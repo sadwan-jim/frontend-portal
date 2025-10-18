@@ -1,0 +1,199 @@
+<template>
+    <div class="mt-4">
+        <v-row>
+            <v-col cols="12">
+                <v-radio-group row v-model="form.selectedUser">
+                    <v-radio label="Self" value="self"></v-radio>
+                    <v-radio label="Agent" value="agent"></v-radio>
+                    <v-radio label="SCD" value="scd"></v-radio>
+                </v-radio-group>
+            </v-col>
+        </v-row>    
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="form.name"
+              :placeholder="'Enter Name'"
+              :label="'Supplier Name'"
+              :rules="[required(form.name, 'Name')]"
+            />
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="form.email"
+              :placeholder="'Enter Email'"
+              :label="emailLabel"
+              :rules="[required(form.email, 'Email'), emailFormat]"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="form.contactPerson"
+              :placeholder="'Contact Person'"
+              :label="contatcPersonLabel"
+              :rules="[required(form.contactPerson, 'Company Name')]"
+            />
+          </v-col>
+          <v-col cols="6">
+            <dropdown
+              :label="'Application'"
+              :placeholder="'Application'"
+              :options="[]"
+              :keyProp="'name'"
+              :valProp="'id'"
+              :apiUrl="'/api/Applications'"
+              v-model="form.applicationId"
+              @update:modelValue="handleApplicationChange"
+              :rules="[required(form.applicationId, 'Application')]"
+            />
+            <!-- <v-text-field
+              v-model="form.applicationId"
+              :placeholder="'Enter Application'"
+              :label="'Application'"
+              :rules="[applicationRequired]"
+            /> -->
+          </v-col>
+        </v-row>
+        <v-row v-if="form.selectedUser=='agent'">
+            <v-col cols="6">
+                <v-text-field
+                    v-model="form.contactPerson"
+                    :placeholder="'Agent Name'"
+                    :label="'Agent Name'"
+
+                />
+            </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn color="primary" @click="submitForm">
+              Submit
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-divider style="margin-top: 10px;"/>
+
+        <!-- {{form}} -->
+              <!-- item-value="id" -->
+        <v-data-table
+          :headers="headers"
+          :items="supplierContactStore.getSupplierContactList||[]"
+        >
+        <template v-slot:item.actions="{ item }">
+          <!-- <v-btn icon @click="previewForm(item)"> -->
+              <v-icon  @click="previewForm(item)" icon="mdi-visibility"></v-icon>
+          <!-- </v-btn> -->
+        </template>
+      </v-data-table>
+      </div>
+</template>      
+<script setup>
+import { ref, onMounted,computed } from 'vue'; 
+import { useRouter } from 'vue-router';
+import { useFormControlStore } from '@/store/form-builder/form-control.store.js';
+import { useSupplierContactStore } from '@/store/supplier-contact/supplier-contact';
+import { required } from '@/validators/validators';
+import dropdown from '@/components/controls/dropdown.vue';
+const supplierContactStore = useSupplierContactStore();
+
+
+
+const router = useRouter(); 
+
+
+const headers = ref([
+  { title: 'Name', key: 'name' },
+  { title: 'Email', key: 'email' },
+  { title: 'Company Name', key: 'contactPerson' },
+  { title: 'Actions', key: 'actions', sortable: false }
+]);
+
+
+const form = ref({
+  name: '',
+  email: '',
+  contactPerson: '',
+  applicationId: null,
+  selectedUser:'self'
+});
+
+const formControlStore = useFormControlStore()
+
+const contatcPersonLabel = computed(()=>{
+    const value = form.value.selectedUser; 
+    switch(value)
+    {
+        case 'agent':{
+            return `Agent's Contact Person`;
+          
+        }
+        case 'scd':{
+            return `SCD's Person`;
+           
+        }
+        case 'self':{
+            return `Supplier's Contact Person`;
+           
+        }
+    }
+    return form.value.selectedUser
+})
+
+const emailLabel = computed(()=>{
+    const value = form.value.selectedUser; 
+    switch(value)
+    {
+        case 'agent':{
+            return `Agent's Email`;
+           
+        }
+        case 'scd':{
+            return `SCD'    break;`
+        }
+        case 'self':{
+            return `Supplier's Email`;
+         
+        }
+    }
+    return form.value.selectedUser
+})
+
+function handleApplicationChange(payload){
+  console.log(payload.id,":::::payload")
+
+  form.value.applicationId = payload.id;
+}
+
+const emailFormat = (v) => /.+@.+\..+/.test(v) || 'Enter a valid email address';
+
+function previewForm(item){
+  console.log("ITEM application",item)
+ 
+
+  // const formControlList = JSON.parse(item.application.formTemplate)
+  // formControlStore.updateControlList([ {...formControlList} ]);
+
+   router.push({ name: 'FormPreview', params: { id: item.application.formTemplate.id } });
+}
+
+
+onMounted(() => {
+  supplierContactStore.fetchSupplierContactList();
+});
+
+
+const submitForm = () => {
+      console.log('Form submitted', form.value);
+
+  if (form.value.name && form.value.email && form.value.contactPerson && form.value.applicationId) {
+    console.log('Form submitted', form.value);
+    supplierContactStore.addSupplierContact(form.value)
+
+  } else {
+    console.log('Form is invalid');
+  }
+};
+</script>
