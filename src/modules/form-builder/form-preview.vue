@@ -1,6 +1,5 @@
 <template>
     <VCard title="Form Preview" style="background-color: rgb(245, 245, 245);">
-       
           <VCardText>
             <VTabs
                 v-model="activeTab"
