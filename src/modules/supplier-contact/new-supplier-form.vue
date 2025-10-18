@@ -84,7 +84,9 @@
         >
         <template v-slot:item.actions="{ item }">
           <!-- <v-btn icon @click="previewForm(item)"> -->
-              <v-icon  @click="previewForm(item)" icon="mdi-visibility"></v-icon>
+            <v-icon @click="previewForm(item)">mdi-eye</v-icon>
+            <v-icon @click="sendEmail(item)">mdi-email</v-icon>
+
           <!-- </v-btn> -->
         </template>
       </v-data-table>
