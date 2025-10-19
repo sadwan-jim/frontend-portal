@@ -45,7 +45,8 @@
               :valProp="'id'"
               :apiUrl="'/api/Applications'"
               v-model="form.applicationId"
-              @update:modelValue="handleApplicationChange"
+              @update:modelValue="(value) => handleChange(value, 'applicationId')"
+            
               :rules="[required(form.applicationId, 'Application')]"
             />
             <!-- <v-text-field
@@ -56,8 +57,21 @@
             /> -->
           </v-col>
         </v-row>
-        <v-row v-if="form.selectedUser=='agent'">
+        <v-row >
             <v-col cols="6">
+              <dropdown
+                :label="'Form Template'"
+                :placeholder="'Form Template'"
+                :options="[]"
+                :keyProp="'name'"
+                :valProp="'id'"
+                :apiUrl="'/api/FormTemplates'"
+                v-model="form.formTemplateId"
+                @update:modelValue="(value) => handleChange(value, 'formTemplateId')"
+                :rules="[required(form.formTemplateId, 'Template')]"
+              />
+            </v-col>
+            <v-col v-if="form.selectedUser=='agent'" cols="6">
                 <v-text-field
                     v-model="form.contactName"
                     :placeholder="'Agent Name'"
@@ -166,10 +180,10 @@ const emailLabel = computed(()=>{
     return form.value.selectedUser
 })
 
-function handleApplicationChange(payload){
+function handleChange(payload,name){
   console.log(payload.id,":::::payload")
 
-  form.value.applicationId = payload.id;
+  form.value[name] = payload.id;
 }
 
 const emailFormat = (v) => /.+@.+\..+/.test(v) || 'Enter a valid email address';
