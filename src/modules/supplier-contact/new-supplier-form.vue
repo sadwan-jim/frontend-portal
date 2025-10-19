@@ -195,8 +195,10 @@ function previewForm(item){
 
   // const formControlList = JSON.parse(item.application.formTemplate)
   // formControlStore.updateControlList([ {...formControlList} ]);
+   const url = router.resolve({ name: 'FormPreview', params: { id: item.formTemplate.id } }).href;
+   window.open(url, '_blank');
 
-   router.push({ name: 'FormPreview', params: { id: item.formTemplate.id } });
+   //router.push({ name: 'FormPreview', params: { id: item.formTemplate.id } });
 }
 
 
