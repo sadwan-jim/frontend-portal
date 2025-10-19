@@ -11,7 +11,7 @@
         <!-- 🔹 No level (direct item) -->
         <v-list-item
           title="Build Form"
-          :to="'form-builder'"
+          :to="'/form-builder'"
           link
         />
         <v-divider />
@@ -31,7 +31,7 @@
             <v-divider />
             
             <!-- Level 3 -->
-            <v-list-item class="nav-item-left3" :to="'supplier-list'" title="Registration Path Creation & Submission" link />
+            <v-list-item class="nav-item-left3" :to="'/supplier-list'" title="Registration Path Creation & Submission" link />
             <v-divider />
             <v-list-item class="nav-item-left3" title="Review & Analysis" link />
             <v-divider />
