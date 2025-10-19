@@ -69,6 +69,13 @@ import { ref } from 'vue';
 
     // Login function
     const login = () => {
+        const templateID = route.params.id;
+
+        console.log("TEMPLATE ID",templateID)
+        if(templateID){
+          router.push({ name: 'FormPreview',params: { id: templateID } })
+        }
+
 
         router.push({ name: 'FormBuilder' })
      
