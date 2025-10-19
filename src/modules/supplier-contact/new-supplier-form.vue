@@ -206,7 +206,13 @@ onMounted(() => {
 
 async function sendEmail(item){
   console.log(item,"AA::AA")
-  const res =  await axios.get(`api/SupplierContacts/SendEmail`)
+  const { email, name, formTemplate } = item;
+
+  const itemPayload = { email, name, templateId: formTemplate.id };
+
+   console.log(itemPayload,"AA::AA")
+
+  const res =  await axios.post(`api/SupplierContacts/SendEmail`,itemPayload)
 }
 
 

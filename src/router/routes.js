@@ -1,7 +1,7 @@
 
 
 export const routes = [
-  { path: '/', redirect: '/login/:id?' },
+  { path: '/', redirect: '/login' },
   {
     path: '/',
 
@@ -34,7 +34,7 @@ export const routes = [
     children: [
     
      {
-        path: 'login',
+        path: 'login/:id?',
         name:'login',
         component:() => import('@/modules/auth/login.vue'),
       }

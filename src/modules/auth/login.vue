@@ -46,11 +46,11 @@
 
 <script setup>
 
-import { useRouter } from 'vue-router';
+import { useRouter ,useRoute} from 'vue-router';
 import { ref } from 'vue';
 
     const router = useRouter(); 
-
+    const route = useRoute(); 
     // Reactive variables
     const email = ref('');
     const password = ref('');
@@ -74,10 +74,12 @@ import { ref } from 'vue';
         console.log("TEMPLATE ID",templateID)
         if(templateID){
           router.push({ name: 'FormPreview',params: { id: templateID } })
+        }else{
+          router.push({ name: 'FormBuilder' })
         }
 
 
-        router.push({ name: 'FormBuilder' })
+        
      
     };
 
