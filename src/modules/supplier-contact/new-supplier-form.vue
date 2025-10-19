@@ -30,10 +30,10 @@
         <v-row>
           <v-col cols="6">
             <v-text-field
-              v-model="form.contactPerson"
+              v-model="form.contactName"
               :placeholder="'Contact Person'"
               :label="contatcPersonLabel"
-              :rules="[required(form.contactPerson, 'Company Name')]"
+              :rules="[required(form.contactName, 'Company Name')]"
             />
           </v-col>
           <v-col cols="6">
@@ -59,7 +59,7 @@
         <v-row v-if="form.selectedUser=='agent'">
             <v-col cols="6">
                 <v-text-field
-                    v-model="form.contactPerson"
+                    v-model="form.contactName"
                     :placeholder="'Agent Name'"
                     :label="'Agent Name'"
 
@@ -118,8 +118,10 @@ const headers = ref([
 const form = ref({
   name: '',
   email: '',
-  contactPerson: '',
+  contactName: '',
+  agentName:'',
   applicationId: null,
+  formTemplateId:null,
   selectedUser:'self'
 });
 
@@ -196,7 +198,7 @@ async function sendEmail(item){
 const submitForm = () => {
       console.log('Form submitted', form.value);
 
-  if (form.value.name && form.value.email && form.value.contactPerson && form.value.applicationId) {
+  if (form.value.name && form.value.email && form.value.contactName && form.value.applicationId) {
     console.log('Form submitted', form.value);
     supplierContactStore.addSupplierContact(form.value)
 
