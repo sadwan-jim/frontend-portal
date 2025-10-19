@@ -124,7 +124,8 @@ const router = useRouter();
 const headers = ref([
   { title: 'Name', key: 'name' },
   { title: 'Email', key: 'email' },
-  { title: 'Company Name', key: 'companyName' },
+  { title: 'Company Name', key: 'contactName' },
+   { title: 'Contact Type', key: 'contactType' },
   { title: 'Actions', key: 'actions', sortable: false }
 ]);
 
@@ -195,7 +196,7 @@ function previewForm(item){
   // const formControlList = JSON.parse(item.application.formTemplate)
   // formControlStore.updateControlList([ {...formControlList} ]);
 
-   router.push({ name: 'FormPreview', params: { id: item.application.formTemplate.id } });
+   router.push({ name: 'FormPreview', params: { id: item.formTemplate.id } });
 }
 
 

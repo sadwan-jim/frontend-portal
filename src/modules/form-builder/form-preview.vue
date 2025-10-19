@@ -165,7 +165,7 @@ onMounted(async () => {
         const res =  await axios.get(`api/FormTemplates/${templateID}`)
         console.log("RES",res)
 
-        const formStructureData = JSON.parse(res.data.name)
+        const formStructureData = JSON.parse(res.data.templateJson)
 
         const uniqueTabs = [...new Set(formStructureData.map(item => item.tab))];
 
