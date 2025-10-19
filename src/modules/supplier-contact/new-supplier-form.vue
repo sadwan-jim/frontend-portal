@@ -99,6 +99,7 @@ import { useFormControlStore } from '@/store/form-builder/form-control.store.js'
 import { useSupplierContactStore } from '@/store/supplier-contact/supplier-contact';
 import { required } from '@/validators/validators';
 import dropdown from '@/components/controls/dropdown.vue';
+import axios from '@/plugins/axios';
 const supplierContactStore = useSupplierContactStore();
 
 
@@ -109,7 +110,7 @@ const router = useRouter();
 const headers = ref([
   { title: 'Name', key: 'name' },
   { title: 'Email', key: 'email' },
-  { title: 'Company Name', key: 'contactPerson' },
+  { title: 'Company Name', key: 'companyName' },
   { title: 'Actions', key: 'actions', sortable: false }
 ]);
 
@@ -185,6 +186,11 @@ function previewForm(item){
 onMounted(() => {
   supplierContactStore.fetchSupplierContactList();
 });
+
+async function sendEmail(item){
+  console.log(item,"AA::AA")
+  const res =  await axios.get(`api/SupplierContacts/SendEmail`)
+}
 
 
 const submitForm = () => {

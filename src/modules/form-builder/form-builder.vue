@@ -14,7 +14,13 @@
     </VRow>
     <v-row>
         <v-col cols="4">
-            <dropdown
+            <v-text-field  
+                :placeholder="'Enter Template Name'"
+                :label="'Template Name'"
+                v-model="templateName"
+                :rules="[required(templateName, 'Template Name')]"
+            />
+            <!-- <dropdown
                 class="mt-4"
                 :label="'Application'"
                 :placeholder="'Application'"
@@ -24,7 +30,7 @@
                 :apiUrl="'/api/Applications'"
                 v-model="applicationId"
                 :rules="[required(applicationId, 'Application')]"
-            />
+            /> -->
         </v-col>
         <v-col cols="3">
             <!-- <VBtn
@@ -370,7 +376,8 @@ const formTemplateStore = useFormTemplateStore()
 const formTabStore = useFormTabStore()
 const activeTab = ref("");
 const tempValues = ref([])
-const applicationId = ref( null );
+// const applicationId = ref( null );
+const templateName = ref('');
 const formColumnType = ref( null ); 
 const controlsList = ref([]);
 const tabs = ref([]);
@@ -457,12 +464,13 @@ const allowFormTableColumn = computed(()=>{
 })
 
 const isValid = computed(()=>{
-    return applicationId.value!=null && controlsList.value.length>0 && tabs.value.length>0
+    // applicationId.value!=null && 
+    return  templateName.value!='' && controlsList.value.length>0 && tabs.value.length>0
 })
 
 function onTemplateSave(){
-    console.log(applicationId.value.id,"applicationId.value")
-    formTemplateStore.addTemplateList( { applicationId:applicationId.value.id,name:JSON.stringify(controlsList.value) })
+    // console.log(applicationId.value.id,"applicationId.value")
+    formTemplateStore.addTemplateList( { name:templateName.value ,templateJson:JSON.stringify(controlsList.value) })
 }
 
 //const selectedControl = ref(null);
@@ -496,11 +504,15 @@ function onControlClick(control){
 }
 
 function onAddControl(item) {
+    if(tabs.value.length>0){
+        controlsList.value.push({...item,tab:activeTab.value,accordionID:selectedAccordion.value});
+        formControlStore.updateControlList(controlsList.value)
+        console.log("controlsList",controlsList.value)
+    }
+    else{
+        alert("MUST Add A Tab")
+    }
     
-    controlsList.value.push({...item,tab:activeTab.value,accordionID:selectedAccordion.value});
-    formControlStore.updateControlList(controlsList.value)
-
-    console.log("controlsList",controlsList.value)
 }
 </script>
 
