@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '@/plugins/axios';
 import { defineStore } from 'pinia';
 
 export const useFormTemplateStore = defineStore('formTemplate', {
