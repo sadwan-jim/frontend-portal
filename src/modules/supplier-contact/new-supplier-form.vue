@@ -215,6 +215,8 @@ async function sendEmail(item){
    console.log(itemPayload,"AA::AA")
 
   const res =  await axios.post(`api/SupplierContacts/SendEmail`,itemPayload)
+
+  alert("Email Send")
 }
 
 
