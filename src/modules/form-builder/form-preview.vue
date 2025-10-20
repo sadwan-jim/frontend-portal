@@ -158,10 +158,10 @@ const formControlStore = useFormControlStore()
 const formTabStore =  useFormTabStore()
 
 onMounted(async () => {
-      console.log('Mounted - Form ID:', route.params.id);
-      if(route.params.id){
-        console.log(":AA Mounted Template ID",route.params.id)
-        const templateID = route.params.id;
+      console.log('Mounted - Form ID:', route.query.templateId);
+      if(route.query.templateId){
+        console.log(":AA Mounted Template ID",route.query.templateId)
+        const templateID = route.query.templateId;
         const res =  await axios.get(`api/FormTemplates/${templateID}`)
         console.log("RES",res)
 
