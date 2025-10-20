@@ -2,7 +2,7 @@
     <div class="mt-4">
         <v-row>
             <v-col cols="12">
-                <v-radio-group row v-model="form.selectedUser">
+                <v-radio-group row v-model="form.contactType">
                     <v-radio label="Self" value="self"></v-radio>
                     <v-radio label="Agent" value="agent"></v-radio>
                     <v-radio label="SCD" value="scd"></v-radio>
@@ -71,7 +71,7 @@
                 :rules="[required(form.formTemplateId, 'Template')]"
               />
             </v-col>
-            <v-col v-if="form.selectedUser=='agent'" cols="6">
+            <v-col v-if="form.contactType=='agent'" cols="6">
                 <v-text-field
                     v-model="form.contactName"
                     :placeholder="'Agent Name'"
@@ -137,13 +137,13 @@ const form = ref({
   agentName:'',
   applicationId: null,
   formTemplateId:null,
-  selectedUser:'self'
+  contactType:'self'
 });
 
 const formControlStore = useFormControlStore()
 
 const contatcPersonLabel = computed(()=>{
-    const value = form.value.selectedUser; 
+    const value = form.value.contactType; 
     switch(value)
     {
         case 'agent':{
@@ -159,11 +159,11 @@ const contatcPersonLabel = computed(()=>{
            
         }
     }
-    return form.value.selectedUser
+    return form.value.contactType
 })
 
 const emailLabel = computed(()=>{
-    const value = form.value.selectedUser; 
+    const value = form.value.contactType; 
     switch(value)
     {
         case 'agent':{
@@ -178,7 +178,7 @@ const emailLabel = computed(()=>{
          
         }
     }
-    return form.value.selectedUser
+    return form.value.contactType
 })
 
 function handleChange(payload,name){

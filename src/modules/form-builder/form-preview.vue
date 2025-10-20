@@ -186,15 +186,28 @@ const formControlStore = useFormControlStore()
 const formTabStore =  useFormTabStore()
 
 onMounted(async () => {
-    console.log("Initial activeTab:", formTabStore.getTabList);
+   
       console.log('Mounted - Form ID:', route.query.templateId);
       if(route.query.templateId){
         console.log(":AA Mounted Template ID",route.query.templateId)
         const templateID = route.query.templateId;
         const res =  await axios.get(`api/FormTemplates/${templateID}`)
+        
+        setTemplateData(res.data.templateJson)
         console.log("RES",res)
+      }
+      if(route.query.contactId){
+         const contactID = route.query.contactId;
+         const res =  await axios.get(`api/SupplierContacts/${contactID}`)
+        console.log("res","RES",res)
+        setTemplateData(res.data.submittedJson)
+      }
+    });
+const activeTab = ref('')
 
-        const formStructureData = JSON.parse(res.data.templateJson)
+
+function setTemplateData(templateJson){
+       const formStructureData = JSON.parse(templateJson)
 
         const uniqueTabs = [...new Set(formStructureData.map(item => item.tab))];
 
@@ -204,16 +217,16 @@ onMounted(async () => {
 
 
         formControlStore.updateControlList(formStructureData)
-      }
-    });
-const activeTab = ref('')
+}
+
+
 
 const contactId = computed(() => {
     return route.query.contactId||'';
 });
 
 function handleClick(name,index){
-    console.log("name,index",name,index)
+    //console.log("name,index",name,index)
 
     switch(name)
     {
@@ -226,7 +239,9 @@ function handleClick(name,index){
             break;
         }
         case 'submit':{
-            
+            console.log(contactId.value)
+            const submittedJson = formControlStore.getControlList;
+            axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
         }
 
     }
