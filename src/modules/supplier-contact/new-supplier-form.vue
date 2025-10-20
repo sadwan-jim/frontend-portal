@@ -97,7 +97,8 @@
           :items="supplierContactStore.getSupplierContactList||[]"
         >
         <template v-slot:item.actions="{ item }">
-          <!-- <v-btn icon @click="previewForm(item)"> -->
+  
+            <v-icon v-if="item.submittedJson" @click="previewResult(item)">mdi-file-document</v-icon>
             <v-icon @click="previewForm(item)">mdi-eye</v-icon>
             <v-icon @click="sendEmail(item)">mdi-email</v-icon>
 
@@ -188,6 +189,11 @@ function handleChange(payload,name){
 }
 
 const emailFormat = (v) => /.+@.+\..+/.test(v) || 'Enter a valid email address';
+
+function previewResult(item){
+   const url = router.resolve({ name: 'FormPreview', query: { contactId: item.id } }).href;
+   window.open(url, '_blank');
+}
 
 function previewForm(item){
   console.log("ITEM application",item)
