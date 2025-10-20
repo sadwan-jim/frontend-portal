@@ -6,6 +6,7 @@
                 show-arrows
                 class="v-tabs-pill"
             >
+            {{  formTabStore.getTabList.length }}
                 <!-- :style="{
                         color:'blue',
                         background: 'linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1))'
@@ -139,6 +140,24 @@
                                 </template>
                         </v-col>    
                     </v-row>
+                    <v-row>
+                        <v-col cols="12">
+                            
+                            <v-btn  @click.stop="handleClick('prev',index)" flat v-if="index>0" style="margin-right: 10px;">
+                                PREVIOUS
+                            </v-btn>
+                            
+                            <v-btn v-if="index<formTabStore.getTabList.length-1" flat @click.stop="handleClick('next',index)">
+                                NEXT
+                            </v-btn>
+
+                            <v-btn v-if="index==formTabStore.getTabList.length-1" flat @click.stop="handleClick('submit',index)">
+                                SUBMIT
+                            </v-btn>
+
+                            
+                        </v-col>
+                    </v-row>
                 </v-window-item>
             </v-window>
           </VCardText>
@@ -158,6 +177,7 @@ const formControlStore = useFormControlStore()
 const formTabStore =  useFormTabStore()
 
 onMounted(async () => {
+    console.log("Initial activeTab:", formTabStore.getTabList);
       console.log('Mounted - Form ID:', route.query.templateId);
       if(route.query.templateId){
         console.log(":AA Mounted Template ID",route.query.templateId)
@@ -169,6 +189,8 @@ onMounted(async () => {
 
         const uniqueTabs = [...new Set(formStructureData.map(item => item.tab))];
 
+        activeTab.value =uniqueTabs[0];
+
         formTabStore.updateTabList(uniqueTabs)
 
 
@@ -176,5 +198,29 @@ onMounted(async () => {
       }
     });
 const activeTab = ref('')
-//const selectedAccordion = ref('')
+
+const contactId = computed(() => {
+    return route.query.contactId||'';
+});
+
+function handleClick(name,index){
+    console.log("name,index",name,index)
+
+    switch(name)
+    {
+        case 'next':{
+            activeTab.value = formTabStore.getTabList[index+1];
+            break;
+        }
+        case 'prev':{
+            activeTab.value = formTabStore.getTabList[index-1];
+            break;
+        }
+
+    }
+    if(name=='prev'||name=='next'){
+         
+    }
+}
+
 </script>
