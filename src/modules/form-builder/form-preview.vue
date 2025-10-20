@@ -1,12 +1,13 @@
 <template>
     <VCard title="Supplier Profile Management" style="background-color: rgb(245, 245, 245);">
           <VCardText>
+            {{  formControlStore.getControlList.filter(x=>x.type!='accordion') }}
             <VTabs
                 v-model="activeTab"
                 show-arrows
                 class="v-tabs-pill"
             >
-            {{  formTabStore.getTabList.length }}
+           
                 <!-- :style="{
                         color:'blue',
                         background: 'linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1))'
@@ -51,32 +52,37 @@
                                           <v-row>
                                             <v-col  cols="4" v-for="econtrol in formControlStore.getControlList.filter(x=>x.tab==item && x.accordionID==control.id)">
                                                     <v-text-field
-                                                        
+                                                        v-model="econtrol.props.value"
                                                         v-if="econtrol.type=='text'"
                                                         :placeholder="econtrol.props.placeholder"
                                                         :label="econtrol.props.label"
                                                     />
                                                     <v-textarea
-                                                    
-                                                    v-if="econtrol.type=='textarea'"
-                                                    :placeholder="econtrol.props.placeholder"
-                                                    :label="econtrol.props.label"
+                                                        v-model="econtrol.props.value"
+                                                        v-if="econtrol.type=='textarea'"
+                                                        :placeholder="econtrol.props.placeholder"
+                                                        :label="econtrol.props.label"
                                                     />
                                                     <dropdown 
-                                                    
-                                                    v-if="econtrol.type=='select'"
-                                                    :label="econtrol.props.label"
-                                                    :placeholder="econtrol.props.placeholder"
-                                                    :options="econtrol.props.options"
-                                                    :keyProp="econtrol.props.optionKey||'id'"
-                                                    :valProp="econtrol.props.optionValue||'value'"
-                                                    :apiUrl="econtrol.props.apiUrl"
+                                                        v-model="econtrol.props.value"
+                                                        v-if="econtrol.type=='select'"
+                                                        :label="econtrol.props.label"
+                                                        :placeholder="econtrol.props.placeholder"
+                                                        :options="econtrol.props.options"
+                                                        :keyProp="econtrol.props.optionKey||'id'"
+                                                        :valProp="econtrol.props.optionValue||'value'"
+                                                        :apiUrl="econtrol.props.apiUrl"
                                                     />
-                                                    <v-radio-group v-if="econtrol.type=='radio'" :label="control.props.label">
+                                                    <v-radio-group 
+                                                        v-if="econtrol.type=='radio'" 
+                                                        :label="control.props.label"
+                                                        
+                                                    >
                                                         <v-radio
                                                             v-for="(option, idx) in econtrol.props.options"
                                                             :key="idx"
                                                             :label="option"
+                                                            v-model="econtrol.props.value"
                                                         />
                                                     </v-radio-group>
                                                     <template v-if="econtrol.type=='table'">
@@ -95,18 +101,21 @@
                                 </v-expansion-panels>
                                 <template v-if="control.type=='text'">
                                     <v-text-field
+                                        v-model="control.props.value"
                                         :placeholder="control.props.placeholder"
                                         :label="control.props.label"
                                     />
                                 </template>
                                 <template v-if="control.type=='textarea'">
                                     <v-textarea
+                                      v-model="control.props.value"  
                                       :placeholder="control.props.placeholder"
                                       :label="control.props.label"
                                     />
                                 </template>
                                 <template v-if="control.type=='select'">
                                     <dropdown 
+                                        v-model="control.props.value"
                                         :label="control.props.label"
                                         :placeholder="control.props.placeholder"
                                         :options="control.props.options"
@@ -123,7 +132,7 @@
                                     /> -->
                                 </template>
                                 <template v-if="control.type=='radio'">
-                                    <v-radio-group  :label="control.props.label">
+                                    <v-radio-group  :label="control.props.label" v-model="control.props.value">
                                         <v-radio
                                             v-for="(option, idx) in control.props.options"
                                             :key="idx"
@@ -133,7 +142,7 @@
                                     
                                 </template>
                                 <template v-if="control.type=='checkbox'">
-                                    <v-checkbox   :label="control.props.label"/>
+                                    <v-checkbox  v-model="control.props.value" :label="control.props.label"/>
                                 </template>
                                  <template v-if="control.type=='submit'">
                                     <v-btn>{{control.props.label}}</v-btn>
@@ -216,11 +225,12 @@ function handleClick(name,index){
             activeTab.value = formTabStore.getTabList[index-1];
             break;
         }
+        case 'submit':{
+            
+        }
 
     }
-    if(name=='prev'||name=='next'){
-         
-    }
+
 }
 
 </script>
