@@ -30,12 +30,17 @@ export const routes = [
     children: [
     
      {
-        path: 'login/:id?',
+        path: 'login',
         name:'login',
         component:() => import('@/modules/auth/login.vue'),
       },
+      //   {
+      //   path: 'form-preview/:id?',
+      //   name: 'FormPreview',
+      //   component: () => import('@/modules/form-builder/form-preview.vue'),
+      // },
       {
-        path: 'form-preview/:id?',
+        path: 'form-preview',
         name: 'FormPreview',
         component: () => import('@/modules/form-builder/form-preview.vue'),
       },

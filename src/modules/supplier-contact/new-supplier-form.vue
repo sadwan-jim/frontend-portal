@@ -208,9 +208,9 @@ onMounted(() => {
 
 async function sendEmail(item){
   console.log(item,"AA::AA")
-  const { email, name, formTemplate } = item;
+  const { email, name, formTemplate,id } = item;
 
-  const itemPayload = { email, name, templateId: formTemplate.id };
+  const itemPayload = { contactId:id, email, name, templateId: formTemplate.id };
 
    console.log(itemPayload,"AA::AA")
 

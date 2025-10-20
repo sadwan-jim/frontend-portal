@@ -69,11 +69,12 @@ import { ref } from 'vue';
 
     // Login function
     const login = () => {
-        const templateID = route.params.id;
+        const templateID = route.query.templateId;
+        const contactID = route.query.contactId;
 
-        console.log("TEMPLATE ID",templateID)
+        console.log(contactID,"TEMPLATE ID",templateID)
         if(templateID){
-          router.push({ name: 'FormPreview',params: { id: templateID } })
+          router.push({ name: 'FormPreview',query: { templateId: templateID  ,contactId:contactID} })
         }else{
           router.push({ name: 'FormBuilder' })
         }
