@@ -1,7 +1,7 @@
 <template>
     <VCard title="Supplier Profile Management" style="background-color: rgb(245, 245, 245);">
           <VCardText>
-            <!-- {{  formControlStore.getControlList.filter(x=>x.type!='accordion') }} -->
+            {{  formControlStore.getControlList.filter(x=>x.type!='accordion') }}
             <VTabs
                 v-model="activeTab"
                 show-arrows
@@ -89,6 +89,7 @@
                                                    
                                                         <FormDataTable                                             
                                                             :headers="econtrol.props.column||[]"
+                                                            @save="(payload)=>onTableSave(payload,econtrol)"
                                                         />
                                                     </template>
                                                     <v-btn v-if="econtrol.type=='submit'">{{econtrol.props.label}}</v-btn>
@@ -224,6 +225,21 @@ function setTemplateData(templateJson){
 const contactId = computed(() => {
     return route.query.contactId||'';
 });
+
+function onTableSave(payload,econtrol){
+    console.log(payload,econtrol)
+
+    econtrol.value= payload;
+    const updatedControl = formControlStore.getControlList.map(x=>{
+        if(x.id==econtrol.id){
+            return { ...econtrol}
+        }
+
+        return {...x}
+    })
+    formControlStore.updateControlList(updatedControl);
+    
+}
 
 function handleClick(name,index){
     //console.log("name,index",name,index)

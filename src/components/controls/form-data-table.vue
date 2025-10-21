@@ -95,7 +95,7 @@ import dropdown from '@/components/controls/dropdown.vue';
   },
 
 })
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click','save'])
 
 function getHeaderItem(key){
     if(key!='id'){
@@ -165,7 +165,7 @@ function getHeaderItem(key){
       formModel.value.id = tableItems.value.length + 1
       tableItems.value.push(formModel.value)
     }
-
+     emit('save', tableItems.value);
     dialog.value = false
   }
 
