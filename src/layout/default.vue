@@ -4,7 +4,7 @@
 
 <template>
   <v-layout class="rounded rounded-md border">
-    <v-app-bar title="Application bar"></v-app-bar>
+    <v-app-bar title="Application bar" color="primary"></v-app-bar>
     
     <v-navigation-drawer expand-on-hover>
       <v-list nav dense>
@@ -49,7 +49,7 @@
       </v-list>
     </v-navigation-drawer>
     
-    <v-main class="d-flex align-center justify-center">
+    <v-main >
       <v-container>
         <RouterView />
       </v-container>
