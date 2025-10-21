@@ -44,6 +44,11 @@ export const routes = [
         name: 'FormPreview',
         component: () => import('@/modules/form-builder/form-preview.vue'),
       },
+      {
+        path: 'form-feedback',
+        name: 'FormFeedback',
+        component: () => import('@/modules/form-builder/form-feedback.vue'),
+      },
     //   {
     //     path: '/:pathMatch(.*)*',
     //     component: () => import('@/pages/[...error].vue'),

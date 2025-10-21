@@ -191,7 +191,7 @@ function handleChange(payload,name){
 const emailFormat = (v) => /.+@.+\..+/.test(v) || 'Enter a valid email address';
 
 function previewResult(item){
-   const url = router.resolve({ name: 'FormPreview', query: { contactId: item.id } }).href;
+   const url = router.resolve({ name: 'FormFeedback', query: { contactId: item.id } }).href;
    window.open(url, '_blank');
 }
 
