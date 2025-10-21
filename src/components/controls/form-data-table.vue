@@ -24,9 +24,9 @@
 
       <template v-slot:item.actions="{ item }">
         <div class="d-flex ga-2 justify-end">
-          <v-icon color="medium-emphasis" icon="ri-pencil-fill" size="small" @click="edit(item)"></v-icon>
+          <v-icon color="medium-emphasis" icon="mdi-pencil" size="small" @click="edit(item)"></v-icon>
 
-          <v-icon color="medium-emphasis" icon="ri-delete-bin-fill" size="small" @click="remove(item)"></v-icon>
+          <v-icon color="medium-emphasis" icon="mdi-delete" size="small" @click="remove(item)"></v-icon>
         </div>
       </template>
 
