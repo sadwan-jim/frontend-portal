@@ -1,47 +1,61 @@
-<template>
-  <v-container>
-    <v-row class="justify-center">
-      <v-col cols="12" md="6">
-        <v-card>
-          <v-card-title class="text-h5">Login</v-card-title>
-          
-          <v-card-subtitle>Please enter your credentials to continue</v-card-subtitle>
+ <template>
+  <v-app>
+    <v-main>
+      <v-container
+        fluid
+        class="d-flex align-center justify-center"
+        style="height: 100vh;"
+      >
+        <v-col cols="12" md="4">
+          <v-card class="shadow-sm p-4">
+            <!-- Header -->
+            <div class="text-center mb-4">
+              <h3 class="fw-bold text-primary">Login</h3>
+              <p class="text-muted">Enter your credentials to continue</p>
+            </div>
 
-          <v-form v-model="formValid">
-            <v-text-field
-              v-model="email"
-              label="Email"
-              :rules="emailRules"
-              type="email"
-              required
-            ></v-text-field>
+            <!-- Form -->
+            <v-form v-model="formValid">
+              <v-text-field
+                v-model="email"
+                label="Email"
+                :rules="emailRules"
+                type="email"
+                outlined
+                dense
+                class="mb-3"
+              ></v-text-field>
 
-            <v-text-field
-              v-model="password"
-              label="Password"
-              :rules="passwordRules"
-              type="password"
-              required
-            ></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                :rules="passwordRules"
+                type="password"
+                outlined
+                dense
+                class="mb-4"
+              ></v-text-field>
 
-            <v-btn
-              :disabled="!formValid"
-              color="primary"
-              @click="login"
-            >
-              Login
-            </v-btn>
-          </v-form>
+              <v-btn
+                :disabled="!formValid"
+                color="success"
+                class="btn btn-primary w-100 mb-3"
+                @click="login"
+              >
+                Login
+              </v-btn>
+            </v-form>
 
-          <v-divider></v-divider>
-
-          <v-card-actions class="justify-center">
-            <v-btn text @click="redirectToRegister">Don't have an account? Register</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+            <div class="text-center">
+              <v-btn text class="btn btn-link" @click="redirectToRegister">
+                Don't have an account? Register
+              </v-btn>
+            </div>
+          </v-card>
+        </v-col>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script setup>
