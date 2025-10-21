@@ -152,15 +152,15 @@
                     <v-row>
                         <v-col cols="12">
                             
-                            <v-btn  @click.stop="handleClick('prev',index)" flat v-if="index>0" style="margin-right: 10px;">
+                            <v-btn color="primary" @click.stop="handleClick('prev',index)" flat v-if="index>0" style="margin-right: 10px;">
                                 PREVIOUS
                             </v-btn>
                             
-                            <v-btn v-if="index<formTabStore.getTabList.length-1" flat @click.stop="handleClick('next',index)">
+                            <v-btn color="primary" v-if="index<formTabStore.getTabList.length-1" flat @click.stop="handleClick('next',index)">
                                 NEXT
                             </v-btn>
 
-                            <v-btn v-if="index==formTabStore.getTabList.length-1" flat @click.stop="handleClick('submit',index)">
+                            <v-btn color="secondary" v-if="index==formTabStore.getTabList.length-1" flat @click.stop="handleClick('submit',index)">
                                 SUBMIT
                             </v-btn>
 

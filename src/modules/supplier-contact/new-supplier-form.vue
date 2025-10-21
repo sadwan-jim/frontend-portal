@@ -172,7 +172,7 @@ const emailLabel = computed(()=>{
            
         }
         case 'scd':{
-            return `SCD'    break;`
+            return `SCD's Email;`
         }
         case 'self':{
             return `Supplier's Email`;
