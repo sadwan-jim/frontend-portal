@@ -100,54 +100,7 @@
                                     </v-expansion-panel>
                                   
                                 </v-expansion-panels>
-                                <template v-if="control.type=='text'">
-                                    <v-text-field
-                                        v-model="control.props.value"
-                                        :placeholder="control.props.placeholder"
-                                        :label="control.props.label"
-                                    />
-                                </template>
-                                <template v-if="control.type=='textarea'">
-                                    <v-textarea
-                                      v-model="control.props.value"  
-                                      :placeholder="control.props.placeholder"
-                                      :label="control.props.label"
-                                    />
-                                </template>
-                                <template v-if="control.type=='select'">
-                                    <dropdown 
-                                        v-model="control.props.value"
-                                        :label="control.props.label"
-                                        :placeholder="control.props.placeholder"
-                                        :options="control.props.options"
-                                        :keyProp="control.props.optionKey||'id'"
-                                        :valProp="control.props.optionValue||'value'"
-                                        :apiUrl="control.props.apiUrl"
-
-                                    />
-                                    <!-- <v-select
-                                      
-                                        :items="control.props.options"
-                                        :label="control.props.label"
-                                        :placeholder="control.props.placeholder"
-                                    /> -->
-                                </template>
-                                <template v-if="control.type=='radio'">
-                                    <v-radio-group  :label="control.props.label" v-model="control.props.value">
-                                        <v-radio
-                                            v-for="(option, idx) in control.props.options"
-                                            :key="idx"
-                                            :label="option"
-                                        />
-                                    </v-radio-group>
-                                    
-                                </template>
-                                <template v-if="control.type=='checkbox'">
-                                    <v-checkbox  v-model="control.props.value" :label="control.props.label"/>
-                                </template>
-                                 <template v-if="control.type=='submit'">
-                                    <v-btn>{{control.props.label}}</v-btn>
-                                </template>
+                      
                         </v-col>    
                     </v-row>
                     <v-row>
