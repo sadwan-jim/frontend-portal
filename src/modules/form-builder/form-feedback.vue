@@ -54,8 +54,12 @@
                                                    <v-row>
                                                         <v-col>
                                                             <template v-if="econtrol.type=='table'">
-                                                      
-                                                               <v-data-table :items="econtrol.props.value"></v-data-table>
+                                                                <FormDataTable
+                                                                    :headers="econtrol.props.column || []"
+                                                                    :tableItems="econtrol.props.value||[]"
+                                                                    @save="payload => onTableSave(payload, econtrol)"
+                                                                />
+                                                               <!-- <v-data-table :items="econtrol.props.value"></v-data-table> -->
                                                             </template>
                                                             <v-text-field
                                                                 v-else
