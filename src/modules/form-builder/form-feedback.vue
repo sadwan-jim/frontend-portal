@@ -129,6 +129,8 @@ onMounted(async () => {
         console.log(":AA Mounted Template ID",route.query.templateId)
         const templateID = route.query.templateId;
         const res =  await axios.get(`api/FormTemplates/${templateID}`)
+
+        contactRef.value=res.data;
         
         setTemplateData(res.data.templateJson)
         console.log("RES",res)
@@ -136,11 +138,14 @@ onMounted(async () => {
       if(route.query.contactId){
          const contactID = route.query.contactId;
          const res =  await axios.get(`api/SupplierContacts/${contactID}`)
+         contactRef.value=res.data;
         console.log("res","RES",res)
         setTemplateData(res.data.submittedJson)
       }
     });
 const activeTab = ref('')
+
+const contactRef = ref('')
 
 
 function setTemplateData(templateJson){
@@ -177,23 +182,28 @@ function onTableSave(payload,econtrol){
     
 }
 
-function handleClick(name,index){
+async function handleClick(name,index){
     //console.log("name,index",name,index)
 
     switch(name)
     {
         case 'next':{
-            activeTab.value = formTabStore.getTabList[index+1];
+            activeTab.value = await formTabStore.getTabList[index+1];
             break;
         }
         case 'prev':{
-            activeTab.value = formTabStore.getTabList[index-1];
+            activeTab.value = await formTabStore.getTabList[index-1];
             break;
         }
         case 'submit':{
-            console.log(contactId.value)
+            console.log(contactId.value,contactRef.value)
             const submittedJson = formControlStore.getControlList;
-            axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
+            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
+             const { email, name, formTemplate,id } = contactRef.value;
+
+             const itemPayload = { contactId:id, email, name, templateId: formTemplate.id ,feedBackForm:true};
+
+             const res =  await axios.post(`api/SupplierContacts/SendEmail`,itemPayload)
         }
 
     }

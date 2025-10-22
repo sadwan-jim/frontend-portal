@@ -209,7 +209,7 @@ async function sendEmail(item){
   console.log(item,"AA::AA")
   const { email, name, formTemplate,id } = item;
 
-  const itemPayload = { contactId:id, email, name, templateId: formTemplate.id };
+  const itemPayload = { contactId:id, email, name, templateId: formTemplate.id,feedBackForm:false };
 
    console.log(itemPayload,"AA::AA")
 

@@ -124,8 +124,14 @@ import { ref } from 'vue';
         const templateID = route.query.templateId;
         const contactID = route.query.contactId;
 
+        const showFeedBackForm = route.query.feedBackForm||false
+
         console.log(contactID,"TEMPLATE ID",templateID)
         if(templateID){
+          if(showFeedBackForm){
+            router.push({ name: 'FormFeedback',query: { contactId:contactID} })
+            return;
+          }
           router.push({ name: 'FormPreview',query: { templateId: templateID  ,contactId:contactID} })
         }else{
           router.push({ name: 'FormBuilder' })
