@@ -27,6 +27,7 @@ export const useSupplierContactStore = defineStore('supplierContact', {
              const response = await axios.post('/api/SupplierContacts',contact);
             console.log(contact,"API RESPONSE",response)
             this.supplierContactList.push(response.data);
+            alert("Saved Template")
         } catch (error) {
             console.error('Error fetching supplier contacts:', error);
         }

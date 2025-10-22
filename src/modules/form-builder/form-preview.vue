@@ -1,7 +1,7 @@
 <template>
     <VCard title="Supplier Profile Management" style="background-color: rgb(245, 245, 245);">
           <VCardText>
-            {{  formControlStore.getControlList.filter(x=>x.type!='accordion') }}
+            <!-- {{  formControlStore.getControlList.filter(x=>x.type!='accordion') }} -->
             <VTabs
                 v-model="activeTab"
                 show-arrows

@@ -41,6 +41,7 @@
                 Go to Form Preview
             </VBtn> -->
             <VBtn
+                style="color: whitesmoke !important;"
                 color="primary"
                 class="mt-4"
                 href="/form-preview"
@@ -55,6 +56,7 @@
             <VBtn
               color="primary"
               class="mt-4"
+              style="color: whitesmoke !important;"
               :disabled="!isValid"
               @click.prevent = "onTemplateSave"
             >
@@ -62,7 +64,7 @@
             </VBtn>
         </v-col> 
     </v-row> 
-    {{ controlsList }}   
+    <!-- {{ controlsList }}    -->
     <VRow>
       <VCol
         cols="12"
@@ -248,7 +250,7 @@
                         </v-row>
 
                     </v-col>
-                   {{ selectedControl.props.column }}
+                   <!-- {{ selectedControl.props.column }} -->
                     <v-col>
                         <!-- v-for="n in parseInt(selectedControl.props.columnNumber)||0" -->
                         <template v-for="(item,index) in selectedControl.props.column"> 
@@ -468,9 +470,10 @@ const isValid = computed(()=>{
     return  templateName.value!='' && controlsList.value.length>0 && tabs.value.length>0
 })
 
-function onTemplateSave(){
+async function onTemplateSave(){
     // console.log(applicationId.value.id,"applicationId.value")
-    formTemplateStore.addTemplateList( { name:templateName.value ,templateJson:JSON.stringify(controlsList.value) })
+    await formTemplateStore.addTemplateList( { name:templateName.value ,templateJson:JSON.stringify(controlsList.value) })
+    
 }
 
 //const selectedControl = ref(null);
