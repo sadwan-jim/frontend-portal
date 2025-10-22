@@ -41,6 +41,7 @@
                 Go to Form Preview
             </VBtn> -->
             <VBtn
+                style="color: whitesmoke !important;"
                 color="primary"
                 class="mt-4"
                 href="/form-preview"
@@ -55,6 +56,7 @@
             <VBtn
               color="primary"
               class="mt-4"
+              style="color: whitesmoke !important;"
               :disabled="!isValid"
               @click.prevent = "onTemplateSave"
             >
@@ -471,7 +473,7 @@ const isValid = computed(()=>{
 async function onTemplateSave(){
     // console.log(applicationId.value.id,"applicationId.value")
     await formTemplateStore.addTemplateList( { name:templateName.value ,templateJson:JSON.stringify(controlsList.value) })
-    alert("Template Saved")
+    
 }
 
 //const selectedControl = ref(null);
