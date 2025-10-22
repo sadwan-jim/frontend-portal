@@ -76,7 +76,7 @@
                                                     <v-radio-group 
                                                         v-if="econtrol.type=='radio'" 
                                                         :label="control.props.label"
-                                                         v-model="econtrol.value"
+                                                         v-model="econtrol.props.value"
                                                     >
                                                         <v-radio
                                                             v-for="(option, idx) in econtrol.props.options"
@@ -183,7 +183,7 @@ const contactId = computed(() => {
 function onTableSave(payload,econtrol){
     console.log(payload,econtrol)
 
-    econtrol.value= payload;
+    econtrol.props.value= payload;
     const updatedControl = formControlStore.getControlList.map(x=>{
         if(x.id==econtrol.id){
             return { ...econtrol}
