@@ -2,12 +2,36 @@
   <v-layout class="rounded rounded-md border">
     <v-app-bar app color="indigo" dark>
       <!-- Toggle Button for Drawer -->
-      <v-btn @click="drawer = !drawer">
+      <v-btn icon @click="drawer = !drawer">
         <v-icon>{{ drawer ? 'mdi-menu-open' : 'mdi-menu' }}</v-icon>
       </v-btn>
+
+      <v-toolbar-title>Supplier Portal</v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <!-- Profile & Logout -->
+      <v-menu>
+        <template #activator="{ props }">
+          <v-btn icon v-bind="props">
+            <v-avatar size="32">
+              <v-icon color="white">mdi-account-circle</v-icon>
+            </v-avatar>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item @click="goToProfile">
+            <v-icon start>mdi-account-circle</v-icon>
+            <v-list-item-title>Profile</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="logout">
+            <v-icon start>mdi-logout</v-icon>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
-    <!-- Navigation Drawer -->
     <v-navigation-drawer
       app
       expand-on-hover
@@ -18,7 +42,6 @@
       v-model="drawer"
     >
       <v-list nav dense>
-        <!-- Build Form Item -->
         <v-list-item
           title="Build Form"
           :to="'/form-builder'"
@@ -30,7 +53,6 @@
         </v-list-item>
         <v-divider />
 
-        <!-- Level 1 - Registration and Onboarding -->
         <v-list-group v-model="registrationOpen">
           <template #activator="{ props }">
             <v-list-item v-bind="props" class="d-flex align-center">
@@ -40,7 +62,6 @@
           </template>
           <v-divider />
 
-          <!-- Level 2 - Registration -->
           <v-list-group v-model="registrationSubGroupOpen">
             <template #activator="{ props }">
               <v-list-item class="d-flex align-center" v-bind="props">
@@ -50,7 +71,6 @@
             </template>
             <v-divider />
 
-            <!-- Level 3 - Registration Path Creation & Submission -->
             <v-list-item class="pl-4" :to="'/supplier-list'" link>
               <v-icon class="mr-2">mdi-arrow-right</v-icon>
               Registration Path Creation & Submission
@@ -68,7 +88,6 @@
             <v-divider />
           </v-list-group>
 
-          <!-- Level 2 - Onboarding -->
           <v-list-group v-model="onboardingSubGroupOpen">
             <template #activator="{ props }">
               <v-list-item class="d-flex align-center" v-bind="props">
@@ -81,7 +100,6 @@
       </v-list>
     </v-navigation-drawer>
 
-    <!-- Main Content -->
     <v-main>
       <v-container>
         <router-view />
@@ -91,37 +109,45 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
+
 export default {
   data() {
     return {
-      // Controls the visibility of the entire navigation drawer
       drawer: true,
-
-      // Controls the expansion of the Registration and Onboarding groups
       registrationOpen: false,
       registrationSubGroupOpen: false,
       onboardingSubGroupOpen: false,
-    };
+    }
   },
-};
+  setup() {
+    const router = useRouter()
+
+    function goToProfile() {
+      router.push('/profile')
+    }
+
+    function logout() {
+      localStorage.removeItem('token')
+      router.push('/login')
+    }
+
+    return { goToProfile, logout }
+  },
+}
 </script>
-
-
- 
 
 <style scoped>
 .nav-item-left {
-  padding-left: 5px !important; /* Removes left padding */
-  margin-left: 0 !important; /* Removes left margin */
+  padding-left: 5px !important;
+  margin-left: 0 !important;
 }
-
 .nav-item-left2 {
-  padding-left: 10px !important; /* Adds more left padding */
-  margin-left: 0 !important; /* Removes left margin */
+  padding-left: 10px !important;
+  margin-left: 0 !important;
 }
-
 .nav-item-left3 {
-  padding-left: 15px !important; /* Adds even more left padding */
-  margin-left: 0 !important; /* Removes left margin */
+  padding-left: 15px !important;
+  margin-left: 0 !important;
 }
 </style>
