@@ -55,7 +55,7 @@
                                                         <v-col>
                                                             <template v-if="econtrol.type=='table'">
                                                       
-                                                               <v-data-table :items="econtrol.value"></v-data-table>
+                                                               <v-data-table :items="econtrol.props.value"></v-data-table>
                                                             </template>
                                                             <v-text-field
                                                                 v-else

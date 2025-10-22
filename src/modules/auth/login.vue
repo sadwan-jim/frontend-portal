@@ -126,9 +126,9 @@ import { ref } from 'vue';
 
         const showFeedBackForm = route.query.feedBackForm||false
 
-        console.log(contactID,"TEMPLATE ID",templateID)
+        console.log(contactID,"TEMPLATE ID",showFeedBackForm)
         if(templateID){
-          if(showFeedBackForm){
+          if(showFeedBackForm!='False'){
             router.push({ name: 'FormFeedback',query: { contactId:contactID} })
             return;
           }
