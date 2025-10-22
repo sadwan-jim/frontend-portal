@@ -5,16 +5,43 @@
         <v-row no-gutters class="w-100 h-100">
           <!-- Left Side - Background / Welcome + Illustration -->
           <v-col cols="12" md="6" class="left-panel d-flex flex-column justify-center align-center text-white px-8">
-            <h2 class="fw-bold mb-3">Welcome to Supplier Portal</h2>
-            <p class="mb-6 text-center">
-              Streamline your supplier workflow with our easy-to-use portal. 
-              Manage orders, track shipments, and collaborate seamlessly.
-            </p>
-            <v-img
-              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-              max-width="250"
-              contain
-            ></v-img>
+<div class="text-center text-white px-6">
+  <h2 class="fw-bold mb-4" style="font-size: 2.2rem; letter-spacing: 1px;">
+    Welcome to the Supplier Portal
+  </h2>
+  <p class="mb-5" style="font-size: 1.1rem; line-height: 1.8;">
+    Manage your business effortlessly with our intuitive Supplier Portal.
+  </p>
+  <ul class="list-unstyled text-left mb-5" style="font-size: 1rem; line-height: 1.8;">
+    <li class="mb-3">
+      <v-icon left small color="yellow lighten-2">mdi-truck-delivery</v-icon>
+      <strong>Track Orders:</strong> Stay updated on every order from placement to delivery.
+    </li>
+
+    <li class="mb-3">
+      <v-icon left small color="green lighten-2">mdi-chart-line</v-icon>
+      <strong>Access Reports:</strong> View performance metrics, invoices, and payment history.
+    </li>
+
+    <li class="mb-3">
+      <v-icon left small color="orange lighten-2">mdi-timer-sand</v-icon>
+      <strong>Save Time:</strong> Automate routine tasks and focus on growing your business.
+    </li>
+        <li class="mb-3">
+      <v-icon left small color="cyan lighten-2">mdi-account-group</v-icon>
+      <strong>Collaborate Seamlessly:</strong> Communicate directly with buyers and teams in real-time.
+    </li>
+        <li class="mb-3">
+      <v-icon left small color="purple lighten-2">mdi-clipboard-check</v-icon>
+      <strong>Stay Organized:</strong> Keep all your product, pricing, and shipment information in one place.
+    </li>
+  </ul>
+  <p style="font-size: 1rem; font-weight: 500;">
+    Empowering suppliers to work smarter, faster, and more efficiently.
+  </p>
+</div>
+
+
           </v-col>
 
           <!-- Right Side - Login Form -->
@@ -121,7 +148,7 @@ import { ref } from 'vue';
 </script>
 
 <style scoped>
-.login-container {
+/* .login-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
 }
@@ -131,6 +158,22 @@ import { ref } from 'vue';
   color: white;
   padding: 2rem;
   text-align: center;
+} */
+.login-container {
+  min-height: 100vh;
+  background: url('/src/assets/bg.jpg') repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-panel {
+  
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 16px;
 }
 
 .left-panel h2 {
