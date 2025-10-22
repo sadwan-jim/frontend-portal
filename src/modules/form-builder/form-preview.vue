@@ -76,13 +76,14 @@
                                                     <v-radio-group 
                                                         v-if="econtrol.type=='radio'" 
                                                         :label="control.props.label"
-                                                        
+                                                         v-model="econtrol.value"
                                                     >
                                                         <v-radio
                                                             v-for="(option, idx) in econtrol.props.options"
                                                             :key="idx"
                                                             :label="option"
-                                                            v-model="econtrol.props.value"
+                                                            :value="option"
+                                                            @click="onTableSave(option,econtrol)"
                                                         />
                                                     </v-radio-group>
                                                     <template v-if="econtrol.type=='table'">
