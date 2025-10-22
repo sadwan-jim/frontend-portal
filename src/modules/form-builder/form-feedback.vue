@@ -44,7 +44,7 @@
                                                 icon="mdi-office-building"/>
                                                 </v-col>
                                                 <v-col cols="11">
-                                                    <h4 style="margin-top: 5px;">{{ control.props.label || 'Title' }}</h4>
+                                                    <h4>{{ control.props.label || 'Title' }}</h4>
                                                 </v-col>
                                             </v-row> 
                                         </v-expansion-panel-title>
