@@ -1,112 +1,105 @@
-<template>
-    <div class="mt-4">
-        <v-row>
-            <v-col cols="12">
-                <v-radio-group row v-model="form.contactType">
-                    <v-radio label="Self" value="self"></v-radio>
-                    <v-radio label="Agent" value="agent"></v-radio>
-                    <v-radio label="SCD" value="scd"></v-radio>
-                </v-radio-group>
-            </v-col>
-        </v-row>    
-        <v-row>
-          <v-col cols="6">
-            <v-text-field
-              v-model="form.name"
-              :placeholder="'Enter Name'"
-              :label="'Supplier Name'"
-              :rules="[required(form.name, 'Name')]"
-            />
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              v-model="form.email"
-              :placeholder="'Enter Email'"
-              :label="emailLabel"
-              :rules="[required(form.email, 'Email'), emailFormat]"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="6">
-            <v-text-field
-              v-model="form.contactName"
-              :placeholder="'Contact Person'"
-              :label="contatcPersonLabel"
-              :rules="[required(form.contactName, 'Company Name')]"
-            />
-          </v-col>
-          <v-col cols="6">
-            <dropdown
-              :label="'Application'"
-              :placeholder="'Application'"
-              :options="[]"
-              :keyProp="'name'"
-              :valProp="'id'"
-              :apiUrl="'/api/Applications'"
-              v-model="form.applicationId"
-              @update:modelValue="(value) => handleChange(value, 'applicationId')"
-            
-              :rules="[required(form.applicationId, 'Application')]"
-            />
-            <!-- <v-text-field
-              v-model="form.applicationId"
-              :placeholder="'Enter Application'"
-              :label="'Application'"
-              :rules="[applicationRequired]"
-            /> -->
-          </v-col>
-        </v-row>
-        <v-row >
-            <v-col cols="6">
-              <dropdown
-                :label="'Form Template'"
-                :placeholder="'Form Template'"
-                :options="[]"
-                :keyProp="'name'"
-                :valProp="'id'"
-                :apiUrl="'/api/FormTemplates'"
-                v-model="form.formTemplateId"
-                @update:modelValue="(value) => handleChange(value, 'formTemplateId')"
-                :rules="[required(form.formTemplateId, 'Template')]"
-              />
-            </v-col>
-            <v-col v-if="form.contactType=='agent'" cols="6">
-                <v-text-field
-                    v-model="form.contactName"
-                    :placeholder="'Agent Name'"
-                    :label="'Agent Name'"
+ <template>
+  <div class="mt-4">
+    <v-row>
+      <v-col cols="12">
+        <v-radio-group v-model="form.contactType" class="d-flex align-center" row>
+          <v-radio label="Self" value="self"></v-radio>
+          <v-radio label="Agent" value="agent"></v-radio>
+          <v-radio label="SCD" value="scd"></v-radio>
+        </v-radio-group>
+      </v-col>
+    </v-row>
+    
+    <v-row>
+      <v-col cols="6">
+        <v-text-field
+          v-model="form.name"
+          :placeholder="'Enter Name'"
+          :label="'Supplier Name'"
+          :rules="[required(form.name, 'Name')]"
+        />
+      </v-col>
+      <v-col cols="6">
+        <v-text-field
+          v-model="form.email"
+          :placeholder="'Enter Email'"
+          :label="emailLabel"
+          :rules="[required(form.email, 'Email'), emailFormat]"
+        />
+      </v-col>
+    </v-row>
 
-                />
-            </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-btn color="primary" @click="submitForm">
-              Submit
-            </v-btn>
-          </v-col>
-        </v-row>
+    <v-row>
+      <v-col cols="6">
+        <v-text-field
+          v-model="form.contactName"
+          :placeholder="'Contact Person'"
+          :label="contatcPersonLabel"
+          :rules="[required(form.contactName, 'Company Name')]"
+        />
+      </v-col>
+      <v-col cols="6">
+        <dropdown
+          :label="'Application'"
+          :placeholder="'Application'"
+          :options="[]"
+          :keyProp="'name'"
+          :valProp="'id'"
+          :apiUrl="'/api/Applications'"
+          v-model="form.applicationId"
+          @update:modelValue="(value) => handleChange(value, 'applicationId')"
+          :rules="[required(form.applicationId, 'Application')]"
+        />
+      </v-col>
+    </v-row>
 
-        <v-divider style="margin-top: 10px;"/>
+    <v-row>
+      <v-col cols="6">
+        <dropdown
+          :label="'Form Template'"
+          :placeholder="'Form Template'"
+          :options="[]"
+          :keyProp="'name'"
+          :valProp="'id'"
+          :apiUrl="'/api/FormTemplates'"
+          v-model="form.formTemplateId"
+          @update:modelValue="(value) => handleChange(value, 'formTemplateId')"
+          :rules="[required(form.formTemplateId, 'Template')]"
+        />
+      </v-col>
+      <v-col v-if="form.contactType=='agent'" cols="6">
+        <v-text-field
+          v-model="form.contactName"
+          :placeholder="'Agent Name'"
+          :label="'Agent Name'"
+        />
+      </v-col>
+    </v-row>
 
-        <!-- {{form}} -->
-              <!-- item-value="id" -->
-        <v-data-table
-          :headers="headers"
-          :items="supplierContactStore.getSupplierContactList||[]"
-        >
-        <template v-slot:item.actions="{ item }">
-  
-            <v-icon v-if="item.submittedJson" @click="previewResult(item)">mdi-file-document</v-icon>
-            <v-icon @click="previewForm(item)">mdi-eye</v-icon>
-            <v-icon @click="sendEmail(item)">mdi-email</v-icon>
+    <v-row>
+      <v-col>
+        <v-btn color="primary" @click="submitForm">
+          Submit
+        </v-btn>
+      </v-col>
+    </v-row>
 
-          <!-- </v-btn> -->
-        </template>
-      </v-data-table>
-      </div>
-</template>      
+    <v-divider style="margin-top: 10px;"/>
+
+    <!-- {{form}} -->
+    <v-data-table
+      :headers="headers"
+      :items="supplierContactStore.getSupplierContactList || []"
+    >
+      <template v-slot:item.actions="{ item }">
+        <v-icon v-if="item.submittedJson" @click="previewResult(item)">mdi-file-document</v-icon>
+        <v-icon @click="previewForm(item)">mdi-eye</v-icon>
+        <v-icon @click="sendEmail(item)">mdi-email</v-icon>
+      </template>
+    </v-data-table>
+  </div>
+</template>
+     
 <script setup>
 import { ref, onMounted,computed } from 'vue'; 
 import { useRouter } from 'vue-router';
