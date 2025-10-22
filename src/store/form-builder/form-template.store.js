@@ -13,8 +13,16 @@ export const useFormTemplateStore = defineStore('formTemplate', {
     
    async addTemplateList(template) {
     console.log(template,"templatetemplate")
-     const  response = await axios.post('/api/FormTemplates',template);
-     this.templateList.push(template)
+    try{
+      const  response = await axios.post('/api/FormTemplates',template);
+      console.log("RESPONSE",response)
+      this.templateList.push(template)
+      alert("Template Saved")
+      
+    }catch(ex){
+      alert("Something went wrong")
+    }
+     
     } ,
    updateTemplateList(newList) {
      this.templateList = newList
