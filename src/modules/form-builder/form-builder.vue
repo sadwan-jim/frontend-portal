@@ -64,7 +64,7 @@
             </VBtn>
         </v-col> 
     </v-row> 
-    {{ controlsList }}   
+    <!-- {{ controlsList }}    -->
     <VRow>
       <VCol
         cols="12"
@@ -250,7 +250,7 @@
                         </v-row>
 
                     </v-col>
-                   {{ selectedControl.props.column }}
+                   <!-- {{ selectedControl.props.column }} -->
                     <v-col>
                         <!-- v-for="n in parseInt(selectedControl.props.columnNumber)||0" -->
                         <template v-for="(item,index) in selectedControl.props.column"> 
