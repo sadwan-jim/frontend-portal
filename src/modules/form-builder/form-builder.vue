@@ -468,9 +468,10 @@ const isValid = computed(()=>{
     return  templateName.value!='' && controlsList.value.length>0 && tabs.value.length>0
 })
 
-function onTemplateSave(){
+async function onTemplateSave(){
     // console.log(applicationId.value.id,"applicationId.value")
-    formTemplateStore.addTemplateList( { name:templateName.value ,templateJson:JSON.stringify(controlsList.value) })
+    await formTemplateStore.addTemplateList( { name:templateName.value ,templateJson:JSON.stringify(controlsList.value) })
+    alert("Template Saved")
 }
 
 //const selectedControl = ref(null);
