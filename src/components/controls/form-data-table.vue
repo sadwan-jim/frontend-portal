@@ -2,8 +2,8 @@
   <v-sheet border rounded @click.stop="emit('click')">
     <v-data-table
       :headers="[...headers,  { title: 'Actions', key: 'actions', align: 'end', sortable: false }]"
-      :hide-default-footer="tableItems.length < 11"
-      :items="tableItems"
+      :hide-default-footer="localItems.length < 11"
+      :items="localItems"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -85,6 +85,11 @@
 import { onMounted, ref, shallowRef, toRef } from 'vue';
 import dropdown from '@/components/controls/dropdown.vue';
 
+import { watch } from 'vue';
+
+const localItems = ref([]);
+
+
 
 
   const props = defineProps({
@@ -93,9 +98,18 @@ import dropdown from '@/components/controls/dropdown.vue';
     type: Array,
     default: () => []
   },
+   tableItems: {
+    type: Array,
+    default: () => []
+  },
 
 })
 const emit = defineEmits(['click','save'])
+
+
+watch(() => props.tableItems, (newVal) => {
+  localItems.value = [...newVal];
+}, { immediate: true });
 
 function getHeaderItem(key){
     if(key!='id'){
@@ -120,7 +134,7 @@ function getHeaderItem(key){
     return record;
   }
 
-  const tableItems = ref([])
+
   const formModel = ref(createNewRecord())
   const dialog = shallowRef(false)
   const isEditing = toRef(() => !!formModel.value.id)
@@ -137,7 +151,7 @@ function getHeaderItem(key){
   }
 
   function edit (item) {
-    const found = tableItems.value.find(i => i.id === item.id)
+    const found = localItems.value.find(i => i.id === item.id)
     formModel.value = { ...found}
 
     // formModel.value = {
@@ -153,19 +167,19 @@ function getHeaderItem(key){
   }
 
   function remove (item) {
-      const index = tableItems.value.findIndex(x => x.id === item.id)
-      tableItems.value.splice(index, 1)
+      const index = localItems.value.findIndex(x => x.id === item.id)
+      localItems.value.splice(index, 1)
   }
 
   function save () {
     if (isEditing.value) {
-      const index = tableItems.value.findIndex(i => i.id === formModel.value.id)
-      tableItems.value[index] = formModel.value
+      const index = localItems.value.findIndex(i => i.id === formModel.value.id)
+      localItems.value[index] = formModel.value
     } else {
-      formModel.value.id = tableItems.value.length + 1
-      tableItems.value.push(formModel.value)
+      formModel.value.id = localItems.value.length + 1
+      localItems.value.push(formModel.value)
     }
-     emit('save', tableItems.value);
+     emit('save', localItems.value);
     dialog.value = false
   }
 
