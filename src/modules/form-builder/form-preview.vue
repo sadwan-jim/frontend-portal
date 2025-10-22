@@ -114,7 +114,7 @@
                         <v-radio-group
                           v-if="econtrol.type === 'radio'"
                           :label="control.props.label"
-                          v-model="econtrol.value"
+                          v-model="econtrol.props.value"
                         >
                           <v-radio
                             v-for="(option, idx) in econtrol.props.options"
