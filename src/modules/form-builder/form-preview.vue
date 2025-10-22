@@ -241,7 +241,7 @@ function onTableSave(payload,econtrol){
     
 }
 
-function handleClick(name,index){
+async function handleClick(name,index){
     //console.log("name,index",name,index)
 
     switch(name)
@@ -257,7 +257,8 @@ function handleClick(name,index){
         case 'submit':{
             console.log(contactId.value)
             const submittedJson = formControlStore.getControlList;
-            axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
+            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
+            alert("FORM SUBMITTED")
         }
 
     }

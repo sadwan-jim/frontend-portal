@@ -97,9 +97,9 @@
                                 NEXT
                             </v-btn>
 
-                            <!-- <v-btn color="secondary" v-if="index==formTabStore.getTabList.length-1" flat @click.stop="handleClick('submit',index)">
+                            <v-btn color="secondary" v-if="index==formTabStore.getTabList.length-1" flat @click.stop="handleClick('submit',index)">
                                 SUBMIT
-                            </v-btn> -->
+                            </v-btn>
 
                             
                         </v-col>
@@ -190,11 +190,11 @@ function handleClick(name,index){
             activeTab.value = formTabStore.getTabList[index-1];
             break;
         }
-        // case 'submit':{
-        //     console.log(contactId.value)
-        //     const submittedJson = formControlStore.getControlList;
-        //     axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
-        // }
+        case 'submit':{
+            console.log(contactId.value)
+            const submittedJson = formControlStore.getControlList;
+            axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
+        }
 
     }
 
