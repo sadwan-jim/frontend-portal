@@ -95,17 +95,14 @@
                           </v-col>
 
                           <v-col>
-                              <v-text-field
+ <v-text-field
   v-model="econtrol.props.feedback"
-  :placeholder="'Feedback'"
-  :label="`Feedback ${econtrol.props.label}`"
+  :placeholder="' Feedback'"
+  :label="`No Feedback For ${econtrol.props.label}`"
   variant="outlined"
- 
-     
-    color: red;
-    font-weight: bold;
-  "
+  style="color: red; font-weight: bold; --v-field-label-color: red; --v-field-label-font-weight: bold;"
 />
+
                           </v-col>
                         </v-row>
                       </v-col>
