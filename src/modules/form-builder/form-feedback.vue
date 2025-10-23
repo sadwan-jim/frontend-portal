@@ -1,118 +1,237 @@
-<template>
-    <VCard title="Supplier Profile Management" style="background-color: rgb(245, 245, 245);">
-          <VCardText>
-            <!-- {{  formControlStore.getControlList.filter(x=>x.type!='accordion') }} -->
-            <VTabs
-                v-model="activeTab"
-                show-arrows
-                class="v-tabs-pill"
+ <template>
+  <VCard
+    class="supplier-card mx-auto my-6"
+    max-width="1200"
+  >
+    <!-- Header with gradient and logo -->
+    <VCardTitle class="card-header d-flex align-center justify-space-between">
+      <div class="d-flex align-center">
+        <v-img
+          src="/logo.png"
+          alt="Logo"
+          width="50"
+          height="50"
+          class="mr-3 rounded-lg"
+        ></v-img>
+        <span class="text-h6 font-weight-bold">Supplier Profile Management</span>
+      </div>
+    </VCardTitle>
+
+    <!-- Main Content -->
+    <VCardText class="pa-5 body-section">
+      <!-- Tabs -->
+      <VTabs
+        v-model="activeTab"
+        show-arrows
+        class="tabs-pill mb-6"
+      >
+        <VTab
+          v-for="(item, index) in formTabStore.getTabList"
+          :key="index"
+          :value="item"
+          class="tab-item"
+        >
+          {{ item }}
+        </VTab>
+      </VTabs>
+
+      <!-- Tab Content -->
+      <v-window
+        v-model="activeTab"
+        class="mt-5 disable-tab-transition"
+        :touch="false"
+      >
+        <v-window-item
+          v-for="(item, index) in formTabStore.getTabList"
+          :key="index"
+          :value="item"
+        >
+          <v-row>
+            <v-col
+              cols="12"
+              v-for="control in formControlStore.getControlList.filter(x => x.tab === item && x.accordionID === '')"
+              :key="control.id"
             >
-           
-                <!-- :style="{
-                        color:'blue',
-                        background: 'linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1))'
-                    }" -->
-                <VTab
-                    v-for="(item,index) in formTabStore.getTabList"
-                    :key="index"
-                    :value="item"
-                
-                >
-                  {{ item }}
-                </VTab>
-            </VTabs>
-             <!-- @click.prevent="onTabClick()"-->
-            <!-- {{formControlStore.getControlList}} -->
-            <v-window
-                v-model="activeTab"
-                class="mt-5 disable-tab-transition"
-                :touch="false"
+              <v-expansion-panels v-if="control.type === 'accordion'" flat>
+                <v-expansion-panel class="expansion-panel">
+                  <v-expansion-panel-title class="expansion-title">
+                    <v-row class="align-center" no-gutters>
+                      <v-col cols="1" class="d-flex justify-center">
+                        <v-icon size="30" color="info" icon="mdi-office-building" />
+                      </v-col>
+                      <v-col cols="11">
+                        <h4 class="font-weight-medium mb-0">
+                          {{ control.props.label || 'Title' }}
+                        </h4>
+                      </v-col>
+                    </v-row>
+                  </v-expansion-panel-title>
+
+                  <v-expansion-panel-text class="expansion-body">
+                    <v-row>
+                      <v-col
+                        cols="12"
+                        v-for="econtrol in formControlStore.getControlList.filter(x => x.tab === item && x.accordionID === control.id)"
+                        :key="econtrol.id"
+                      >
+                        <v-row>
+                          <v-col>
+                            <template v-if="econtrol.type === 'table'">
+                              <FormDataTable
+                                :headers="econtrol.props.column || []"
+                                :tableItems="econtrol.props.value || []"
+                                @save="payload => onTableSave(payload, econtrol)"
+                              />
+                            </template>
+
+                            <v-text-field
+                              v-else
+                              v-model="econtrol.props.value"
+                              :placeholder="econtrol.props.placeholder"
+                              :label="econtrol.props.label"
+                              variant="outlined"
+                              color="primary"
+                            />
+                          </v-col>
+
+                          <v-col>
+                            <v-text-field
+                              v-model="econtrol.props.feedback"
+                              :placeholder="'Feedback'"
+                              :label="`Feedback ${econtrol.props.label}`"
+                              variant="outlined"
+                              color="teal"
+                            />
+                          </v-col>
+                        </v-row>
+                      </v-col>
+                    </v-row>
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-col>
+          </v-row>
+
+          <!-- Navigation Buttons -->
+          <v-row justify="center" class="mt-8">
+            <v-btn
+              color="primary"
+              variant="tonal"
+              rounded
+              v-if="index > 0"
+              class="mr-3"
+              @click.stop="handleClick('prev', index)"
             >
-                <v-window-item v-for="(item,index) in formTabStore.getTabList" :value="item">
-                    <v-row>
-                        <v-col  cols="12" v-for="control in formControlStore.getControlList.filter(x=>x.tab==item && x.accordionID=='')">
-                             
-                                <v-expansion-panels  v-if="control.type=='accordion'">
-                                    <v-expansion-panel style="background-color: rgb(248, 249, 250);">
-                                        <v-expansion-panel-title style="font-size: 1.25rem;">
-                                            <v-row>
-                                                <v-col cols="1" style="max-width: 35px;">
-                                                    <v-icon
-                                              
-                                                :size="30"
-                                                color="info"
-                                                icon="mdi-office-building"/>
-                                                </v-col>
-                                                <v-col cols="11">
-                                                    <h4>{{ control.props.label || 'Title' }}</h4>
-                                                </v-col>
-                                            </v-row> 
-                                        </v-expansion-panel-title>
-                                        <v-expansion-panel-text elevation="3">
-                                          <v-row>
-                                            <v-col  cols="12" v-for="econtrol in formControlStore.getControlList.filter(x=>x.tab==item && x.accordionID==control.id)">
-                                                   <v-row>
-                                                        <v-col>
-                                                            <template v-if="econtrol.type=='table'">
-                                                                <FormDataTable
-                                                                    :headers="econtrol.props.column || []"
-                                                                    :tableItems="econtrol.props.value||[]"
-                                                                    @save="payload => onTableSave(payload, econtrol)"
-                                                                />
-                                                               <!-- <v-data-table :items="econtrol.props.value"></v-data-table> -->
-                                                            </template>
-                                                            <v-text-field
-                                                                v-else
-                                                                v-model="econtrol.props.value"
-                                                                
-                                                                :placeholder="econtrol.props.placeholder"
-                                                                :label="econtrol.props.label"
-                                                            />
-                                                        </v-col>
-                                                        <v-col>
-                                                            <v-text-field
-                                                                v-model="econtrol.props.feedback"
-                                                                
-                                                                :placeholder="'feedback'"
-                                                                :label="`Feedback ${econtrol.props.label}`"
-                                                            />
-                                                        </v-col>
-                                                   </v-row> 
+              <v-icon left>mdi-arrow-left</v-icon> Previous
+            </v-btn>
 
-                                              
-                                               
-                                            </v-col>
-                                           </v-row> 
-                                        </v-expansion-panel-text>
+            <v-btn
+              color="primary"
+              rounded
+              variant="flat"
+              v-if="index < formTabStore.getTabList.length - 1"
+              class="mr-3"
+              @click.stop="handleClick('next', index)"
+            >
+              Next <v-icon right>mdi-arrow-right</v-icon>
+            </v-btn>
 
-                                    </v-expansion-panel>
-                                  
-                                </v-expansion-panels>
-                        </v-col>    
-                    </v-row>
-                    <v-row>
-                        <v-col cols="12">
-                            
-                            <v-btn color="primary" @click.stop="handleClick('prev',index)" flat v-if="index>0" style="margin-right: 10px;">
-                                PREVIOUS
-                            </v-btn>
-                            
-                            <v-btn color="primary" v-if="index<formTabStore.getTabList.length-1" flat @click.stop="handleClick('next',index)">
-                                NEXT
-                            </v-btn>
-
-                            <v-btn color="secondary" v-if="index==formTabStore.getTabList.length-1" flat @click.stop="handleClick('submit',index)">
-                                SUBMIT
-                            </v-btn>
-
-                            
-                        </v-col>
-                    </v-row>
-                </v-window-item>
-            </v-window>
-          </VCardText>
-        </VCard>  
+            <v-btn
+              color="success"
+              rounded
+              variant="elevated"
+              v-if="index === formTabStore.getTabList.length - 1"
+              @click.stop="handleClick('submit', index)"
+            >
+              Submit <v-icon right>mdi-check</v-icon>
+            </v-btn>
+          </v-row>
+        </v-window-item>
+      </v-window>
+    </VCardText>
+  </VCard>
 </template>
+
+<style scoped>
+/* --- Main Card --- */
+.supplier-card {
+  border-radius: 18px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Header --- */
+.card-header {
+  background: linear-gradient(135deg, #FF6B6B, #4ECDCC);
+  color: white;
+  padding: 18px 24px;
+}
+
+/* --- Body --- */
+.body-section {
+  background-color: #f9f9f9;
+}
+
+/* --- Tabs --- */
+.tabs-pill {
+  background-color: white;
+  border-radius: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.tab-item {
+  text-transform: capitalize;
+  color: #555 !important;
+  transition: all 0.3s ease;
+  padding: 12px 24px;
+}
+
+.tab-item.v-tab--selected {
+  background: linear-gradient(90deg, #FF6B6B, #4ECDCC);
+  color: white !important;
+  font-weight: 600;
+  border-radius: 50px;
+}
+
+/* --- Expansion Panels --- */
+.expansion-panel {
+  border-radius: 10px;
+  margin-bottom: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.expansion-panel:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.expansion-title {
+  background-color: #f5f7fa;
+  font-weight: 600;
+  color: #333;
+  border-radius: 10px 10px 0 0;
+}
+
+.expansion-body {
+  background-color: #fafafa;
+}
+
+/* --- Buttons --- */
+.v-btn {
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.v-btn:hover {
+  transform: scale(1.03);
+  transition: all 0.2s ease-in-out;
+}
+</style>
+
 <script setup>
 import { useFormControlStore } from '@/store/form-builder/form-control.store.js';
 import { useFormTabStore } from '@/store/form-builder/form-tab.store.js';
