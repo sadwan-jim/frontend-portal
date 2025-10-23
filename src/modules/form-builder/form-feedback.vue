@@ -1,7 +1,7 @@
  <template>
   <VCard
-    class="supplier-card mx-auto my-6"
-    max-width="1200"
+      class="mx-auto my-5"
+    style="max-width: 1200px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1);"
   >
     <!-- Header with gradient and logo -->
     <VCardTitle class="card-header d-flex align-center justify-space-between">
