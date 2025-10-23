@@ -97,6 +97,8 @@
         <v-icon @click="sendEmail(item)">mdi-email</v-icon>
       </template>
     </v-data-table>
+     <!-- Reusable AlertControl -->
+    <AlertControl ref="alertRef" />
   </div>
 </template>
      
@@ -108,12 +110,13 @@ import { useSupplierContactStore } from '@/store/supplier-contact/supplier-conta
 import { required } from '@/validators/validators';
 import dropdown from '@/components/controls/dropdown.vue';
 import axios from '@/plugins/axios';
+import AlertControl from '@/components/alerts/AlertControl.vue' ;
 const supplierContactStore = useSupplierContactStore();
 
 
 
 const router = useRouter(); 
-
+const alertRef = ref(null)
 
 const headers = ref([
   { title: 'Name', key: 'name' },
@@ -214,8 +217,7 @@ async function sendEmail(item){
    console.log(itemPayload,"AA::AA")
 
   const res =  await axios.post(`api/SupplierContacts/SendEmail`,itemPayload)
-
-  alert("Email Send")
+ alertRef.value.show('🎉 Email Send successfully!', 'success')
 }
 
 
