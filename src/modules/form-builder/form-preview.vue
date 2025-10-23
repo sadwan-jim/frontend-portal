@@ -195,6 +195,8 @@
         </v-window-item>
       </v-window>
     </VCardText>
+    <!-- Reusable AlertControl -->
+    <AlertControl ref="alertRef" />
   </VCard>
 </template>
 
@@ -207,10 +209,12 @@ import { ref, onMounted,computed } from 'vue';
 import { useRoute } from 'vue-router';
 import dropdown from '@/components/controls/dropdown.vue';
 import FormDataTable from '@/components/controls/form-data-table.vue';
+import AlertControl from '@/components/alerts/AlertControl.vue' ;
  const route = useRoute(); 
  
 const formControlStore = useFormControlStore()
 const formTabStore =  useFormTabStore()
+const alertRef = ref(null)
 
 onMounted(async () => {
    
@@ -281,10 +285,10 @@ async function handleClick(name,index){
             break;
         }
         case 'submit':{
-            console.log(contactId.value)
+             
             const submittedJson = formControlStore.getControlList;
             await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
-            alert("FORM SUBMITTED")
+             alertRef.value.show('🎉 Form submitted successfully!', 'success')
         }
 
     }
