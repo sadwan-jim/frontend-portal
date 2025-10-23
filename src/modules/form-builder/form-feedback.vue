@@ -175,27 +175,7 @@
   background-color: #f9f9f9;
 }
 
-/* --- Tabs --- */
-.tabs-pill {
-  background-color: white;
-  border-radius: 50px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-}
-
-.tab-item {
-  text-transform: capitalize;
-  color: #555 !important;
-  transition: all 0.3s ease;
-  padding: 12px 24px;
-}
-
-.tab-item.v-tab--selected {
-  background: linear-gradient(90deg, #FF6B6B, #4ECDCC);
-  color: white !important;
-  font-weight: 600;
-  border-radius: 50px;
-}
+ 
 
 /* --- Expansion Panels --- */
 .expansion-panel {
@@ -231,6 +211,12 @@
 .v-btn:hover {
   transform: scale(1.03);
   transition: all 0.2s ease-in-out;
+}
+ /* Placeholder text */
+.feedback-field input::placeholder {
+  font-weight: bold;
+  color: red;
+  opacity: 1; /* Ensure color is applied */
 }
 </style>
 
