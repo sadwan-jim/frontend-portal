@@ -21,12 +21,12 @@ export default createVuetify({
           colors: {
             primary: '#b4b7edff', // fallback for components that require a solid color
             secondary: '#6c757d',     // Bootstrap secondary gray
-            success: '#198754',
+            success: '#3a5f5dff',
             info: '#0dcaf0',
             warning: '#ffc107',
             danger: '#dc3545',
             light: '#f8f9fa',
-            dark: '#212529'
+            dark: '#6f7881ff'
           }
       }
     }
