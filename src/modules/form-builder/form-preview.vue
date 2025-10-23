@@ -172,6 +172,16 @@
             >
               NEXT <v-icon right>mdi-arrow-right</v-icon>
             </v-btn>
+            
+            <v-btn
+              color="success"
+              rounded
+              v-if="index === formTabStore.getTabList.length - 1"
+              @click.stop="handleClick('feedback', index)"
+              style="margin-right:10px ;"
+            >
+              Feedback <v-icon right>mdi-feedback</v-icon>
+            </v-btn>
 
             <v-btn
               color="success"
