@@ -95,13 +95,17 @@
                           </v-col>
 
                           <v-col>
-                            <v-text-field
-                              v-model="econtrol.props.feedback"
-                              :placeholder="'Feedback'"
-                              :label="`Feedback ${econtrol.props.label}`"
-                              variant="outlined"
-                              color="teal"
-                            />
+                              <v-text-field
+  v-model="econtrol.props.feedback"
+  :placeholder="'Feedback'"
+  :label="`Feedback ${econtrol.props.label}`"
+  variant="outlined"
+ 
+     
+    color: red;
+    font-weight: bold;
+  "
+/>
                           </v-col>
                         </v-row>
                       </v-col>
@@ -212,12 +216,7 @@
   transform: scale(1.03);
   transition: all 0.2s ease-in-out;
 }
- /* Placeholder text */
-.feedback-field input::placeholder {
-  font-weight: bold;
-  color: red;
-  opacity: 1; /* Ensure color is applied */
-}
+  
 </style>
 
 <script setup>
@@ -229,6 +228,7 @@ import { useRoute } from 'vue-router';
 import dropdown from '@/components/controls/dropdown.vue';
 import FormDataTable from '@/components/controls/form-data-table.vue';
 import AlertControl from '@/components/alerts/AlertControl.vue' ;
+import { red } from 'vuetify/util/colors';
  const route = useRoute(); 
  
 const formControlStore = useFormControlStore()
