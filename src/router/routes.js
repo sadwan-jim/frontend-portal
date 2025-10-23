@@ -49,6 +49,12 @@ export const routes = [
         name: 'FormFeedback',
         component: () => import('@/modules/form-builder/form-feedback.vue'),
       },
+
+      {
+        path: 'success',
+        name: 'Success',
+        component: () => import('@/modules/msg/success.vue'),
+      },
     //   {
     //     path: '/:pathMatch(.*)*',
     //     component: () => import('@/pages/[...error].vue'),

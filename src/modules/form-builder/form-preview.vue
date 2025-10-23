@@ -198,7 +198,7 @@ import { useFormControlStore } from '@/store/form-builder/form-control.store.js'
 import { useFormTabStore } from '@/store/form-builder/form-tab.store.js';
 import axios from '@/plugins/axios';
 import { ref, onMounted,computed } from 'vue'; 
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter } from 'vue-router';
 import dropdown from '@/components/controls/dropdown.vue';
 import FormDataTable from '@/components/controls/form-data-table.vue';
 import AlertControl from '@/components/alerts/AlertControl.vue' ;
@@ -207,6 +207,8 @@ import AlertControl from '@/components/alerts/AlertControl.vue' ;
 const formControlStore = useFormControlStore()
 const formTabStore =  useFormTabStore()
 const alertRef = ref(null)
+
+const router = useRouter();
 
 onMounted(async () => {
    
@@ -281,7 +283,8 @@ async function handleClick(name,index){
             const submittedJson = formControlStore.getControlList;
             await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
              alertRef.value.show('🎉 Form submitted successfully!', 'success')
-              window.location.href = '/success';  // or use router.push('/success')
+             router.push({ name: 'Success' })
+             //window.location.href = '/success';  // or use router.push('/success')
 
         }catch(error){
             alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
