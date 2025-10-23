@@ -113,7 +113,7 @@
           </v-row>
 
           <!-- Navigation Buttons -->
-          <v-row justify="center" class="mt-8">
+        <v-row justify="center" class="mt-6" style="margin:0px;">
             <v-btn
               color="primary"
               variant="tonal"
@@ -149,6 +149,8 @@
         </v-window-item>
       </v-window>
     </VCardText>
+     <!-- Reusable AlertControl -->
+    <AlertControl ref="alertRef" />
   </VCard>
 </template>
 
@@ -240,11 +242,12 @@ import { ref, onMounted,computed } from 'vue';
 import { useRoute } from 'vue-router';
 import dropdown from '@/components/controls/dropdown.vue';
 import FormDataTable from '@/components/controls/form-data-table.vue';
+import AlertControl from '@/components/alerts/AlertControl.vue' ;
  const route = useRoute(); 
  
 const formControlStore = useFormControlStore()
 const formTabStore =  useFormTabStore()
-
+const alertRef = ref(null)
 onMounted(async () => {
    
       console.log('Mounted - Form ID:', route.query.templateId);
@@ -319,6 +322,7 @@ async function handleClick(name,index){
             break;
         }
         case 'submit':{
+          try{
             console.log(contactId.value,contactRef.value)
             const submittedJson = formControlStore.getControlList;
             await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
@@ -327,6 +331,11 @@ async function handleClick(name,index){
              const itemPayload = { contactId:id, email, name, templateId: formTemplate.id ,feedBackForm:true};
 
              const res =  await axios.post(`api/SupplierContacts/SendEmail`,itemPayload)
+               alertRef.value.show('🎉 Form submitted successfully!', 'success')
+          }catch(error){
+            alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
+            console.error("Error submitting form:",error)
+        }
         }
 
     }

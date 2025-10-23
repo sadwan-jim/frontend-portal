@@ -275,10 +275,17 @@ async function handleClick(name,index){
             break;
         }
         case 'submit':{
-             
+          try{
             const submittedJson = formControlStore.getControlList;
             await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
              alertRef.value.show('🎉 Form submitted successfully!', 'success')
+              window.location.href = '/success';  // or use router.push('/success')
+
+        }catch(error){
+            alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
+            console.error("Error submitting form:",error)
+        }
+
         }
 
     }
