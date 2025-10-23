@@ -281,7 +281,7 @@ async function handleClick(name,index){
         case 'submit':{
           try{
             const submittedJson = formControlStore.getControlList;
-            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
+            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) , status:'Waiting For Review' });
              alertRef.value.show('🎉 Form submitted successfully!', 'success')
              router.push({ name: 'Success' })
              //window.location.href = '/success';  // or use router.push('/success')

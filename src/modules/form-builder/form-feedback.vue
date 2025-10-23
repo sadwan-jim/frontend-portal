@@ -138,9 +138,9 @@
             </v-btn>
             
             <v-btn
-              color="success"
+              color="red"
               rounded
-              v-if="index === formTabStore.getTabList.length - 1"
+              v-if="index === formTabStore.getTabList.length - 1 && isFeedBack"
               @click.stop="handleClick('feedback', index)"
               style="margin-right:10px ;"
             >
@@ -154,7 +154,13 @@
               v-if="index === formTabStore.getTabList.length - 1"
               @click.stop="handleClick('submit', index)"
             >
-              Submit <v-icon right>mdi-check</v-icon>
+              <template v-if="isFeedBack">
+                   No Feedback (All Ok) <v-icon right>mdi-check</v-icon>
+              </template>
+              <template v-else>
+                  Submit
+              </template>
+           
             </v-btn>
           </v-row>
         </v-window-item>
@@ -231,7 +237,7 @@ import { useFormControlStore } from '@/store/form-builder/form-control.store.js'
 import { useFormTabStore } from '@/store/form-builder/form-tab.store.js';
 import axios from '@/plugins/axios';
 import { ref, onMounted,computed } from 'vue'; 
-import { useRoute } from 'vue-router';
+import { useRoute ,useRouter} from 'vue-router';
 import dropdown from '@/components/controls/dropdown.vue';
 import FormDataTable from '@/components/controls/form-data-table.vue';
 import AlertControl from '@/components/alerts/AlertControl.vue' ;
@@ -241,6 +247,8 @@ import { red } from 'vuetify/util/colors';
 const formControlStore = useFormControlStore()
 const formTabStore =  useFormTabStore()
 const alertRef = ref(null)
+
+const router = useRouter();
 onMounted(async () => {
    
       console.log('Mounted - Form ID:', route.query.templateId);
@@ -280,7 +288,9 @@ function setTemplateData(templateJson){
         formControlStore.updateControlList(formStructureData)
 }
 
-
+const isFeedBack = computed(() => {
+    return route.query.feedBackForm && route.query.feedBackForm == 'True'?true:false||false;
+});
 
 const contactId = computed(() => {
     return route.query.contactId||'';
@@ -314,21 +324,37 @@ async function handleClick(name,index){
             activeTab.value = await formTabStore.getTabList[index-1];
             break;
         }
-        case 'submit':{
+        case 'feedback':{
           try{
             console.log(contactId.value,contactRef.value)
             const submittedJson = formControlStore.getControlList;
-            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) });
+            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) ,status:'Feedback Submitted'});
              const { email, name, formTemplate,id } = contactRef.value;
 
              const itemPayload = { contactId:id, email, name, templateId: formTemplate.id ,feedBackForm:true};
 
              const res =  await axios.post(`api/SupplierContacts/SendEmail`,itemPayload)
-               alertRef.value.show('🎉 Form submitted successfully!', 'success')
+               alertRef.value.show('🎉 FeedBack Send Successfully!', 'success')
+
           }catch(error){
             alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
             console.error("Error submitting form:",error)
+          }
+          finally{
+            router.push({ name: 'SupplierList' }) 
+             break;
+          }
         }
+        case 'submit':{
+          try{
+            console.log(contactId.value,contactRef.value)
+            const submittedJson = formControlStore.getControlList;
+            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) ,status:'Waiting For Review' });
+            router.push({ name: 'Success' }) 
+          }catch(error){
+            alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
+            console.error("Error submitting form:",error)
+          }
         }
 
     }

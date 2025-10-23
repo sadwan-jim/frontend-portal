@@ -3,7 +3,7 @@
     <div class="card">
       <h1>✅ Success!</h1>
       <p>Your operation was completed successfully.</p>
-       <p>You will give you a feedback soon </p>
+       <p>We will give you a feedback soon </p>
     </div>
   </div>
 </template>

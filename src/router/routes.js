@@ -18,6 +18,7 @@ export const routes = [
       },
       {
         path: 'supplier-list',
+        name:'SupplierList',
         component: () => import('@/modules/supplier-contact/supplier-contact-list.vue'),
       },
     

@@ -122,7 +122,8 @@ const headers = ref([
   { title: 'Name', key: 'name' },
   { title: 'Email', key: 'email' },
   { title: 'Company Name', key: 'contactName' },
-   { title: 'Contact Type', key: 'contactType' },
+  { title: 'Contact Type', key: 'contactType' },
+  { title: 'Status', key: 'status' },
   { title: 'Actions', key: 'actions', sortable: false }
 ]);
 
@@ -187,7 +188,7 @@ function handleChange(payload,name){
 const emailFormat = (v) => /.+@.+\..+/.test(v) || 'Enter a valid email address';
 
 function previewResult(item){
-   const url = router.resolve({ name: 'FormFeedback', query: { contactId: item.id } }).href;
+   const url = router.resolve({ name: 'FormFeedback', query: { contactId: item.id ,feedBackForm:'True'} }).href;
    window.open(url, '_blank');
 }
 
