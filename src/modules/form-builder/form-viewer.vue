@@ -14,6 +14,16 @@
           :rules="[required(form.formTemplateId, 'Template')]"
         />
       </v-col>
+      <v-col>
+        <v-btn
+            color="primary"
+            class="mt-2 text-white"
+            @click.stop="onDeleteTemplate"
+        >
+            Delete Template
+        </v-btn>
+
+      </v-col>
 
     </v-row>
 
@@ -28,6 +38,24 @@
     <v-divider style="margin-top: 10px;"/>
     
     <FormPreview v-if="form.formTemplateId!=null" :key="form.formTemplateId"/>
+
+     <v-dialog v-model="dialog" max-width="400">
+      <v-card>
+        <v-card-title class="text-h6">Confirm Delete</v-card-title>
+        <v-card-text>
+          Are you sure you want to delete this item? This action cannot be undone.
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="dialog = false">Cancel</v-btn>
+          <v-btn color="red" text @click="confirmDelete">Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
+
   </div>
 </template>
      
@@ -48,7 +76,7 @@ const supplierContactStore = useSupplierContactStore();
 const router = useRouter(); 
 
 
-
+const dialog = ref(false)
 
 const form = ref({
 
@@ -71,6 +99,20 @@ function handleChange(payload,name){
   form.value[name] = payload.id;
 
   
+}
+
+function onDeleteTemplate(){
+
+    if(form.value.formTemplateId!=null){
+        dialog.value=true
+    }
+
+}
+
+function confirmDelete() {
+ 
+  console.log('Item deleted')
+  dialog.value = false
 }
 
 
