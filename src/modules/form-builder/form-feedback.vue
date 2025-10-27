@@ -349,7 +349,7 @@ async function handleClick(name,index){
           try{
             console.log(contactId.value,contactRef.value)
             const submittedJson = formControlStore.getControlList;
-            let status = isFeedBack?'Create Profile':'Waiting For Review'
+            let status = isFeedBack && contactId && contactId!=''?'Create Profile':'Waiting For Review'
             await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) ,status:status });
             router.push({ name: 'Success' }) 
           }catch(error){
