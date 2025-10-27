@@ -27,14 +27,15 @@
 
     <v-divider style="margin-top: 10px;"/>
     
-    <FormPreview v-if="form.formTemplateId!=null"/>
+    <FormPreview v-if="form.formTemplateId!=null" :key="form.formTemplateId"/>
   </div>
 </template>
      
 <script setup>
-import { ref, onMounted,computed } from 'vue'; 
+import { ref, onMounted,computed ,nextTick } from 'vue'; 
 import { useRouter } from 'vue-router';
 import { useFormControlStore } from '@/store/form-builder/form-control.store.js';
+import { useFormTabStore } from '@/store/form-builder/form-tab.store.js';
 import { useSupplierContactStore } from '@/store/supplier-contact/supplier-contact';
 import { required } from '@/validators/validators';
 import dropdown from '@/components/controls/dropdown.vue';
@@ -57,14 +58,19 @@ const form = ref({
 
 const formControlStore = useFormControlStore()
 
-
+const formTabStore =  useFormTabStore()
 
 function handleChange(payload,name){
   console.log(payload,":::::payload")
 
-  formControlStore.updateControlList(JSON.parse(payload.templateJson))
+   const formStructureData = JSON.parse(payload.templateJson)
+   const uniqueTabs = [...new Set(formStructureData.map(item => item.tab))];
+   formTabStore.updateTabList(uniqueTabs)
+   formControlStore.updateControlList(formStructureData)
 
   form.value[name] = payload.id;
+
+  
 }
 
 
