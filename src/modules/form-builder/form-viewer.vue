@@ -109,9 +109,14 @@ function onDeleteTemplate(){
 
 }
 
-function confirmDelete() {
+async function confirmDelete() {
  
   console.log('Item deleted')
+
+  formTabStore.updateTabList([])
+  formControlStore.updateControlList([])
+  form.value.formTemplateId = null;
+
   dialog.value = false
 }
 
