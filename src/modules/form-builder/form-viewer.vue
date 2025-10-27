@@ -26,7 +26,8 @@
     </v-row> -->
 
     <v-divider style="margin-top: 10px;"/>
- 
+    
+    <FormPreview v-if="form.formTemplateId!=null"/>
   </div>
 </template>
      
@@ -37,6 +38,7 @@ import { useFormControlStore } from '@/store/form-builder/form-control.store.js'
 import { useSupplierContactStore } from '@/store/supplier-contact/supplier-contact';
 import { required } from '@/validators/validators';
 import dropdown from '@/components/controls/dropdown.vue';
+import FormPreview from '@/modules/form-builder/form-preview.vue'
 import axios from '@/plugins/axios';
 const supplierContactStore = useSupplierContactStore();
 
