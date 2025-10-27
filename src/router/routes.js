@@ -17,6 +17,11 @@ export const routes = [
         component:() => import('@/modules/form-builder/form-builder.vue'),
       },
       {
+        path: 'form-viewer',
+        name:'FormViewer',
+        component: () => import('@/modules/form-builder/form-viewer.vue'),
+      },
+      {
         path: 'supplier-list',
         name:'SupplierList',
         component: () => import('@/modules/supplier-contact/supplier-contact-list.vue'),

@@ -52,6 +52,17 @@
           <span>Build Form</span>
         </v-list-item>
         <v-divider />
+        
+        <v-list-item
+          title="View Form"
+          :to="'/form-viewer'"
+          link
+          class="d-flex align-center"
+        >
+          <v-icon class="mr-2">mdi-pencil</v-icon>
+          <span>View Form</span>
+        </v-list-item>
+        <v-divider />
 
         <v-list-group v-model="registrationOpen">
           <template #activator="{ props }">
