@@ -296,6 +296,10 @@ const contactId = computed(() => {
     return route.query.contactId||'';
 });
 
+const templateId = computed(() => {
+    return route.query.templateId||'';
+});
+
 function onTableSave(payload,econtrol){
     console.log(payload,econtrol)
 
@@ -346,11 +350,18 @@ async function handleClick(name,index){
           }
         }
         case 'submit':{
+          debugger;
           try{
             console.log(contactId.value,contactRef.value)
             const submittedJson = formControlStore.getControlList;
-            let status = isFeedBack && contactId && contactId!=''?'Create Profile':'Waiting For Review'
+            let status = isFeedBack && templateId && templateId.value==''?'Create Profile':'Waiting For Review'
             await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) ,status:status });
+            
+            if(status === 'Create Profile'){
+               router.push({ name: 'SupplierList' }) 
+               return;
+            }
+
             router.push({ name: 'Success' }) 
           }catch(error){
             alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
