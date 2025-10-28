@@ -37,6 +37,7 @@
       <v-window v-model="tab">
         <v-window-item :value="'General Information'">
           <BasicInfo class="mt-4"/>
+          <LegalInfo class="mt-4"/>
         </v-window-item>
         <v-window-item :value="'Manufacturing Info'">
           <p>BROTHERHOOD OF NOD</p> <!-- Dynamic content could go here -->
@@ -52,6 +53,7 @@
 <script setup>
 import { ref } from 'vue'; 
 import BasicInfo from './basic-info.vue';
+import LegalInfo from './legal-info.vue';
 
 const tabs = ref(['General Information','Manufacturing Info','Commercial & Finance']);
 const tab = ref('General Information');
