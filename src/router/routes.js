@@ -31,6 +31,11 @@ export const routes = [
         name: 'SupplierProfile',
         component: () => import('@/modules/profile/SupplierProfile.vue'),
       },
+      {
+        path: 'supplier-form',
+        name: 'SupplierForm',
+        component: () => import('@/modules/supplier-form/supplier-form.vue'),
+      },
 
     ],
   },

@@ -63,6 +63,17 @@
           <span>View Form</span>
         </v-list-item>
         <v-divider />
+        <v-list-item
+          title="Supplier Form"
+          :to="'/supplier-form'"
+          link
+          class="d-flex align-center"
+        >
+        
+          <v-icon class="mr-2">mdi-kanban</v-icon>
+          <span>Sup</span>
+        </v-list-item>
+        <v-divider />
 
         <v-list-group v-model="registrationOpen">
           <template #activator="{ props }">
