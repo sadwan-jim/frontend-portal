@@ -64,7 +64,7 @@
             </VBtn>
         </v-col> 
     </v-row> 
-    <!-- {{ controlsList }}    -->
+   
     <VRow>
       <VCol
         cols="12"
@@ -349,8 +349,12 @@
                     />
                 </v-col>
                 </template>
-     
-              
+                <v-col   cols="12" lass="d-flex justify-center">
+                    <v-btn color="primary" @click="deleteControl(selectedControl)">
+                        DELETE
+                    </v-btn>
+                  
+                </v-col>
             </v-row>
           </VCardText>
         </VCard>
@@ -516,6 +520,12 @@ function onAddControl(item) {
         alert("MUST Add A Tab")
     }
     
+}
+
+function deleteControl(selectedControl){
+    //console.log(selectedControl,":::::::::::::::::::::",controlsList.value.filter(x=>x.id==selectedControl.id))
+    controlsList.value = controlsList.value.filter(x=>x.id!=selectedControl.id);
+    formControlStore.updateControlList(controlsList.value)
 }
 </script>
 
