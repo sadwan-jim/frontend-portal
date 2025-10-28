@@ -43,7 +43,7 @@
             <VBtn
                 style="color: whitesmoke !important;"
                 color="primary"
-                class="mt-4"
+                class="mt-2"
                 href="/form-preview"
                 target="_blank"
                 rel="noopener"
@@ -55,7 +55,7 @@
         <v-col cols="3">
             <VBtn
               color="primary"
-              class="mt-4"
+              class="mt-2"
               style="color: whitesmoke !important;"
               :disabled="!isValid"
               @click.prevent = "onTemplateSave"
