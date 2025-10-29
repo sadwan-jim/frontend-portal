@@ -47,6 +47,7 @@
         <v-window-item :value="tabs[0].name">
           <BasicInfo class="mt-4"/>
           <LegalInfo class="mt-4"/>
+          <TransactionBase class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Marketing Concern'" class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Authorized Signatory Person'" class="mt-4"/>
         </v-window-item>
@@ -67,6 +68,7 @@ import { ref } from 'vue';
 import BasicInfo from './general-info/basic-info.vue';
 import LegalInfo from './general-info/legal-info.vue';
 import AccordionTable from './component/accordion-table.vue';
+import TransactionBase from './general-info/transaction-base.vue';
 
 const tabs = ref([
   { name: 'General Information' },
