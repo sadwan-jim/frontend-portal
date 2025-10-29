@@ -29,6 +29,62 @@
           </v-col>
 
         </v-row>
+        <v-row dense v-if="transactionType=='agent'" >
+            <v-col >
+              <v-btn-toggle v-model="searchState" group>
+                <v-btn value="manually_add" color="primary">Manually Add</v-btn>
+                <v-btn value="show_search" color="primary">Show Search</v-btn>  
+              </v-btn-toggle>
+            </v-col>
+        </v-row>
+        <v-row dense v-if="transactionType=='agent'" >
+            <template v-if="searchState=='manually_add'">
+                <v-col cols="4">
+                    <v-text-field
+                        :placeholder="'Agent Name'"
+                        :label="'Agent Name'"
+                        outlined
+                        dense
+                        v-model="agentInfo.agentName"
+                        :rules="[required(agentInfo.agentName, 'Agent Name')]"
+                    />
+                </v-col>
+                <v-col cols="4">
+                    <v-text-field
+                        :placeholder="'Agent Address'"
+                        :label="'Agent Address'"
+                        outlined
+                        dense
+                        v-model="agentInfo.agentAddress"
+                        :rules="[required(agentInfo.agentAddress, 'Agent Address')]"
+                    />
+                </v-col>
+                <v-col cols="4">
+                    <v-text-field
+                        :placeholder="'Agent Email'"
+                        :label="'Agent Email'"
+                        outlined
+                        dense
+                        v-model="agentInfo.agentEmail"
+                        :rules="[required(agentInfo.agentEmail, 'Agent Email')]"
+                    />
+                </v-col>
+            </template>
+            <template v-else>
+                <v-col cols="4">
+                    <dropdown
+                        :label="'Search Agent Name'"
+                        :placeholder="'Search Agent Name'"
+                        :options="['ABC','DEF','GHI','JKL']"
+                        :keyProp="''"
+                        :valProp="''"
+                        :apiUrl="''"
+                       
+                    />
+                </v-col>
+            </template>
+
+        </v-row>
         
        
       </v-expansion-panel-text>
@@ -39,19 +95,21 @@
 <script setup>
 import axios from '@/plugins/axios';
 import { ref, onMounted, computed } from 'vue'; 
-
+import dropdown from '@/components/controls/dropdown.vue';
 import { required } from '@/validators/validators';
 
-const transactionType =  ref(''); 
+const transactionType =  ref('self'); 
 
-const basicInfo = ref({
-  groupName: '',
-  exportBusinessUnitName: '',
-  exportBusinessUnitAddress: '',
-  corporateOfficeAddress:'',
-  website:''
+const searchState =  ref('manually_add'); 
+
+const agentInfo = ref({
+  agentName: '',
+  agentAddress: '',
+  agentEmail:''
 
 });
+
+
 
 
 </script>
