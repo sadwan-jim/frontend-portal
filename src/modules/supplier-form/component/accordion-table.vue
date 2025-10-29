@@ -113,6 +113,8 @@
 
           <v-divider class="my-4" />
 
+          {{ editableHeaders }}
+
           <!-- Form Table -->
           <FormDataTable :headers="editableHeaders" @save="onTableSave" />
         </v-card>
@@ -140,7 +142,7 @@ watch(() => props.title, (newTitle) => { localTitle.value = newTitle })
 
 // Editable Table Columns
 const editableHeaders = ref(
-  props.headers.map(h => ({ ...h, tempTitle: h.title, type: h.type || 'text', options: h.options || '', required: !!h.required }))
+  props.headers.map(h => ({ ...h, tempTitle: h.title, type: h.type || 'text', option: h.options || '', required: !!h.required }))
 )
 
 // Column headers
@@ -186,7 +188,7 @@ editableHeaders.value.forEach(item => {
 // Update array when text changes
 const onOptionsInput = (item) => {
   if (item.type === 'dropdown') {
-    item.options = item.optionsText.split(',').map(s => s.trim())
+    item.option = item.optionsText.split(',').map(s => s.trim())
   }
 }
 
