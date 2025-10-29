@@ -3,7 +3,7 @@
     <v-expansion-panel
       style="background-color: #ffffff; border-radius: 8px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);"
     >
-      <!-- Editable Title -->
+      <!-- Editable Section Title -->
       <v-expansion-panel-title class="d-flex align-center" style="font-size: 1.25rem;">
         <v-row class="align-center" no-gutters>
           <v-col cols="1" class="d-flex justify-center">
@@ -31,6 +31,7 @@
       <!-- Panel Body -->
       <v-expansion-panel-text>
         <v-card flat class="pa-3">
+          <!-- Editable Columns Table -->
           <v-data-table
             :headers="columnHeaders"
             :items="editableHeaders"
@@ -46,7 +47,7 @@
               </v-toolbar>
             </template>
 
-            <!-- Column Title Editable -->
+            <!-- Column Title -->
             <template #item.title="{ item }">
               <v-text-field
                 v-model="item.tempTitle"
@@ -57,7 +58,7 @@
               />
             </template>
 
-            <!-- Column Key Readonly -->
+            <!-- Column Key -->
             <template #item.key="{ item }">
               <v-text-field
                 v-model="item.key"
@@ -65,6 +66,40 @@
                 density="compact"
                 hide-details
                 readonly
+              />
+            </template>
+
+            <!-- Column Type -->
+            <template #item.type="{ item }">
+              <v-select
+                v-model="item.type"
+                :items="['text', 'dropdown']"
+                dense
+                hide-details
+                variant="outlined"
+              />
+            </template>
+
+            <!-- Column Options -->
+ <template #item.options="{ item }">
+  <v-text-field
+    v-model="item.optionsText"
+    :disabled="item.type !== 'dropdown'"
+    dense
+    hide-details
+    variant="outlined"
+    placeholder="A,B,C"
+    @input="onOptionsInput(item)"
+  />
+</template>
+
+
+            <!-- Required Checkbox -->
+            <template #item.required="{ item }">
+              <v-checkbox
+                v-model="item.required"
+                hide-details
+                dense
               />
             </template>
 
@@ -78,6 +113,7 @@
 
           <v-divider class="my-4" />
 
+          <!-- Form Table -->
           <FormDataTable :headers="editableHeaders" @save="onTableSave" />
         </v-card>
       </v-expansion-panel-text>
@@ -102,46 +138,66 @@ const localTitle = ref(props.title)
 const editingTitle = ref(false)
 watch(() => props.title, (newTitle) => { localTitle.value = newTitle })
 
-// Editable table columns
+// Editable Table Columns
 const editableHeaders = ref(
-  props.headers.map((h) => ({ ...h, tempTitle: h.title }))
+  props.headers.map(h => ({ ...h, tempTitle: h.title, type: h.type || 'text', options: h.options || '', required: !!h.required }))
 )
 
 // Column headers
 const columnHeaders = [
   { title: 'Column Title', key: 'title' },
   { title: 'Column Key', key: 'key' },
+  { title: 'Type', key: 'type' },
+  { title: 'Options', key: 'options' },
+  { title: 'Required', key: 'required', align: 'center' },
   { title: 'Actions', key: 'actions', align: 'center', sortable: false }
 ]
 
-// Add new column
+// Add Column
 const addColumn = () => {
   editableHeaders.value.push({
     title: 'New Column',
     tempTitle: 'New Column',
-    key: toCamelCase('New Column')
+    key: toCamelCase('New Column'),
+    type: 'text',
+    options: '',
+    required: false
   })
 }
 
-// Remove column
+// Remove Column
 const removeColumn = (index) => editableHeaders.value.splice(index, 1)
 
-// Sync tempTitle → title and update key
+// Sync Title → Key
 const syncTitleAndKey = (item) => {
   item.title = item.tempTitle
   item.key = toCamelCase(item.tempTitle)
 }
 
-// Convert to camelCase
-const toCamelCase = (str) =>
+// Initialize a string version of options
+editableHeaders.value.forEach(item => {
+  if (item.type === 'dropdown') {
+    item.optionsText = item.options.join(', ')
+  }
+})
+
+// Update array when text changes
+const onOptionsInput = (item) => {
+  if (item.type === 'dropdown') {
+    item.options = item.optionsText.split(',').map(s => s.trim())
+  }
+}
+
+// CamelCase helper
+const toCamelCase = str =>
   str
     .replace(/[^a-zA-Z0-9 ]/g, '')
     .split(' ')
-    .map((word, idx) => idx === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1))
+    .map((w, i) => i === 0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1))
     .join('')
 
-// Save table data
-const onTableSave = (payload) => emit('emitTableData', payload)
+// Save Table
+const onTableSave = payload => emit('emitTableData', payload)
 </script>
 
 <style scoped>
