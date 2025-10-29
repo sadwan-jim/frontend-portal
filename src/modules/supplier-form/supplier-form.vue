@@ -1,4 +1,4 @@
-<template>
+ <template>
   <v-card
     class="mx-auto my-5"
     style="max-width: 1200px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1);"
@@ -28,24 +28,32 @@
         <v-tab
           v-for="(item, index) in tabs"
           :key="index"
-          :value="item"
+          :value="item.name"
+          class="d-flex align-center"
         >
-          {{ item }}
+          <span>{{ item.name }}</span>
+          <v-icon
+            small
+            color="primary"
+            class="ml-2 cursor-pointer"
+            @click.stop="editTabName(index)"
+          >
+            mdi-pencil
+          </v-icon>
         </v-tab>
       </v-tabs>
       
       <v-window v-model="tab">
-        <v-window-item :value="'General Information'">
+        <v-window-item :value="tabs[0].name">
           <BasicInfo class="mt-4"/>
           <LegalInfo class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Marketing Concern'" class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Authorized Signatory Person'" class="mt-4"/>
-          <TransactionBase/>
         </v-window-item>
-        <v-window-item :value="'Manufacturing Info'">
+        <v-window-item :value="tabs[1].name">
           <p>BROTHERHOOD OF NOD</p> 
         </v-window-item>
-        <v-window-item :value="'Commercial & Finance'">
+        <v-window-item :value="tabs[2].name">
           <p>SCRIN</p> 
         </v-window-item>
       </v-window>
@@ -57,16 +65,30 @@
 import { ref } from 'vue'; 
 import BasicInfo from './general-info/basic-info.vue';
 import LegalInfo from './general-info/legal-info.vue';
-import MarketingConcern from './general-info/marketing-concern.vue';
 import AccordionTable from './component/accordion-table.vue';
-import TransactionBase from './general-info/transaction-base.vue';
-const tabs = ref(['General Information','Manufacturing Info','Commercial & Finance']);
-const tab = ref('General Information');
+
+const tabs = ref([
+  { name: 'General Information' },
+  { name: 'Manufacturing Info' },
+  { name: 'Commercial & Finance' }
+]);
+
+const tab = ref(tabs.value[0].name);
 
 const headersMarketting = [
-    { title:'Name' , key: 'name' , type:'textbox' },
-    { title:'Designation' , key: 'designation' , type:'textbox' },
-    { title:'Contact No.' , key: 'contactNo' , type:'textbox' },
-    { title:'Email' , key: 'email' , type:'textbox' },
-]
+  { title:'Name' , key: 'name' , type:'textbox' },
+  { title:'Designation' , key: 'designation' , type:'textbox' },
+  { title:'Contact No.' , key: 'contactNo' , type:'textbox' },
+  { title:'Email' , key: 'email' , type:'textbox' },
+];
+
+// Function to edit tab name
+const editTabName = (index) => {
+  const newName = prompt('Enter new tab name', tabs.value[index].name);
+  if (newName) {
+    tabs.value[index].name = newName;
+    // Keep the selected tab active
+    tab.value = newName;
+  }
+};
 </script>
