@@ -55,11 +55,11 @@
 
 <script setup>
 import { ref } from 'vue'; 
-import BasicInfo from './basic-info.vue';
-import LegalInfo from './legal-info.vue';
-import MarketingConcern from './marketing-concern.vue';
+import BasicInfo from './general-info/basic-info.vue';
+import LegalInfo from './general-info/legal-info.vue';
+import MarketingConcern from './general-info/marketing-concern.vue';
 import AccordionTable from './component/accordion-table.vue';
-import TransactionBase from './transaction-base.vue';
+import TransactionBase from './general-info/transaction-base.vue';
 const tabs = ref(['General Information','Manufacturing Info','Commercial & Finance']);
 const tab = ref('General Information');
 
