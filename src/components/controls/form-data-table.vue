@@ -57,8 +57,8 @@
             <v-text-field v-if="getHeaderItem(item).type=='textbox'" v-model="formModel[item]" :label="getHeaderItem(item).title"/>
             <dropdown 
                 v-if="getHeaderItem(item).type=='dropdown'"
-                :label="item"
-                :placeholder="`Select ${item}`"
+                :label="getHeaderItem(item).title"
+                :placeholder="`Select ${getHeaderItem(item).title}`"
                 :options="getHeaderItem(item).option"
                 :keyProp="''"
                 :valProp="''"

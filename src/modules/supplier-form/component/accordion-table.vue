@@ -113,7 +113,7 @@
 
           <v-divider class="my-4" />
 
-          {{ editableHeaders }}
+        
 
           <!-- Form Table -->
           <FormDataTable :headers="editableHeaders" @save="onTableSave" />
