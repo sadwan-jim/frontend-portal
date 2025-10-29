@@ -43,7 +43,8 @@
           <TransactionBase/>
         </v-window-item>
         <v-window-item :value="'Manufacturing Info'">
-          <p>BROTHERHOOD OF NOD</p> 
+           <AccordionTable :headers="headersPacking" :title="'Packing'" class="mt-4"/>
+           <AccordionTable :headers="headersCertificationCompliances" :title="'Certification & Compliance'" class="mt-4"/>
         </v-window-item>
         <v-window-item :value="'Commercial & Finance'">
           <p>SCRIN</p> 
@@ -69,4 +70,19 @@ const headersMarketting = [
     { title:'Contact No.' , key: 'contactNo' , type:'textbox' },
     { title:'Email' , key: 'email' , type:'textbox' },
 ]
+
+const headersPacking = [
+    { title:'Yarn Net Weight Per Cone' , key: 'yarnNetWeightPerCone' , type:'textbox' },
+    { title:'Cone Per Carton' , key: 'conePerCarton' , type:'textbox' },
+    { title:'Gross Weight Per Carton' , key: 'grossWeightPerCarton' , type:'textbox' },
+    
+]
+
+const headersCertificationCompliances = [
+    { title:'Sustainability Certifications' , key: 'sustainabilityCertifications' , type:'textbox' },
+    { title:'Validity Date' , key: 'validityDate' , type:'textbox' },
+    { title:'Social Environmental Audits' , key: 'socialEnvironmentalAudits' , type:'textbox' },
+    
+]
+
 </script>
