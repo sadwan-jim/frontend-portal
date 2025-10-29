@@ -38,6 +38,7 @@
         <v-window-item :value="'General Information'">
           <BasicInfo class="mt-4"/>
           <LegalInfo class="mt-4"/>
+          <MarketingConcern class="mt-4"/>
         </v-window-item>
         <v-window-item :value="'Manufacturing Info'">
           <p>BROTHERHOOD OF NOD</p> <!-- Dynamic content could go here -->
@@ -54,6 +55,7 @@
 import { ref } from 'vue'; 
 import BasicInfo from './basic-info.vue';
 import LegalInfo from './legal-info.vue';
+import MarketingConcern from './marketing-concern.vue';
 
 const tabs = ref(['General Information','Manufacturing Info','Commercial & Finance']);
 const tab = ref('General Information');
