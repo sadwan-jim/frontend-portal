@@ -14,7 +14,7 @@
       <v-expansion-panel-text>
         <v-row dense>
           <v-col cols="4" class="mb-4">
-            <v-radio-group  :label="'Transaction Type'" v-model="transactionType" row>
+            <v-radio-group  :label="'Transaction Type'" v-model="transactionType" inline>
                 <v-radio
                    :label="'Self'"
                    :value="'self'"
