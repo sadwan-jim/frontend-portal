@@ -53,10 +53,10 @@
         </v-window-item>
         <v-window-item :value="tabs[1].name">
            <AccordionTable :headers="headersPacking" :title="'Packing'" class="mt-4"/>
-            <AccordionTable :headers="headersCertificationCompliances" :title="'Certification & Compliance'" class="mt-4"/>
+           <AccordionTable :headers="headersCertificationCompliances" :title="'Certification & Compliance'" class="mt-4"/>
         </v-window-item>
         <v-window-item :value="tabs[2].name">
-          <p>SCRIN</p> 
+          <AccordionTable :headers="headersPaymentInfo" :title="'Payment Information'" class="mt-4"/>
         </v-window-item>
       </v-window>
     </v-card-text>
@@ -98,6 +98,14 @@ const headersCertificationCompliances = [
     { title:'Validity Date' , key: 'validityDate' , type:'textbox' },
     { title:'Social Environmental Audits' , key: 'socialEnvironmentalAudits' , type:'textbox' },
     
+]
+
+
+const headersPaymentInfo = [
+    { title:'Currency' , key: 'currency' , type:'dropdown' ,option:['BDT','USD']},
+    { title:'Payment Term' , key: 'paymentTerm' , type:'dropdown' ,option:['RTGS','DA','A/C Payee Cheque','LC','TT']},
+    { title:'Payment Method' , key: 'paymentMethod' , type:'textbox' },
+    { title:'Tenure Days' , key: 'tenureDays' , type:'textbox' },
 ]
 
 // Function to edit tab name
