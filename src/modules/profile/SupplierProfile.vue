@@ -1,8 +1,4 @@
 <template>
- 
- 
-   
-        
           <v-col cols="12"  >
             <v-card class="pa-6" elevation="3">
               <v-card-title class="text-h5 font-weight-bold mb-4">

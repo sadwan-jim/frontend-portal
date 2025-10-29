@@ -6,8 +6,9 @@
           <v-col cols="1" class="d-flex justify-center">
             <v-icon size="30" color="info" icon="mdi-office-building" />
           </v-col>
-          <v-col cols="11">
-            <span class="font-weight-medium">Transaction Base</span>
+             <v-col cols="11" class="d-flex align-center justify-space-between">
+            <span class="font-weight-medium">{{ sectionTitle }}</span>
+            <v-icon small color="primary" @click="editTitle">mdi-pencil</v-icon>
           </v-col>
         </v-row>
       </v-expansion-panel-title>
@@ -100,7 +101,12 @@ import { required } from '@/validators/validators';
 
 const transactionType =  ref('self'); 
 
+const sectionTitle = ref('Transaction Base');
 const searchState =  ref('manually_add'); 
+const editTitle = () => {
+  const newTitle = prompt('Enter new section title', sectionTitle.value);
+  if (newTitle) sectionTitle.value = newTitle;
+};
 
 const agentInfo = ref({
   agentName: '',

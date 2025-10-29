@@ -6,8 +6,9 @@
           <v-col cols="1" class="d-flex justify-center">
             <v-icon size="30" color="info" icon="mdi-office-building" />
           </v-col>
-          <v-col cols="11">
-            <span class="font-weight-medium">Marketing Concern</span>
+           <v-col cols="11" class="d-flex align-center justify-space-between">
+            <span class="font-weight-medium">{{ sectionTitle }}</span>
+            <v-icon small color="primary" @click="editTitle">mdi-pencil</v-icon>
           </v-col>
         </v-row>
       </v-expansion-panel-title>
@@ -35,7 +36,7 @@ import axios from '@/plugins/axios';
 import { ref, onMounted, computed } from 'vue'; 
 import FormDataTable from '@/components/controls/form-data-table.vue';
 import { required } from '@/validators/validators';
-
+const sectionTitle = ref('Legal Info');
 
 const headers = [
     { title:'Name' , key: 'name' , type:'textbox' },
@@ -45,7 +46,10 @@ const headers = [
     { title:'Email' , key: 'email' , type:'textbox' },
 ]
 
-
+const editTitle = () => {
+  const newTitle = prompt('Enter new section title', sectionTitle.value);
+  if (newTitle) sectionTitle.value = newTitle;
+};
 
 
 </script>

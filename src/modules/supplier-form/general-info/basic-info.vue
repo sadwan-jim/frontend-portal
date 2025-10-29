@@ -30,8 +30,11 @@
               dense
               v-model="field.value"
               :rules="field.required ? [required(field.value, field.label)] : []"
+               class="flex-grow-1"
             />
-            <v-btn small color="red" @click="removeField(index)" class="mt-1">Remove</v-btn>
+                        <v-btn small color="red" class="ml-2 mt-1" @click="removeField(index)">
+              <v-icon size="16">mdi-close</v-icon>
+            </v-btn>
           </v-col>
         </v-row>
        
