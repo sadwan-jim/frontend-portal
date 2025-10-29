@@ -175,12 +175,14 @@ const syncTitleAndKey = (item) => {
 }
 
 // Initialize a string version of options
+ 
 editableHeaders.value.forEach(item => {
-  if (item.type === 'dropdown') {
+  if (item.type === 'dropdown' && Array.isArray(item.options)) {
     item.optionsText = item.options.join(', ')
   }
 })
 
+ 
 // Update array when text changes
 const onOptionsInput = (item) => {
   if (item.type === 'dropdown') {
