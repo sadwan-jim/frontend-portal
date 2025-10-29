@@ -43,7 +43,6 @@ const emit = defineEmits(['emitTableData'])
 function onTableSave(payload)
 {
     emit('emitTableData', payload);
-    console.log(":::::::::::{{{{{{{{{{{{}}}}}}}}}}}}",payload)
 }
 
 </script>
