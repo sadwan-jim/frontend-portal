@@ -8,8 +8,9 @@
           <v-col cols="1" class="d-flex justify-center">
             <v-icon size="30" color="info">mdi-office-building</v-icon>
           </v-col>
-          <v-col cols="11">
-            <span class="font-weight-medium">Legal Info</span>
+           <v-col cols="11" class="d-flex align-center justify-space-between">
+            <span class="font-weight-medium">{{ sectionTitle }}</span>
+            <v-icon small color="primary" @click="editTitle">mdi-pencil</v-icon>
           </v-col>
         </v-row>
       </v-expansion-panel-title>
@@ -101,6 +102,8 @@ import { ref, computed } from 'vue';
 import { required } from '@/validators/validators';
 import dropdown from '@/components/controls/dropdown.vue';
 
+const sectionTitle = ref('Legal Info');
+
 const legalInfo = ref({
   legalEntity: null,
   countryOfIncorporation: null,
@@ -125,6 +128,10 @@ const newFieldRequired = ref(false);
 // Merge static and dynamic fields for rendering
 const allFields = computed(() => [...initialFields, ...dynamicFields.value]);
 
+const editTitle = () => {
+  const newTitle = prompt('Enter new section title', sectionTitle.value);
+  if (newTitle) sectionTitle.value = newTitle;
+};
 // Add new text field
 const addField = () => {
   if (!newFieldLabel.value) return alert('Field label is required!');
