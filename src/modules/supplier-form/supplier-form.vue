@@ -102,8 +102,8 @@ const headersCertificationCompliances = [
 
 
  const headersPaymentInfo = [
-  { title: 'Currency', key: 'currency', type: 'dropdown', options: ['BDT','USD'] },
-  { title: 'Payment Term', key: 'paymentTerm', type: 'dropdown', options: ['RTGS','DA','A/C Payee Cheque','LC','TT'] },
+  { title: 'Currency', key: 'currency', type: 'dropdown', option: ['BDT','USD'] },
+  { title: 'Payment Term', key: 'paymentTerm', type: 'dropdown', option: ['RTGS','DA','A/C Payee Cheque','LC','TT'] },
   { title: 'Payment Method', key: 'paymentMethod', type: 'textbox' },
   { title: 'Tenure Days', key: 'tenureDays', type: 'textbox' },
 ]

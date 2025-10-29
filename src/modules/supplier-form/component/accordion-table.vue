@@ -142,7 +142,7 @@ watch(() => props.title, (newTitle) => { localTitle.value = newTitle })
 
 // Editable Table Columns
 const editableHeaders = ref(
-  props.headers.map(h => ({ ...h, tempTitle: h.title, type: h.type || 'text', option: h.options || '', required: !!h.required }))
+  props.headers.map(h => ({ ...h, tempTitle: h.title, type: h.type || 'text', option: h.option || '', required: !!h.required }))
 )
 
 // Column headers
@@ -162,7 +162,7 @@ const addColumn = () => {
     tempTitle: 'New Column',
     key: toCamelCase('New Column'),
     type: 'text',
-    options: '',
+    option: '',
     required: false
   })
 }
@@ -179,8 +179,8 @@ const syncTitleAndKey = (item) => {
 // Initialize a string version of options
  
 editableHeaders.value.forEach(item => {
-  if (item.type === 'dropdown' && Array.isArray(item.options)) {
-    item.optionsText = item.options.join(', ')
+  if (item.type === 'dropdown' && Array.isArray(item.option)) {
+    item.optionsText = item.option.join(', ')
   }
 })
 
