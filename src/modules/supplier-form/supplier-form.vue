@@ -40,6 +40,7 @@
           <LegalInfo class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Marketing Concern'" class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Authorized Signatory Person'" class="mt-4"/>
+          <TransactionBase/>
         </v-window-item>
         <v-window-item :value="'Manufacturing Info'">
           <p>BROTHERHOOD OF NOD</p> 
@@ -54,11 +55,11 @@
 
 <script setup>
 import { ref } from 'vue'; 
-import BasicInfo from './basic-info.vue';
-import LegalInfo from './legal-info.vue';
-import MarketingConcern from './marketing-concern.vue';
+import BasicInfo from './general-info/basic-info.vue';
+import LegalInfo from './general-info/legal-info.vue';
+import MarketingConcern from './general-info/marketing-concern.vue';
 import AccordionTable from './component/accordion-table.vue';
-
+import TransactionBase from './general-info/transaction-base.vue';
 const tabs = ref(['General Information','Manufacturing Info','Commercial & Finance']);
 const tab = ref('General Information');
 

@@ -7,10 +7,10 @@
             <v-icon size="30" color="info" icon="mdi-office-building" />
           </v-col>
          
-<v-col cols="11" class="d-flex align-center justify-space-between">
-  <span class="font-weight-medium">{{ sectionTitle }}</span>
-  <v-icon small color="primary" @click="editTitle">mdi-pencil</v-icon>
-</v-col>
+          <v-col cols="11" class="d-flex align-center justify-space-between">
+            <span class="font-weight-medium">{{ sectionTitle }}</span>
+            <v-icon small color="primary" @click="editTitle">mdi-pencil</v-icon>
+          </v-col>
         </v-row>
       </v-expansion-panel-title>
 
@@ -34,6 +34,7 @@
             <v-btn small color="red" @click="removeField(index)" class="mt-1">Remove</v-btn>
           </v-col>
         </v-row>
+       
 
         <!-- Add New Field -->
         <v-row>
