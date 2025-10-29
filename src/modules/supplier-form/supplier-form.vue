@@ -38,13 +38,14 @@
         <v-window-item :value="'General Information'">
           <BasicInfo class="mt-4"/>
           <LegalInfo class="mt-4"/>
-          <MarketingConcern class="mt-4"/>
+          <AccordionTable :headers="headersMarketting" :title="'Marketing Concern'" class="mt-4"/>
+          <AccordionTable :headers="headersMarketting" :title="'Authorized Signatory Person'" class="mt-4"/>
         </v-window-item>
         <v-window-item :value="'Manufacturing Info'">
-          <p>BROTHERHOOD OF NOD</p> <!-- Dynamic content could go here -->
+          <p>BROTHERHOOD OF NOD</p> 
         </v-window-item>
         <v-window-item :value="'Commercial & Finance'">
-          <p>SCRIN</p> <!-- More dynamic content -->
+          <p>SCRIN</p> 
         </v-window-item>
       </v-window>
     </v-card-text>
@@ -56,7 +57,15 @@ import { ref } from 'vue';
 import BasicInfo from './basic-info.vue';
 import LegalInfo from './legal-info.vue';
 import MarketingConcern from './marketing-concern.vue';
+import AccordionTable from './component/accordion-table.vue';
 
 const tabs = ref(['General Information','Manufacturing Info','Commercial & Finance']);
 const tab = ref('General Information');
+
+const headersMarketting = [
+    { title:'Name' , key: 'name' , type:'textbox' },
+    { title:'Designation' , key: 'designation' , type:'textbox' },
+    { title:'Contact No.' , key: 'contactNo' , type:'textbox' },
+    { title:'Email' , key: 'email' , type:'textbox' },
+]
 </script>

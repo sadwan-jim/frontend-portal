@@ -7,45 +7,47 @@
             <v-icon size="30" color="info" icon="mdi-office-building" />
           </v-col>
           <v-col cols="11">
-            <span class="font-weight-medium">Marketing Concern</span>
+            <span class="font-weight-medium">{{ title }}</span>
           </v-col>
         </v-row>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-row dense>
           <v-col cols="12" class="mb-4">
-            <FormDataTable
-              :headers="headers"
-             
-            />
-          <!-- @save="payload => onTableSave(payload)" -->
-         
+            <FormDataTable :headers="headers"  @save="onTableSave"/>
           </v-col>
-        
-        
         </v-row>
-   
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
 
 <script setup>
-import axios from '@/plugins/axios';
-import { ref, onMounted, computed } from 'vue'; 
+import { defineProps } from 'vue';
 import FormDataTable from '@/components/controls/form-data-table.vue';
-import { required } from '@/validators/validators';
 
+// Define props for dynamic title and headers
+const props = defineProps({
+  title: {
+    type: String,
+    required: true
+  },
+  headers: {
+    type: Array,
+    required: true
+  }
+});
 
-const headers = [
-    { title:'Name' , key: 'name' , type:'textbox' },
-    { title:'Designation' , key: 'designation' , type:'textbox' },
-    { title:'Contact No.' , key: 'designation' , type:'textbox' },
-    { title:'Designation' , key: 'contactNo' , type:'textbox' },
-    { title:'Email' , key: 'email' , type:'textbox' },
-]
+const emit = defineEmits(['emitTableData'])
 
-
-
+function onTableSave(payload)
+{
+    emit('emitTableData', payload);
+    console.log(":::::::::::{{{{{{{{{{{{}}}}}}}}}}}}",payload)
+}
 
 </script>
+
+<style scoped>
+
+</style>
