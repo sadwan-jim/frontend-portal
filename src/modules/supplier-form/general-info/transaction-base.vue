@@ -32,7 +32,7 @@
         </v-row>
         <v-row dense v-if="transactionType=='agent'" >
             <v-col >
-              <v-btn-toggle v-model="searchState" group>
+              <v-btn-toggle v-model="searchState" group style="border: 1px solid #ccc;">
                 <v-btn value="manually_add" color="primary">Manually Add</v-btn>
                 <v-btn value="show_search" color="primary">Show Search</v-btn>  
               </v-btn-toggle>
