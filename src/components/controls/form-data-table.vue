@@ -54,7 +54,12 @@
 
           <v-col v-for="item in Object.keys(formModel)" cols="12" md="6">
             <!-- {{getHeaderItem(item)}} -->
-            <v-text-field v-if="getHeaderItem(item).type=='textbox'" v-model="formModel[item]" :label="getHeaderItem(item).title"/>
+            <v-text-field 
+              v-if="getHeaderItem(item).type=='textbox'" 
+              v-model="formModel[item]" 
+              :label="getHeaderItem(item).title"
+              :rules="getHeaderItem(item).required ? [required(formModel[item], getHeaderItem(item).title)] : []"
+            />
             <dropdown 
                 v-if="getHeaderItem(item).type=='dropdown'"
                 :label="getHeaderItem(item).title"
@@ -64,6 +69,8 @@
                 :valProp="''"
                 :apiUrl="''"
                 v-model="formModel[item]"
+                 :rules="getHeaderItem(item).required ? [required(formModel[item], getHeaderItem(item).title)] : []"
+
             />
           </v-col>
         </v-row>
@@ -84,7 +91,7 @@
 <script setup>
 import { onMounted, ref, shallowRef, toRef } from 'vue';
 import dropdown from '@/components/controls/dropdown.vue';
-
+import { required } from '@/validators/validators';
 import { watch } from 'vue';
 
 const localItems = ref([]);
