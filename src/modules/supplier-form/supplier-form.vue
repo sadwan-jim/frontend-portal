@@ -8,14 +8,11 @@
       style="background: linear-gradient(135deg, #FF6B6B, #4ECDCC); color: white; padding: 16px 24px;"
     >
       <div class="d-flex align-center">
-        <v-img
-          src="/logo.png"
-          alt="Logo"
-          width="50"
-          height="50"
-          class="mr-3 rounded"
-        />
-        <span class="text-h6 font-weight-bold">Supplier Profile Management</span>
+  
+      <v-col cols="11" class="d-flex align-center justify-space-between">
+            <span class="font-weight-medium">{{ sectionTitle }}</span>
+            <v-icon small color="primary" @click="editTitle">mdi-pencil</v-icon>
+          </v-col>
       </div>
     </v-card-title>
     
@@ -78,6 +75,12 @@ const tabs = ref([
 
 const tab = ref(tabs.value[0].name);
 
+const sectionTitle = ref('Supplier Profile Management');
+
+const editTitle = () => {
+  const newTitle = prompt('Enter new section title', sectionTitle.value);
+  if (newTitle) sectionTitle.value = newTitle;
+};
 const headersMarketting = [
   { title:'Name' , key: 'name' , type:'textbox' },
   { title:'Designation' , key: 'designation' , type:'textbox' },
