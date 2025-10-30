@@ -7,14 +7,16 @@
       class="d-flex align-center justify-space-between"
       style="background: linear-gradient(135deg, #FF6B6B, #4ECDCC); color: white; padding: 16px 24px;"
     >
+      
       <div class="d-flex align-center">
-  
-      <v-col cols="11" class="d-flex align-center justify-space-between">
-            <span class="font-weight-medium">{{ sectionTitle }}</span>
-            <v-icon small color="primary" @click="editTitle">mdi-pencil</v-icon>
-          </v-col>
+        <span class="font-weight-medium">{{ sectionTitle }}</span>
+        <v-icon small color="white" class="ml-2" @click="editTitle">mdi-pencil</v-icon>
       </div>
+
+      
+      <v-btn small color="primary" style="color: white !important;"  @click="saveTemplate">Save Template</v-btn>
     </v-card-title>
+
     
     <v-card-text class="pa-4" style="background-color: #f9f9f9;">
       <v-tabs
@@ -42,7 +44,8 @@
       
       <v-window v-model="tab">
         <v-window-item :value="tabs[0].name">
-          <BasicInfo class="mt-4"/>
+         <BasicInfo ref="basicInfoRef" class="mt-4" @emitConfig="config=>handleConfig('basicInfoConfig',config)"/>
+
           <LegalInfo class="mt-4"/>
           <TransactionBase class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Marketing Concern'" class="mt-4"/>
@@ -120,4 +123,25 @@ const editTabName = (index) => {
     tab.value = newName;
   }
 };
+
+// const basicInfoConfig = ref([]);
+
+const basicInfoRef = ref(null);
+
+const configs = {
+  basicInfoConfig: ref([]),
+  legalInfoConfig: ref([]),
+  transactionBaseConfig: ref([])
+};
+
+
+function handleConfig(name,config) {
+  configs[name].value = config;
+  console.log('Received from BasicInfo:', configs[name].value);
+}
+
+
+function saveTemplate(){
+  basicInfoRef.value.sendConfig();
+}
 </script>

@@ -72,8 +72,13 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { required } from '@/validators/validators';
-
+import { useStringCase } from '../../../composable/useStringCase.js';
 const sectionTitle = ref('Basic Info');
+
+const { toCamelCase } = useStringCase();
+
+const emit = defineEmits(['emitConfig'])
+
 const basicInfo = ref({
   groupName: '',
   exportBusinessUnitName: '',
@@ -115,11 +120,29 @@ const addField = () => {
   dynamicFields.value.push({
     label: newFieldLabel.value,
     value: '',
-    required: newFieldRequired.value
+    required: newFieldRequired.value,
+  
   });
   newFieldLabel.value = '';
   newFieldRequired.value = false;
 };
+
+const dynamicFieldsConfig = computed(() => {
+  return  dynamicFields.value.map(x=>{
+    return { ...x, type:'textbox',key:toCamelCase(x.label)}
+  });
+});
+
+
+
+
+const sendConfig = () => {
+  emit('emitConfig', dynamicFieldsConfig.value);
+};
+
+defineExpose({
+  sendConfig
+});
 
 // Remove a field dynamically
 const removeField = (index) => {
