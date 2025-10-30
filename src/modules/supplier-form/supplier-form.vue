@@ -62,10 +62,10 @@
 
 <script setup>
 import { ref } from 'vue'; 
-import BasicInfo from './general-info/basic-info.vue';
-import LegalInfo from './general-info/legal-info.vue';
+import BasicInfo from './general-info/basic-info-template.vue';
+import LegalInfo from './general-info/legal-info-template.vue';
 import AccordionTable from './component/accordion-table.vue';
-import TransactionBase from './general-info/transaction-base.vue';
+import TransactionBase from './general-info/transaction-base-template.vue';
 
 const tabs = ref([
   { name: 'General Information' },
