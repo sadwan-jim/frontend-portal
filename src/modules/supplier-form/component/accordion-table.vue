@@ -126,14 +126,18 @@
 <script setup>
 import { ref, watch } from 'vue'
 import FormDataTable from '@/components/controls/form-data-table.vue'
-
+import { useStringCase } from '../../../composable/useStringCase.js';
 // Props
 const props = defineProps({
   title: { type: String, required: true },
   headers: { type: Array, required: true }
 })
 
-const emit = defineEmits(['emitTableData'])
+const { toCamelCase } = useStringCase();
+
+
+
+const emit = defineEmits(['emitTableData','emitConfig'])
 
 // Editable Section Title
 const localTitle = ref(props.title)
@@ -192,15 +196,16 @@ const onOptionsInput = (item) => {
   }
 }
 
-// CamelCase helper
-const toCamelCase = str =>
-  str
-    .replace(/[^a-zA-Z0-9 ]/g, '')
-    .split(' ')
-    .map((w, i) => i === 0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1))
-    .join('')
 
-// Save Table
+
+const sendConfig = () => {
+  emit('emitConfig', [{ type:'table', headers:editableHeaders, label:localTitle}]);
+};
+
+defineExpose({
+  sendConfig
+});
+
 const onTableSave = payload => emit('emitTableData', payload)
 </script>
 

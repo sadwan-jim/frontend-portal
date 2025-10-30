@@ -43,20 +43,50 @@
       </v-tabs>
       
       <v-window v-model="tab">
-        <v-window-item :value="tabs[0].name">
+        <v-window-item :value="tabs[0].name" eager>
           <BasicInfo ref="basicInfoRef" class="mt-4" @emitConfig="config=>handleConfig('basicInfoConfig',config)"/>
 
           <LegalInfo ref="legalInfoRef" class="mt-4" @emitConfig="config=>handleConfig('legalInfoConfig',config)"/>
           <TransactionBase class="mt-4"/>
-          <AccordionTable :headers="headersMarketting" :title="'Marketing Concern'" class="mt-4"/>
-          <AccordionTable :headers="headersMarketting" :title="'Authorized Signatory Person'" class="mt-4"/>
+          <AccordionTable
+            ref="marketingInfoRef"
+            :headers="headersMarketting" 
+            :title="'Marketing Concern'" 
+            class="mt-4"
+            @emitConfig="config=>handleConfig('marketingInfoConfig',config)"
+          />
+          <AccordionTable
+            ref="authorizedSignatoryInfoRef"
+            :headers="headersMarketting" 
+            :title="'Authorized Signatory Person'" 
+            class="mt-4"
+            @emitConfig="config=>handleConfig('authorizedSignatoryInfoConfig',config)"
+          />
         </v-window-item>
-        <v-window-item :value="tabs[1].name">
-           <AccordionTable :headers="headersPacking" :title="'Packing'" class="mt-4"/>
-           <AccordionTable :headers="headersCertificationCompliances" :title="'Certification & Compliance'" class="mt-4"/>
+        <v-window-item :value="tabs[1].name" eager>
+          <AccordionTable
+            ref="packingInfoRef" 
+            :headers="headersPacking" 
+            :title="'Packing'" 
+            class="mt-4"
+            @emitConfig="config=>handleConfig('packingInfoConfig',config)"
+          />
+          <AccordionTable
+           ref="certificationInfoRef" 
+           :headers="headersCertificationCompliances" 
+           :title="'Certification & Compliance'" 
+           class="mt-4"
+           @emitConfig="config=>handleConfig('certificationInfoConfig',config)"
+          />
         </v-window-item>
-        <v-window-item :value="tabs[2].name">
-          <AccordionTable :headers="headersPaymentInfo" :title="'Payment Information'" class="mt-4"/>
+        <v-window-item :value="tabs[2].name" eager>
+          <AccordionTable
+           ref="paymentInfoRef" 
+           :headers="headersPaymentInfo" 
+           :title="'Payment Information'" 
+           class="mt-4"
+           @emitConfig="config=>handleConfig('paymentInfoConfig',config)"
+          />
         </v-window-item>
       </v-window>
     </v-card-text>
@@ -128,11 +158,21 @@ const editTabName = (index) => {
 
 const basicInfoRef = ref(null);
 const legalInfoRef = ref(null);
+const marketingInfoRef = ref(null);
+const authorizedSignatoryInfoRef = ref(null);
+const packingInfoRef = ref(null);
+const certificationInfoRef = ref(null);
+const paymentInfoRef = ref(null);
 
 const configs = {
   basicInfoConfig: ref([]),
   legalInfoConfig: ref([]),
-  transactionBaseConfig: ref([])
+  marketingInfoConfig: ref([]),
+  authorizedSignatoryInfoConfig:ref([]),
+  packingInfoConfig:ref([]),
+  certificationInfoConfig:ref([]),
+  paymentInfoConfig:ref([])
+
 };
 
 
@@ -145,5 +185,10 @@ function handleConfig(name,config) {
 function saveTemplate(){
   basicInfoRef.value.sendConfig();
   legalInfoRef.value.sendConfig();
+  marketingInfoRef.value.sendConfig();
+  authorizedSignatoryInfoRef.value.sendConfig();
+  packingInfoRef.value.sendConfig();
+  certificationInfoRef.value.sendConfig();
+  paymentInfoRef.value.sendConfig();
 }
 </script>
