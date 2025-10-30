@@ -101,6 +101,11 @@
 import { ref, computed } from 'vue';
 import { required } from '@/validators/validators';
 import dropdown from '@/components/controls/dropdown.vue';
+import { useStringCase } from '../../../composable/useStringCase.js';
+const { toCamelCase } = useStringCase();
+
+const emit = defineEmits(['emitConfig'])
+
 
 const sectionTitle = ref('Legal Info');
 
@@ -155,6 +160,17 @@ const removeField = (index) => {
   }
 };
 
+
+const sendConfig = () => {
+  emit('emitConfig', dynamicFieldsConfig.value);
+};
+
+defineExpose({
+  sendConfig
+});
+
+
+
 // Form data for preview
 const formData = computed(() => {
   const data = {};
@@ -164,4 +180,17 @@ const formData = computed(() => {
   data['Location'] = legalInfo.value.geographicalLocation;
   return data;
 });
+
+
+const dynamicFieldsConfig = computed(() => {
+  return [
+          { label:'Legal Entity',key:'legalEntity',value:null,type:'dropdown',required:false ,option:['Partnership','Sole Proprietorship','Private Limited Company','Public Limited Company'] },
+          { label:'Country Of Incorporation',key:'countryOfIncorporation' ,value:null,type:'dropdown',required:false ,option:['China','Afghanistan','Iraq','Canada'] },
+          { label:'Geographical Location' , key:'geographicalLocation'  ,value:null,type:'dropdown',required:false ,option:['Toronto','Kabul','Baghdad','Shanghai'] }, 
+          ...allFields.value.map(x=>{
+              return { ...x, type:'textbox',key:toCamelCase(x.label),required:x.required||false}
+          })
+        ];
+});
+
 </script>

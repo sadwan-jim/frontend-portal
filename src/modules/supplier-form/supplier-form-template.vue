@@ -44,9 +44,9 @@
       
       <v-window v-model="tab">
         <v-window-item :value="tabs[0].name">
-         <BasicInfo ref="basicInfoRef" class="mt-4" @emitConfig="config=>handleConfig('basicInfoConfig',config)"/>
+          <BasicInfo ref="basicInfoRef" class="mt-4" @emitConfig="config=>handleConfig('basicInfoConfig',config)"/>
 
-          <LegalInfo class="mt-4"/>
+          <LegalInfo ref="legalInfoRef" class="mt-4" @emitConfig="config=>handleConfig('legalInfoConfig',config)"/>
           <TransactionBase class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Marketing Concern'" class="mt-4"/>
           <AccordionTable :headers="headersMarketting" :title="'Authorized Signatory Person'" class="mt-4"/>
@@ -127,6 +127,7 @@ const editTabName = (index) => {
 // const basicInfoConfig = ref([]);
 
 const basicInfoRef = ref(null);
+const legalInfoRef = ref(null);
 
 const configs = {
   basicInfoConfig: ref([]),
@@ -143,5 +144,6 @@ function handleConfig(name,config) {
 
 function saveTemplate(){
   basicInfoRef.value.sendConfig();
+  legalInfoRef.value.sendConfig();
 }
 </script>
