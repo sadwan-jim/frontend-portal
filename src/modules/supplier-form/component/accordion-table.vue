@@ -73,25 +73,25 @@
             <template #item.type="{ item }">
               <v-select
                 v-model="item.type"
-                :items="['text', 'dropdown']"
-                dense
+                :items="['textbox', 'dropdown']"
+                  density="compact"
                 hide-details
                 variant="outlined"
               />
             </template>
 
             <!-- Column Options -->
- <template #item.options="{ item }">
-  <v-text-field
-    v-model="item.optionsText"
-    :disabled="item.type !== 'dropdown'"
-    dense
-    hide-details
-    variant="outlined"
-    placeholder="A,B,C"
-    @input="onOptionsInput(item)"
-  />
-</template>
+            <template #item.options="{ item }">
+                <v-text-field
+                    v-model="item.optionsText"
+                    :disabled="item.type !== 'dropdown'"
+                    density="compact"
+                    hide-details
+                    variant="outlined"
+                    placeholder="A,B,C"
+                    @input="onOptionsInput(item)"
+                />
+            </template>
 
 
             <!-- Required Checkbox -->
@@ -161,7 +161,7 @@ const addColumn = () => {
     title: 'New Column',
     tempTitle: 'New Column',
     key: toCamelCase('New Column'),
-    type: 'text',
+    type: 'textbox',
     option: '',
     required: false
   })
