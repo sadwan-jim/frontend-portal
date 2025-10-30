@@ -103,8 +103,7 @@ const headersCertificationCompliances = [
     
 ]
 
-
- const headersPaymentInfo = [
+const headersPaymentInfo = [
   { title: 'Currency', key: 'currency', type: 'dropdown', option: ['BDT','USD'] },
   { title: 'Payment Term', key: 'paymentTerm', type: 'dropdown', option: ['RTGS','DA','A/C Payee Cheque','LC','TT'] },
   { title: 'Payment Method', key: 'paymentMethod', type: 'textbox' },
