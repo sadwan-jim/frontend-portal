@@ -64,6 +64,11 @@ export const routes = [
         name: 'FormFeedback',
         component: () => import('@/modules/form-builder/form-feedback.vue'),
       },
+      {
+        path: 'dynamic-template',
+        name: 'DynamicForm',
+        component: () => import('@/modules/supplier-form/form-component/dynamic-registration-form.vue'),
+      },
 
       {
         path: 'success',

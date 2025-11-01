@@ -177,13 +177,14 @@ const certificationInfoRef = ref(null);
 const paymentInfoRef = ref(null);
 
 const configs = {
-  basicInfoConfig: { title:'Basic Info', tab:'' , controls:[]},
-  legalInfoConfig: { title:'Legal Info', tab:'' , controls:[]},
-  marketingInfoConfig: { title:'Marketing Concern', tab:'' , controls:[]},
-  authorizedSignatoryInfoConfig:{ title:'Authorized Signatory Person', tab:'' , controls:[]},
-  packingInfoConfig:{ title:'Packing', tab:'' , controls:[]},
-  certificationInfoConfig:{title:'Certification & Compliance', tab:'' , controls:[]},
-  paymentInfoConfig:{title:'Payment Information', tab:'' , controls:[]}
+  basicInfoConfig: { title:'Basic Info', tab:'' , controls:[] ,panelType:'control'},
+  legalInfoConfig: { title:'Legal Info', tab:'' , controls:[] ,panelType:'control'},
+  transactionBaseConfig: { title:'Transaction Base', tab:'General Information' , controls:[] ,panelType:'control'},
+  marketingInfoConfig: { title:'Marketing Concern', tab:'' , controls:[] ,panelType:'table'},
+  authorizedSignatoryInfoConfig:{ title:'Authorized Signatory Person', tab:'' , controls:[],panelType:'table'},
+  packingInfoConfig:{ title:'Packing', tab:'' , controls:[],panelType:'table'},
+  certificationInfoConfig:{title:'Certification & Compliance', tab:'' , controls:[],panelType:'table'},
+  paymentInfoConfig:{title:'Payment Information', tab:'' , controls:[],panelType:'table'}
 
 };
 

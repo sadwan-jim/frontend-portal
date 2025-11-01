@@ -13,7 +13,7 @@
       </div>
     </v-card-title>
 
-    
+   
     <v-card-text class="pa-4" style="background-color: #f9f9f9;">
       <v-tabs
         v-model="tab"
@@ -23,22 +23,29 @@
         <v-tab
           v-for="(item, index) in tabs"
           :key="index"
-          :value="item.name"
+          :value="item"
           class="d-flex align-center"
         >
-          <span>{{ item.name }}</span>
+          <span>{{ item }}</span>
         </v-tab>
       </v-tabs>
       
-      <v-window v-model="tab">
-        <v-window-item :value="tabs[0].name" eager>
+      <v-window v-model="tab" eager>
+        <v-window-item   
+          v-for="(item, index) in tabs"
+          :key="index"
+          :value="item"
+        >
+            <template v-for="template in templateStore.getTemplateList.filter(x=>x.tab==item)">
+                {{ template }}
+                <template v-if="template.panelType == 'control'">
+                    <ControlTemplate :sectionTitle="template.title" :controls="template.controls"/>
+                </template>
+                <template v-if="template.panelType == 'table'">
+                    <TableTemplate :sectionTitle="template.title" :headers="template.controls[0].headers"/>
+                </template>
 
-        </v-window-item>
-        <v-window-item :value="tabs[1].name" eager>
-
-        </v-window-item>
-        <v-window-item :value="tabs[2].name" eager>
-
+            </template>
         </v-window-item>
       </v-window>
     </v-card-text>
@@ -46,20 +53,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'; 
+import { ref ,onMounted} from 'vue'; 
 import ControlTemplate from './control-template.vue';
 import TableTemplate from './table-template.vue';
 
 import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
-const tabs = ref([
-  { name: 'General Information' },
-  { name: 'Manufacturing Info' },
-  { name: 'Commercial & Finance' }
-]);
 
-templateStore = useFormTemplateStore();
+const tabs = ref([]);
+const tab = ref('');
 
-const tab = ref(tabs.value[0].name);
+onMounted(async () => {
+    console.log(templateStore.getTemplateList,"::::::templateStore.getTemplateList")
+        setTemplateData(templateStore.getTemplateList)
+    });
+function setTemplateData(templateJson){
+       //const formStructureData = JSON.parse(templateJson)
+
+    const uniqueTabs = [...new Set(templateJson.map(item => item.tab))];
+    
+    tabs.value = uniqueTabs;
+    
+    tab.value =uniqueTabs[0];
+    //templateStore.updateControlList(templateJson)
+}
+
+const templateStore = useFormTemplateStore();
+
 
 const sectionTitle = ref('Supplier Profile Management');
 
