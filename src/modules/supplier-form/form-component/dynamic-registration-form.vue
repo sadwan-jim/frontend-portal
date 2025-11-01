@@ -37,9 +37,10 @@
           :value="item"
         >
             <template v-for="template in templateStore.getTemplateList.filter(x=>x.tab==item)">
-                {{ template }}
+                <!-- {{ template }} -->
                 <template v-if="template.panelType == 'control'">
-                    <ControlTemplate :sectionTitle="template.title" :controls="template.controls"/>
+                    <TransactionBaseTemplate v-if="template.title === 'Transaction Base'" />
+                    <ControlTemplate v-else :sectionTitle="template.title" :controls="template.controls"/>
                 </template>
                 <template v-if="template.panelType == 'table'">
                     <TableTemplate :sectionTitle="template.title" :headers="template.controls[0].headers"/>
@@ -56,6 +57,7 @@
 import { ref ,onMounted} from 'vue'; 
 import ControlTemplate from './control-template.vue';
 import TableTemplate from './table-template.vue';
+import TransactionBaseTemplate from '../general-info/transaction-base-template.vue';
 
 import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
 
