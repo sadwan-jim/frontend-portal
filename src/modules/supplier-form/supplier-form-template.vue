@@ -108,6 +108,9 @@ import BasicInfo from './general-info/basic-info-template.vue';
 import LegalInfo from './general-info/legal-info-template.vue';
 import AccordionTable from './component/accordion-table.vue';
 import TransactionBase from './general-info/transaction-base-template.vue';
+import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
+
+const templateStore = useFormTemplateStore();
 
 const tabs = ref([
   { name: 'General Information' },
@@ -200,5 +203,6 @@ function saveTemplate(){
   packingInfoRef.value.sendConfig();
   certificationInfoRef.value.sendConfig();
   paymentInfoRef.value.sendConfig();
+  templateStore.updateTemplateList(Object.values(configs));
 }
 </script>
