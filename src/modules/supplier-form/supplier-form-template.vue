@@ -44,23 +44,32 @@
       
       <v-window v-model="tab">
         <v-window-item :value="tabs[0].name" eager>
-          <BasicInfo ref="basicInfoRef" class="mt-4" @emitConfig="config=>handleConfig('basicInfoConfig',config)"/>
+          <BasicInfo 
+            ref="basicInfoRef" 
+            class="mt-4" 
+            @emitConfig="config=>handleConfig('basicInfoConfig',config,tabs[0].name)"
+          />
 
-          <LegalInfo ref="legalInfoRef" class="mt-4" @emitConfig="config=>handleConfig('legalInfoConfig',config)"/>
+          <LegalInfo 
+            ref="legalInfoRef" 
+            class="mt-4" 
+            @emitConfig="config=>handleConfig('legalInfoConfig',config,tabs[0].name)"
+            
+          />
           <TransactionBase class="mt-4"/>
           <AccordionTable
             ref="marketingInfoRef"
             :headers="headersMarketting" 
             :title="'Marketing Concern'" 
             class="mt-4"
-            @emitConfig="config=>handleConfig('marketingInfoConfig',config)"
+            @emitConfig="config=>handleConfig('marketingInfoConfig',config,tabs[0].name)"
           />
           <AccordionTable
             ref="authorizedSignatoryInfoRef"
             :headers="headersMarketting" 
             :title="'Authorized Signatory Person'" 
             class="mt-4"
-            @emitConfig="config=>handleConfig('authorizedSignatoryInfoConfig',config)"
+            @emitConfig="config=>handleConfig('authorizedSignatoryInfoConfig',config,tabs[0].name)"
           />
         </v-window-item>
         <v-window-item :value="tabs[1].name" eager>
@@ -69,14 +78,14 @@
             :headers="headersPacking" 
             :title="'Packing'" 
             class="mt-4"
-            @emitConfig="config=>handleConfig('packingInfoConfig',config)"
+            @emitConfig="config=>handleConfig('packingInfoConfig',config,tabs[1].name)"
           />
           <AccordionTable
            ref="certificationInfoRef" 
            :headers="headersCertificationCompliances" 
            :title="'Certification & Compliance'" 
            class="mt-4"
-           @emitConfig="config=>handleConfig('certificationInfoConfig',config)"
+           @emitConfig="config=>handleConfig('certificationInfoConfig',config,tabs[1].name)"
           />
         </v-window-item>
         <v-window-item :value="tabs[2].name" eager>
@@ -85,7 +94,7 @@
            :headers="headersPaymentInfo" 
            :title="'Payment Information'" 
            class="mt-4"
-           @emitConfig="config=>handleConfig('paymentInfoConfig',config)"
+           @emitConfig="config=>handleConfig('paymentInfoConfig',config,tabs[2].name)"
           />
         </v-window-item>
       </v-window>
@@ -165,20 +174,21 @@ const certificationInfoRef = ref(null);
 const paymentInfoRef = ref(null);
 
 const configs = {
-  basicInfoConfig: ref([]),
-  legalInfoConfig: ref([]),
-  marketingInfoConfig: ref([]),
-  authorizedSignatoryInfoConfig:ref([]),
-  packingInfoConfig:ref([]),
-  certificationInfoConfig:ref([]),
-  paymentInfoConfig:ref([])
+  basicInfoConfig: { title:'Basic Info', tab:'' , controls:[]},
+  legalInfoConfig: { title:'Legal Info', tab:'' , controls:[]},
+  marketingInfoConfig: { title:'Marketing Concern', tab:'' , controls:[]},
+  authorizedSignatoryInfoConfig:{ title:'Authorized Signatory Person', tab:'' , controls:[]},
+  packingInfoConfig:{ title:'Packing', tab:'' , controls:[]},
+  certificationInfoConfig:{title:'Certification & Compliance', tab:'' , controls:[]},
+  paymentInfoConfig:{title:'Payment Information', tab:'' , controls:[]}
 
 };
 
 
-function handleConfig(name,config) {
-  configs[name].value = config;
-  console.log('Received from BasicInfo:', configs[name].value);
+function handleConfig(name,config,tabname) {
+  configs[name].controls = config;
+  configs[name].tab = tabname;
+  console.log('Received from BasicInfo:', configs[name]);
 }
 
 
