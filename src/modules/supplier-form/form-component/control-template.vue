@@ -53,7 +53,6 @@
                 </v-btn>
             </v-col>
         </v-row>
-
     
       </v-expansion-panel-text>
     </v-expansion-panel>
@@ -72,30 +71,11 @@ const props = defineProps({
 
 const { toCamelCase } = useStringCase();
 
-const emit = defineEmits(['emitConfig'])
-
-const basicInfo = ref({
-  groupName: '',
-  exportBusinessUnitName: '',
-  exportBusinessUnitAddress: '',
-  corporateOfficeAddress:'',
-  website:''
-});
-
-// Convert your existing fields into dynamic fields
-const dynamicFields = ref([
-  { label: 'Group Name', value: basicInfo.value.groupName, required: false },
-  { label: 'Export Business Unit Name', value: basicInfo.value.exportBusinessUnitName, required: true },
-  { label: 'Export Business Unit Address', value: basicInfo.value.exportBusinessUnitAddress, required: true },
-  { label: 'Corporate Office Address', value: basicInfo.value.corporateOfficeAddress, required: true },
-  { label: 'Website', value: basicInfo.value.website, required: false }
-]);
-
-
+const emit = defineEmits(['emitData'])
 
 const dynamicFieldsData = computed(() => {
   const data = {};
-  dynamicFields.value.forEach(f => {
+  props.controls.forEach(f => {
     data[f.label] = f.value;
   });
   return data;
@@ -103,21 +83,17 @@ const dynamicFieldsData = computed(() => {
 
 
 
-const dynamicFieldsConfig = computed(() => {
-  return  dynamicFields.value.map(x=>{
-    return { ...x, type:'textbox',key:toCamelCase(x.label)}
-  });
-});
 
 
 
 
-const sendConfig = () => {
-  emit('emitConfig', dynamicFieldsConfig.value);
+
+const sendData = () => {
+  emit('emitData',dynamicFieldsData);
 };
 
 defineExpose({
-  sendConfig
+  sendData
 });
 
 </script>
