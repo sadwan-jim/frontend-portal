@@ -14,7 +14,7 @@
       </div>
 
       
-      <v-btn small color="primary" style="color: white !important;"  @click="saveTemplate">Save Template</v-btn>
+      <v-btn small color="primary" style="color: white !important;"  @click="saveTemplate">Copy Template</v-btn>
     </v-card-title>
 
     
@@ -109,6 +109,7 @@ import LegalInfo from './general-info/legal-info-template.vue';
 import AccordionTable from './component/accordion-table.vue';
 import TransactionBase from './general-info/transaction-base-template.vue';
 import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
+import TemplateServices from '../../services/template.services';
 
 const templateStore = useFormTemplateStore();
 
@@ -204,6 +205,12 @@ function saveTemplate(){
   packingInfoRef.value.sendConfig();
   certificationInfoRef.value.sendConfig();
   paymentInfoRef.value.sendConfig();
+  
   templateStore.updateTemplateList(Object.values(configs));
+  const newTemplateName = prompt('Enter new template name');
+  if (newTemplateName) {
+     TemplateServices.create({ name:newTemplateName, templateJson: JSON.stringify(Object.values(configs))});
+  }
+ 
 }
 </script>

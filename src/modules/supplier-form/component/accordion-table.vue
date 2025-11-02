@@ -199,7 +199,7 @@ const onOptionsInput = (item) => {
 
 
 const sendConfig = () => {
-  emit('emitConfig', [{ type:'table', headers:editableHeaders, label:localTitle}]);
+  emit('emitConfig', [{ type:'table', headers:editableHeaders.value, label:localTitle.value}]);
 };
 
 defineExpose({
