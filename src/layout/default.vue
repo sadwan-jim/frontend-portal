@@ -71,7 +71,7 @@
         >
         
           <v-icon class="mr-2">mdi-kanban</v-icon>
-          <span>Sup</span>
+          <span>Default Form</span>
         </v-list-item>
         <v-divider />
 
