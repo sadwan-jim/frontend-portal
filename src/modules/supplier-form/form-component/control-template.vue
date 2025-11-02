@@ -49,7 +49,7 @@
         <v-row>
             <v-col>
                 <v-btn>
-                    Save
+                    NEXT
                 </v-btn>
             </v-col>
         </v-row>

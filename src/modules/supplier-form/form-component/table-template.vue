@@ -17,6 +17,13 @@
             <FormDataTable :headers="headers"  @save="onTableSave"/>
           </v-col>
         </v-row>
+          <v-row>
+            <v-col>
+                <v-btn>
+                    NEXT
+                </v-btn>
+            </v-col>
+        </v-row>
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
