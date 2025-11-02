@@ -42,7 +42,7 @@
       v-model="drawer"
     >
       <v-list nav dense>
-        <v-list-item
+        <!-- <v-list-item
           title="Build Form"
           :to="'/form-builder'"
           link
@@ -50,7 +50,7 @@
         >
           <v-icon class="mr-2">mdi-pencil</v-icon>
           <span>Build Form</span>
-        </v-list-item>
+        </v-list-item> -->
         <v-divider />
         
         <v-list-item
