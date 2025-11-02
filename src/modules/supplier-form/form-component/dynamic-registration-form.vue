@@ -60,17 +60,29 @@ import ControlTemplate from './control-template.vue';
 import TableTemplate from './table-template.vue';
 import TransactionBaseTemplate from '../general-info/transaction-base-template.vue';
 import { useStringCase } from '@/composable/useStringCase.js';
-import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
 
+import { useRoute,useRouter } from 'vue-router';
+import axios from '@/plugins/axios';
+import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
 const tabs = ref([]);
 const tab = ref('');
 
+const route = useRoute(); 
 const { toCamelCase } = useStringCase();
+const templateStore = useFormTemplateStore();
 
 onMounted(async () => {
     console.log(templateStore.getTemplateList,"::::::templateStore.getTemplateList")
         setTemplateData(templateStore.getTemplateList)
-    });
+      if(route.query.templateId){
+        console.log(":AA Mounted Template ID",route.query.templateId)
+        const templateID = route.query.templateId;
+        const res =  await axios.get(`api/FormTemplates/${templateID}`)
+        
+        setTemplateData(JSON.parse(res.data.templateJson))
+        console.log("RES",res)
+      }
+});
 function setTemplateData(templateJson){
        //const formStructureData = JSON.parse(templateJson)
 
@@ -79,10 +91,11 @@ function setTemplateData(templateJson){
     tabs.value = uniqueTabs;
     
     tab.value =uniqueTabs[0];
+    templateStore.updateTemplateList(templateJson);
     //templateStore.updateControlList(templateJson)
 }
 
-const templateStore = useFormTemplateStore();
+
 
 function onEmitData(payload ,title){
     console.log(payload ,title,"::::::payload ,title")
