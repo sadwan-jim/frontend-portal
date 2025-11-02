@@ -29,7 +29,7 @@
           <span>{{ item }}</span>
         </v-tab>
       </v-tabs>
-      
+     
       <v-window v-model="tab" eager>
         <v-window-item   
           v-for="(item, index) in tabs"
@@ -37,7 +37,7 @@
           :value="item"
         >
             <template v-for="template in templateStore.getTemplateList.filter(x=>x.tab==item)">
-                {{template}}
+                <!-- {{template}} -->
                 <template v-if="template.panelType == 'control'">
                     <TransactionBaseTemplate v-if="template.title === 'Transaction Base'" />
                     <ControlTemplate v-else :sectionTitle="template.title" :controls="template.controls" @emitData="payload=> onEmitData(payload,template.title)"/>
