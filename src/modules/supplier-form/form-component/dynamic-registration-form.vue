@@ -37,10 +37,10 @@
           :value="item"
         >
             <template v-for="template in templateStore.getTemplateList.filter(x=>x.tab==item)">
-               
+                {{template}}
                 <template v-if="template.panelType == 'control'">
                     <TransactionBaseTemplate v-if="template.title === 'Transaction Base'" />
-                    <ControlTemplate v-else :sectionTitle="template.title" :controls="template.controls"/>
+                    <ControlTemplate v-else :sectionTitle="template.title" :controls="template.controls" @emitData="payload=> onEmitData(payload,template.title)"/>
                 </template>
                 <template v-if="template.panelType == 'table'">
                     <TableTemplate :sectionTitle="template.title" :headers="template.controls[0].headers"/>
@@ -58,11 +58,13 @@ import { ref ,onMounted} from 'vue';
 import ControlTemplate from './control-template.vue';
 import TableTemplate from './table-template.vue';
 import TransactionBaseTemplate from '../general-info/transaction-base-template.vue';
-
+import { useStringCase } from '@/composable/useStringCase.js';
 import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
 
 const tabs = ref([]);
 const tab = ref('');
+
+const { toCamelCase } = useStringCase();
 
 onMounted(async () => {
     console.log(templateStore.getTemplateList,"::::::templateStore.getTemplateList")
@@ -80,6 +82,10 @@ function setTemplateData(templateJson){
 }
 
 const templateStore = useFormTemplateStore();
+
+function onEmitData(payload ,title){
+    console.log(payload ,title,"::::::payload ,title")
+}
 
 
 const sectionTitle = ref('Supplier Profile Management');
