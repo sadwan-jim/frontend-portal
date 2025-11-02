@@ -1,39 +1,83 @@
-<template>
-  <v-tabs
-    v-model="tab"
-    show-arrows
-    class="v-tabs-pill"
-  >
-    <v-tab
-      v-for="(item,index) in ['new','existing']"
-      :key="index"
-      :value="item"
+ <template>
+  <div class="mt-4">
+    <v-data-table
+      :headers="headers"
+      :items="supplierContactStore.getSupplierContactList || []"
     >
-      {{ item }}
-    </v-tab>
-  </v-tabs>
-  <v-window v-model="tab">
-    <v-window-item  :value="'new'">
-      <NewSupplierForm/>
-    </v-window-item>
-    <v-window-item  :value="'existing'">
-       <NewSupplierForm/>
-    </v-window-item>
-  </v-window>
-
+      <template v-slot:item.actions="{ item }">
+        <v-icon v-if="item.submittedJson" @click="previewResult(item)">mdi-file-document</v-icon>
+        <v-icon @click="previewForm(item)">mdi-eye</v-icon>
+        <v-icon @click="sendEmail(item)">mdi-email</v-icon>
+      </template>
+    </v-data-table>
+     <!-- Reusable AlertControl -->
+    <AlertControl ref="alertRef" />
+  </div>
 </template>
-
+     
 <script setup>
-import { ref } from 'vue'; 
-import NewSupplierForm from './new-supplier-form.vue';
+import { ref, onMounted,computed } from 'vue'; 
+import { useRouter } from 'vue-router';
+import { useFormControlStore } from '@/store/form-builder/form-control.store.js';
+import { useSupplierContactStore } from '@/store/supplier-contact/supplier-contact';
+
+import axios from '@/plugins/axios';
+import AlertControl from '@/components/alerts/AlertControl.vue' ;
+const supplierContactStore = useSupplierContactStore();
 
 
 
-const tab = ref('new')
+const router = useRouter(); 
+const alertRef = ref(null)
+
+const headers = ref([
+  { title: 'Name', key: 'name' },
+  { title: 'Email', key: 'email' },
+  { title: 'Company Name', key: 'contactName' },
+  { title: 'Contact Type', key: 'contactType' },
+  { title: 'Status', key: 'status' },
+  { title: 'Actions', key: 'actions', sortable: false }
+]);
 
 
 
 
+const formControlStore = useFormControlStore()
 
+
+
+function previewResult(item){
+   const url = router.resolve({ name: 'FormFeedback', query: { contactId: item.id ,feedBackForm:'True'} }).href;
+   window.open(url, '_blank');
+}
+
+function previewForm(item){
+  console.log("ITEM application",item)
+ 
+
+  // const formControlList = JSON.parse(item.application.formTemplate)
+  // formControlStore.updateControlList([ {...formControlList} ]);
+   const url = router.resolve({ name: 'FormPreview', query: { templateId: item.formTemplate.id } }).href;
+   window.open(url, '_blank');
+
+   //router.push({ name: 'FormPreview', params: { id: item.formTemplate.id } });
+}
+
+
+onMounted(() => {
+  supplierContactStore.fetchSupplierContactList();
+});
+
+async function sendEmail(item){
+  console.log(item,"AA::AA")
+  const { email, name, formTemplate,id } = item;
+
+  const itemPayload = { contactId:id, email, name, templateId: formTemplate.id,feedBackForm:false };
+
+   console.log(itemPayload,"AA::AA")
+
+  const res =  await axios.post(`api/SupplierContacts/SendEmail`,itemPayload)
+ alertRef.value.show('🎉 Email Send successfully!', 'success')
+}
 
 </script>

@@ -27,6 +27,11 @@ export const routes = [
         component: () => import('@/modules/supplier-contact/supplier-contact-list.vue'),
       },
       {
+        path: 'supplier-add',
+        name: 'AddList',
+        component: () => import('@/modules/supplier-contact/supplier-tab-form.vue'),
+      },
+      {
         path: 'profile',
         name: 'SupplierProfile',
         component: () => import('@/modules/profile/SupplierProfile.vue'),

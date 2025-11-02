@@ -92,12 +92,19 @@
               </v-list-item>
             </template>
             <v-divider />
+            
+            <v-list-item class="pl-4" :to="'/supplier-add'" link>
+              <v-icon class="mr-2">mdi-arrow-right</v-icon>
+              Registration Path  Creation
+            </v-list-item>
+            <v-divider />
 
             <v-list-item class="pl-4" :to="'/supplier-list'" link>
               <v-icon class="mr-2">mdi-arrow-right</v-icon>
-              Registration Path Creation & Submission
+              Registration Path Submission 
             </v-list-item>
             <v-divider />
+           
             <v-list-item class="pl-4" link>
               <v-icon class="mr-2">mdi-check-circle</v-icon>
               Review & Analysis
