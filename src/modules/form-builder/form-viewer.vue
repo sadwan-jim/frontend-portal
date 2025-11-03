@@ -36,8 +36,10 @@
     </v-row> -->
 
     <v-divider style="margin-top: 10px;"/>
+
+    <DynamicRegistrationFrom v-if="form.formTemplateId!=null" :key="form.formTemplateId"/>
     
-    <FormPreview v-if="form.formTemplateId!=null" :key="form.formTemplateId"/>
+    <!-- <FormPreview v-if="form.formTemplateId!=null" :key="form.formTemplateId"/> -->
 
      <v-dialog v-model="dialog" max-width="400">
       <v-card>
@@ -65,9 +67,11 @@ import { useRouter } from 'vue-router';
 import { useFormControlStore } from '@/store/form-builder/form-control.store.js';
 import { useFormTabStore } from '@/store/form-builder/form-tab.store.js';
 import { useSupplierContactStore } from '@/store/supplier-contact/supplier-contact';
+import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
 import { required } from '@/validators/validators';
 import dropdown from '@/components/controls/dropdown.vue';
 import FormPreview from '@/modules/form-builder/form-preview.vue'
+import DynamicRegistrationFrom from '../../modules/supplier-form/form-component/dynamic-registration-form.vue'
 import axios from '@/plugins/axios';
 const supplierContactStore = useSupplierContactStore();
 
@@ -88,14 +92,16 @@ const formControlStore = useFormControlStore()
 
 const formTabStore =  useFormTabStore()
 
+const templateStore  = useFormTemplateStore();
+
 function handleChange(payload,name){
   console.log(payload,":::::payload")
 
    const formStructureData = JSON.parse(payload.templateJson)
-   const uniqueTabs = [...new Set(formStructureData.map(item => item.tab))];
-   formTabStore.updateTabList(uniqueTabs)
-   formControlStore.updateControlList(formStructureData)
-
+  //  const uniqueTabs = [...new Set(formStructureData.map(item => item.tab))];
+  //  formTabStore.updateTabList(uniqueTabs)
+  //  formControlStore.updateControlList(formStructureData)
+   templateStore.updateTemplateList(formStructureData)
   form.value[name] = payload.id;
 
   
