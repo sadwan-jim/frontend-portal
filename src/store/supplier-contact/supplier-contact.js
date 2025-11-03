@@ -1,6 +1,5 @@
-
-import axios from '@/plugins/axios';
 import { defineStore } from 'pinia';
+import SupplierContactServices from '@/services/supplier-contact.services';
 
 
 export const useSupplierContactStore = defineStore('supplierContact', {
@@ -14,8 +13,8 @@ export const useSupplierContactStore = defineStore('supplierContact', {
   actions: {
     async fetchSupplierContactList(){
        try {
-            const response = await axios.get('/api/SupplierContacts');
-            console.log("API RESPONSE",)
+            const response =await SupplierContactServices.getAll();
+            console.log("API RESPONSE",response)
             this.supplierContactList = response.data;
         } catch (error) {
             console.error('Error fetching supplier contacts:', error);
@@ -24,7 +23,7 @@ export const useSupplierContactStore = defineStore('supplierContact', {
     async addSupplierContact(contact) {
           try {
              console.log(contact,"API RESPONSE")
-             const response = await axios.post('/api/SupplierContacts',contact);
+             const response = await SupplierContactServices.create(contact);
             console.log(contact,"API RESPONSE",response)
             this.supplierContactList.push(response.data);
             alert("Saved Template")
