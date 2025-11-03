@@ -2,7 +2,7 @@
   <div class="mt-4">
     <v-row>
       <v-col cols="12">
-        <v-radio-group v-model="form.contactType" class="d-flex align-center" row>
+        <v-radio-group v-model="form.contactType" class="d-flex align-center" inline>
           <v-radio label="Self" value="self"></v-radio>
           <v-radio label="Agent" value="agent"></v-radio>
           <v-radio label="SCD" value="scd"></v-radio>
