@@ -123,20 +123,32 @@ import { ref } from 'vue';
     const login = () => {
         const templateID = route.query.templateId;
         const contactID = route.query.contactId;
+        const status = route.query.status;
 
         const showFeedBackForm = route.query.feedBackForm||false
 
         console.log(contactID,"TEMPLATE ID",showFeedBackForm)
-        if(templateID){
-          if(showFeedBackForm!='False'){
-            router.push({ name: 'FormFeedback',query: { contactId:contactID} })
-            return;
-          }
-          router.push({ name: 'FormPreview',query: { templateId: templateID  ,contactId:contactID} })
-        }else{
-          router.push({ name: 'FormBuilder' })
-        }
+        // if(templateID){
+        //   if(showFeedBackForm!='False'){
+        //     router.push({ name: 'FormFeedback',query: { contactId:contactID} })
+        //     return;
+        //   }
+        //   router.push({ name: 'FormPreview',query: { templateId: templateID  ,contactId:contactID} })
+        // }else{
+        //   router.push({ name: 'FormBuilder' })
+        // }
+        switch(status)
+        {
+          case 0:{
 
+            break;
+          }
+          case 1:{
+            router.push({ name: 'DynamicForm',query: { templateID:templateID} })
+
+            break;
+          }
+        }
 
         
      

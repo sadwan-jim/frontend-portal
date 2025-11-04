@@ -48,7 +48,7 @@
         </v-row>
         <v-row>
             <v-col>
-                <v-btn @click.stop="emit('emitData',dynamicFieldsData)">
+                <v-btn @click.stop="sendData">
                     NEXT
                 </v-btn>
             </v-col>
