@@ -91,14 +91,17 @@ onMounted(() => {
 
 async function sendEmail(item){
   console.log(item,"AA::AA")
-  const { email, name, formTemplate,id } = item;
+  const { email, name, formTemplate,id,status } = item;
 
-  const itemPayload = { contactId:id, email, name, templateId: formTemplate.id,feedBackForm:false };
-
-   console.log(itemPayload,"AA::AA")
-
+  const itemPayload = { contactId:id, email, name, templateId: formTemplate.id,status:status };
+  
+  
+  console.log(itemPayload,"AA::AA")
   const res =  await axios.post(`api/SupplierContacts/SendEmail`,itemPayload)
- alertRef.value.show('🎉 Email Send successfully!', 'success')
+  
+  supplierContactStore.updateSupplierContact({ ...item ,  status:1});
+
+  alertRef.value.show('🎉 Email Send successfully!', 'success')
 }
 
 </script>
