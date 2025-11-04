@@ -4,6 +4,9 @@
       :headers="headers"
       :items="supplierContactStore.getSupplierContactList || []"
     >
+       <template v-slot:item.status="{ item }">
+        {{ getStatusString(item.status) }}
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-icon v-if="item.submittedJson" @click="previewResult(item)">mdi-file-document</v-icon>
         <v-icon @click="previewForm(item)">mdi-eye</v-icon>
@@ -38,6 +41,24 @@ const headers = ref([
   { title: 'Status', key: 'status' },
   { title: 'Actions', key: 'actions', sortable: false }
 ]);
+
+
+const getStatusString = computed(() => (status) => {
+  switch (status) {
+    case 0:
+      return 'Initial Create';
+    case 1:
+      return 'Email Sent';
+    case 2:
+      return 'Supplier Submit';
+    case 3:
+      return 'Pending FeedBack';
+    case 4:
+      return 'Feed Back Sent';
+    default:
+      return 'Unknown';
+  }
+});
 
 
 
