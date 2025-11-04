@@ -121,6 +121,8 @@ const form = ref({
   contactType:'self'
 });
 
+const selectedTemplate=ref("");
+
 const formControlStore = useFormControlStore()
 
 const contatcPersonLabel = computed(()=>{
@@ -163,7 +165,12 @@ const emailLabel = computed(()=>{
 })
 
 function handleChange(payload,name){
-  console.log(payload.id,":::::payload")
+  console.log(payload,":::::payload")
+
+  if(name=='formTemplateId')
+  {
+    selectedTemplate.value = payload.templateJson
+  }
 
   form.value[name] = payload.id;
 }
@@ -185,7 +192,7 @@ const submitForm = () => {
 
   if (form.value.name && form.value.email && form.value.contactName && form.value.applicationId) {
     console.log('Form submitted', form.value);
-    supplierContactStore.addSupplierContact(form.value)
+    supplierContactStore.addSupplierContact({...form.value , submittedJson:selectedTemplate.value })
 
   } else {
     console.log('Form is invalid');

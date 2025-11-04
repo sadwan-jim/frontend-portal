@@ -8,7 +8,7 @@
         {{ getStatusString(item.status) }}
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon v-if="item.submittedJson" @click="previewResult(item)">mdi-file-document</v-icon>
+        <v-icon v-if="item.status==1" @click="previewResult(item)">mdi-file-document</v-icon>
         <v-icon @click="previewForm(item)">mdi-eye</v-icon>
         <v-icon @click="sendEmail(item)">mdi-email</v-icon>
       </template>
