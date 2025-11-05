@@ -16,42 +16,54 @@
 
       <v-expansion-panel-text>
       
-        <v-row dense>
-          <v-col
-            v-for="(field, index) in controls"
-            :key="index"
-            cols="4"
-            class="mb-4"
-          >
-            <v-text-field
-              v-if="field.type=='textbox'"
-              :placeholder="field.label"
-              :label="field.label"
-              outlined
-              dense
-              v-model="field.value"
-              :rules="field.required ? [required(field.value, field.label)] : []"
-               class="flex-grow-1"
-            />
-            <dropdown
-               v-if="field.type=='dropdown'"
-              :placeholder="field.label"
-              :label="field.label"
-              :options="field.option"
-              v-model="field.value"
-              :rules="field.required ? [required(field.value, field.label)] : []"
-               class="flex-grow-1"
-            />
-                    
-             
-          </v-col>
+        <v-row :key="index" v-for="(field, index) in controls" dense>
+   
+            <v-col
+              cols="4"
+              class="mb-4"
+            >
+              <v-text-field
+                v-if="field.type=='textbox'"
+                :placeholder="field.label"
+                :label="field.label"
+                outlined
+                dense
+                v-model="field.value"
+              
+                class="flex-grow-1"
+              />
+              <dropdown
+                v-if="field.type=='dropdown'"
+                :placeholder="field.label"
+                :label="field.label"
+                :options="field.option"
+                v-model="field.value"
+                :rules="field.required ? [required(field.value, field.label)] : []"
+                class="flex-grow-1"
+              />
+            </v-col>
+            <v-col  cols="2">
+              <v-checkbox label="All Ok"></v-checkbox>
+            </v-col>
+            <v-col  cols="4">
+              <v-text-field
+                :placeholder="'Feedback'"
+                :label="'Feedback'"
+                outlined
+                dense
+                v-model="field.feedback"
+                class="flex-grow-1"
+              />
+            </v-col>
+          
+
         </v-row>
         <v-row>
-            <v-col>
+            <!-- <v-col>
                 <v-btn @click.stop="sendData">
                     NEXT
                 </v-btn>
-            </v-col>
+            </v-col> -->
         </v-row>
     
       </v-expansion-panel-text>
@@ -62,14 +74,14 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { required } from '@/validators/validators';
-import { useStringCase } from '../../../composable/useStringCase.js';
+
 import dropdown from '@/components/controls/dropdown.vue';
 const props = defineProps({
   sectionTitle: { type: String, required: true },
   controls: { type: Array, required: true }
 })
 
-const { toCamelCase } = useStringCase();
+
 
 const emit = defineEmits(['emitData'])
 
