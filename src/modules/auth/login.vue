@@ -100,7 +100,8 @@
 
 import { useRouter ,useRoute} from 'vue-router';
 import { ref } from 'vue';
-
+import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
+    const templateStore = useFormTemplateStore();
     const router = useRouter(); 
     const route = useRoute(); 
     // Reactive variables
@@ -120,14 +121,14 @@ import { ref } from 'vue';
     ];
 
     // Login function
-    const login = () => {
+    const login =async () => {
         const templateID = route.query.templateId;
         const contactID = route.query.contactId;
         const status = route.query.status;
 
         const showFeedBackForm = route.query.feedBackForm||false
 
-        console.log(contactID,"TEMPLATE ID",showFeedBackForm)
+        console.log(contactID,"TEMPLATE ID",showFeedBackForm,status)
         // if(templateID){
         //   if(showFeedBackForm!='False'){
         //     router.push({ name: 'FormFeedback',query: { contactId:contactID} })
@@ -137,14 +138,17 @@ import { ref } from 'vue';
         // }else{
         //   router.push({ name: 'FormBuilder' })
         // }
+        debugger;
         switch(status)
         {
-          case 0:{
+          case "0":{
 
             break;
           }
-          case 1:{
-            router.push({ name: 'DynamicForm',query: { templateID:templateID} })
+          case "1":{
+            console.log("::::AAAASSS",status)
+            await templateStore.setTemplateFromContact(contactID)
+            router.push({ name: 'DynamicForm'})
 
             break;
           }
