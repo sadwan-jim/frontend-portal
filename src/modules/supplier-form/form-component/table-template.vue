@@ -14,7 +14,7 @@
       <v-expansion-panel-text>
         <v-row dense>
           <v-col cols="12" class="mb-4">
-            <FormDataTable :headers="headers"  @save="onTableSave"/>
+            <FormDataTable :headers="headers" :tableItems="tableData || []"  @save="onTableSave"/>
           </v-col>
         </v-row>
           <v-row>
@@ -40,6 +40,10 @@ const props = defineProps({
     required: true
   },
   headers: {
+    type: Array,
+    required: true
+  },
+    tableData: {
     type: Array,
     required: true
   },
