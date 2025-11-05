@@ -176,6 +176,7 @@ function getHeaderItem(key){
   function remove (item) {
       const index = localItems.value.findIndex(x => x.id === item.id)
       localItems.value.splice(index, 1)
+         emit('save', localItems.value);
   }
 
   function save () {
