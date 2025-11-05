@@ -42,14 +42,18 @@ const props = defineProps({
   headers: {
     type: Array,
     required: true
+  },
+    modelValue: {
+    type: [Array, Object, []],
+    default: []
   }
 });
 
 const emit = defineEmits(['emitTableData'])
 
 function onTableSave(payload)
-{
-    emit('emitTableData', payload);
+{   emit('update:modelValue', payload) 
+    // emit('emitTableData', payload);
 }
 
 </script>

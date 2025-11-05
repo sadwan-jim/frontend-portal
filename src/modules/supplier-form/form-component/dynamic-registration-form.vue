@@ -44,7 +44,7 @@
                     <ControlTemplate v-else :sectionTitle="template.title" :controls="template.controls" @emitData="payload=> onEmitData(payload,template.title)"/>
                 </template>
                 <template v-if="template.panelType == 'table'">
-                    <TableTemplate :sectionTitle="template.title" :headers="template.controls[0].headers"/>
+                    <TableTemplate v-model="template.controls[0].tableData" :sectionTitle="template.title" :headers="template.controls[0].headers"/>
                 </template>
 
             </template>
