@@ -148,7 +148,7 @@ import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
           case "1":{
             console.log("::::AAAASSS",status)
             await templateStore.setTemplateFromContact(contactID)
-            router.push({ name: 'DynamicForm'})
+            router.push({ name: 'DynamicForm' , query: { contactId:contactID } })
 
             break;
           }

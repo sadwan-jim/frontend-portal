@@ -91,7 +91,7 @@
 </template>
 
 <script setup>
-import { ref ,onMounted} from 'vue'; 
+import { ref ,onMounted ,computed} from 'vue'; 
 import ControlTemplate from './control-template.vue';
 import TableTemplate from './table-template.vue';
 import TransactionBaseTemplate from '../general-info/transaction-base-template.vue';
@@ -139,10 +139,13 @@ function onEmitData(payload ,title){
 
 
 const sectionTitle = ref('Supplier Profile Management');
+const contactId = computed(() => {
+    return route.query.contactId||'';
+});
 
 async function handleClick(name,index){
     //console.log("name,index",name,index)
-
+ debugger;
     switch(name)
     {
         case 'next':{
@@ -155,14 +158,14 @@ async function handleClick(name,index){
         }
         case 'submit':{
           try{
-            const submittedJson = formControlStore.getControlList;
-            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) , status:'Waiting For Review' });
-             alertRef.value.show('🎉 Form submitted successfully!', 'success')
+            const submittedJson = templateStore.getTemplateList;
+            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) , status:2 });
+            // alertRef.value.show('🎉 Form submitted successfully!', 'success')
              router.push({ name: 'Success' })
              //window.location.href = '/success';  // or use router.push('/success')
 
         }catch(error){
-            alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
+            //alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
             console.error("Error submitting form:",error)
         }
 
