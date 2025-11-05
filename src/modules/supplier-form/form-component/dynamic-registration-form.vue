@@ -150,7 +150,7 @@ async function handleClick(name,index){
             break;
         }
         case 'prev':{
-            activeTab.value = tabs.value[index-1];
+             tab.value = tabs.value[index-1];
             break;
         }
         case 'submit':{
