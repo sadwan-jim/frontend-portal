@@ -40,11 +40,11 @@
             <template v-for="template in templateStore.getTemplateList.filter(x=>x.tab==item)">
                 <!-- {{template}} -->
                 <template v-if="template.panelType == 'control'">
-                    <TransactionBaseTemplate v-if="template.title === 'Transaction Base'" />
-                    <ControlTemplate v-else :sectionTitle="template.title" :controls="template.controls" @emitData="payload=> onEmitData(payload,template.title)"/>
+                    <TransactionBaseTemplate  class="mt-4" v-if="template.title === 'Transaction Base'" />
+                    <ControlTemplate  class="mt-4" v-else :sectionTitle="template.title" :controls="template.controls" @emitData="payload=> onEmitData(payload,template.title)"/>
                 </template>
                 <template v-if="template.panelType == 'table'">
-                    <TableTemplate :tableData ="template.controls[0].tableData||[]"  v-model="template.controls[0].tableData" :sectionTitle="template.title" :headers="template.controls[0].headers"/>
+                    <TableTemplate  class="mt-4" :tableData ="template.controls[0].tableData||[]"  v-model="template.controls[0].tableData" :sectionTitle="template.title" :headers="template.controls[0].headers"/>
                 </template>
 
             </template>
@@ -104,6 +104,7 @@ const tabs = ref([]);
 const tab = ref('');
 
 const route = useRoute(); 
+const router = useRouter(); 
 const { toCamelCase } = useStringCase();
 const templateStore = useFormTemplateStore();
 
