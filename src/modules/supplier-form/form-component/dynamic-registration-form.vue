@@ -48,8 +48,44 @@
                 </template>
 
             </template>
+                     <v-row justify="center" class="mt-6" style="margin:0px;">
+            <v-btn
+              color="primary"
+              rounded
+              outlined
+              v-if="index > 0"
+              class="mr-3"
+              @click.stop="handleClick('prev', index)"
+            >
+              <v-icon left>mdi-arrow-left</v-icon> PREVIOUS
+            </v-btn>
+
+            <v-btn
+              color="primary"
+              rounded
+              outlined
+              v-if="index < tabs.length - 1"
+              class="mr-3"
+              @click.stop="handleClick('next', index)"
+            >
+              NEXT <v-icon right>mdi-arrow-right</v-icon>
+            </v-btn>
+            
+          
+
+            <v-btn
+              color="success"
+              rounded
+              v-if="index === tabs.length - 1"
+              @click.stop="handleClick('submit', index)"
+            >
+              SUBMIT <v-icon right>mdi-check</v-icon>
+            </v-btn>
+          </v-row>
         </v-window-item>
+
       </v-window>
+     
     </v-card-text>
   </v-card>
 </template>
@@ -104,5 +140,35 @@ function onEmitData(payload ,title){
 
 const sectionTitle = ref('Supplier Profile Management');
 
+async function handleClick(name,index){
+    //console.log("name,index",name,index)
 
+    switch(name)
+    {
+        case 'next':{
+            tab.value = tabs.value[index+1];
+            break;
+        }
+        case 'prev':{
+            activeTab.value = tabs.value[index-1];
+            break;
+        }
+        case 'submit':{
+          try{
+            const submittedJson = formControlStore.getControlList;
+            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) , status:'Waiting For Review' });
+             alertRef.value.show('🎉 Form submitted successfully!', 'success')
+             router.push({ name: 'Success' })
+             //window.location.href = '/success';  // or use router.push('/success')
+
+        }catch(error){
+            alertRef.value.show('❌ Error submitting form. Please try again.', 'error')
+            console.error("Error submitting form:",error)
+        }
+
+        }
+
+    }
+
+}
 </script>
