@@ -37,6 +37,7 @@
           <!-- 🟩 Feedback -->
           <v-col cols="4">
             <v-text-field
+              v-if="!localModel.ok"
               v-model="localModel.feedback"
               label="Feedback"
               placeholder="Feedback"
@@ -77,6 +78,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const localModel = reactive({
+  ...props.modelValue,
   tableData: props.modelValue.tableData ?? [],
   ok: props.modelValue.ok ?? false,
   feedback: props.modelValue.feedback ?? ''

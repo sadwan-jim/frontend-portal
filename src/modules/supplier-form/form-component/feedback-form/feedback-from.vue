@@ -15,7 +15,7 @@
 
    
     <v-card-text class="pa-4" style="background-color: #f9f9f9;">
-        {{ templateStore.getTemplateList }}
+        {{ templateStore.getTemplateList.filter(x=>x.title=='Marketing Concern') }}
       <v-tabs
         v-model="tab"
         show-arrows
