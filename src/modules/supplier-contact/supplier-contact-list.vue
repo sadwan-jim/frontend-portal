@@ -8,7 +8,7 @@
         {{ getStatusString(item.status) }}
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon v-if="item.status==1" @click="previewResult(item)">mdi-file-document</v-icon>
+        <v-icon v-if="item.status>1" @click="previewResult(item)">mdi-file-document</v-icon>
         <v-icon @click="previewForm(item)">mdi-eye</v-icon>
         <v-icon @click="sendEmail(item)">mdi-email</v-icon>
       </template>
@@ -23,6 +23,7 @@ import { ref, onMounted,computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useFormControlStore } from '@/store/form-builder/form-control.store.js';
 import { useSupplierContactStore } from '@/store/supplier-contact/supplier-contact';
+import { useFormTemplateStore } from '@/store/form-builder/form-template.store.js';
 
 import axios from '@/plugins/axios';
 import AlertControl from '@/components/alerts/AlertControl.vue' ;
@@ -64,11 +65,13 @@ const getStatusString = computed(() => (status) => {
 
 
 const formControlStore = useFormControlStore()
+const templateStore  = useFormTemplateStore() 
 
 
-
-function previewResult(item){
-   const url = router.resolve({ name: 'FormFeedback', query: { contactId: item.id ,feedBackForm:'True'} }).href;
+async function previewResult(item){
+  console.log("ITEM",JSON.parse(item.submittedJson))
+  await templateStore.updateTemplateList(JSON.parse(item.submittedJson))
+   const url = router.resolve({ name: 'FeedbackForm', query: { contactId: item.id} }).href;
    window.open(url, '_blank');
 }
 
