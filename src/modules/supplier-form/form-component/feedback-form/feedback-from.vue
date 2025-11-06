@@ -44,7 +44,13 @@
                     <FeedbackControlTemplate  class="mt-4" :sectionTitle="template.title" :controls="template.controls" @emitData="payload=> onEmitData(payload,template.title)"/>
                 </template>
                 <template v-if="template.panelType == 'table'">
-                    <FeedbackTableTemplate  class="mt-4" :tableData ="template.controls[0].tableData||[]"  v-model="template.controls[0].tableData" :sectionTitle="template.title" :headers="template.controls[0].headers"/>
+                   <FeedbackTableTemplate
+                        class="mt-4"
+                        v-model="template.controls[0]"
+                        :sectionTitle="template.title"
+                        :headers="template.controls[0].headers"
+                   />
+
                 </template>
 
             </template>
