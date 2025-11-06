@@ -43,7 +43,7 @@
               />
             </v-col>
             <v-col  cols="2">
-              <v-checkbox label="All Ok"></v-checkbox>
+              <v-checkbox label="Ok"></v-checkbox>
             </v-col>
             <v-col  cols="4">
               <v-text-field

@@ -43,9 +43,9 @@
                     <!-- <TransactionBaseTemplate  class="mt-4" v-if="template.title === 'Transaction Base'" /> -->
                     <FeedbackControlTemplate  class="mt-4" :sectionTitle="template.title" :controls="template.controls" @emitData="payload=> onEmitData(payload,template.title)"/>
                 </template>
-                <!-- <template v-if="template.panelType == 'table'">
-                    <TableTemplate  class="mt-4" :tableData ="template.controls[0].tableData||[]"  v-model="template.controls[0].tableData" :sectionTitle="template.title" :headers="template.controls[0].headers"/>
-                </template> -->
+                <template v-if="template.panelType == 'table'">
+                    <FeedbackTableTemplate  class="mt-4" :tableData ="template.controls[0].tableData||[]"  v-model="template.controls[0].tableData" :sectionTitle="template.title" :headers="template.controls[0].headers"/>
+                </template>
 
             </template>
             <v-row justify="center" class="mt-6" style="margin:0px;">
@@ -93,7 +93,7 @@
 <script setup>
 import { ref ,onMounted ,computed} from 'vue'; 
 import FeedbackControlTemplate from './feedback-control-template.vue';
-
+import FeedbackTableTemplate from './feedback-table-template.vue';
 
 
 import { useRoute,useRouter } from 'vue-router';
