@@ -13,7 +13,7 @@
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-row dense>
-          <v-col cols="8" class="mb-4">
+          <v-col cols="6" class="mb-4">
             <FormDataTable :headers="headers" :tableItems="tableData || []"  @save="onTableSave"/>
           </v-col>
           <v-col  cols="2" class="mb-6">
@@ -25,7 +25,7 @@
                 :label="'Feedback'"
                 outlined
                 dense
-                v-model="field.feedback"
+             
                 class="flex-grow-1"
               />
           </v-col>
