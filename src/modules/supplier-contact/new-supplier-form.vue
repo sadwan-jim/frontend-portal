@@ -40,22 +40,6 @@
       </v-col>
       <v-col cols="6">
         <dropdown
-          :label="'Application'"
-          :placeholder="'Application'"
-          :options="[]"
-          :keyProp="'name'"
-          :valProp="'id'"
-          :apiUrl="'/api/Applications'"
-          v-model="form.applicationId"
-          @update:modelValue="(value) => handleChange(value, 'applicationId')"
-          :rules="[required(form.applicationId, 'Application')]"
-        />
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="6">
-        <dropdown
           :label="'Form Template'"
           :placeholder="'Form Template'"
           :options="[]"
@@ -67,6 +51,23 @@
           :rules="[required(form.formTemplateId, 'Template')]"
         />
       </v-col>
+
+    </v-row>
+
+    <v-row>
+            <!-- <v-col cols="6">
+        <dropdown
+          :label="'Application'"
+          :placeholder="'Application'"
+          :options="[]"
+          :keyProp="'name'"
+          :valProp="'id'"
+          :apiUrl="'/api/Applications'"
+          v-model="form.applicationId"
+          @update:modelValue="(value) => handleChange(value, 'applicationId')"
+          :rules="[required(form.applicationId, 'Application')]"
+        />
+      </v-col> -->
       <v-col v-if="form.contactType=='agent'" cols="6">
         <v-text-field
           v-model="form.contactName"
@@ -116,7 +117,7 @@ const form = ref({
   email: '',
   contactName: '',
   agentName:'',
-  applicationId: null,
+  applicationId: 1,
   formTemplateId:null,
   contactType:'self'
 });
