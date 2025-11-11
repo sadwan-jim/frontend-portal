@@ -15,7 +15,7 @@
 
    
     <v-card-text class="pa-4" style="background-color: #f9f9f9;">
-        {{ templateStore.getTemplateList }}
+        <!-- {{ templateStore.getTemplateList }} -->
       <v-tabs
         v-model="tab"
         show-arrows
@@ -160,7 +160,8 @@ async function handleClick(name,index){
         case 'submit':{
           try{
             const submittedJson = templateStore.getTemplateList;
-            await axios.patch('api/SupplierContacts',{ contactId:contactId.value ,  submittedJson:JSON.stringify(submittedJson) , status:2 });
+            const payLoad = { contactId:(contactId.value ),  submittedJson:JSON.stringify(submittedJson) , status:2 }
+            await axios.patch('api/SupplierContacts',{...payLoad});
             // alertRef.value.show('🎉 Form submitted successfully!', 'success')
              router.push({ name: 'Success' })
              //window.location.href = '/success';  // or use router.push('/success')

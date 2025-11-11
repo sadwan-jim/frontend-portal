@@ -153,7 +153,7 @@ import { useFormTemplateStore } from '@/store/form-builder/form-template.store';
             break;
           }
           default :{
-            router.push({ name: 'FormPreview' })
+            router.push({ name: 'FormViewer' })
           }
         }
 

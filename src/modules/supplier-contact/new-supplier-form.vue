@@ -79,7 +79,7 @@
     <v-row>
       <v-col>
         <v-btn color="primary" @click="submitForm">
-          Submit
+          Save
         </v-btn>
       </v-col>
     </v-row>
