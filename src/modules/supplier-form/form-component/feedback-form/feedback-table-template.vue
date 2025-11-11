@@ -9,7 +9,13 @@
             <v-icon size="30" color="info" icon="mdi-office-building" />
           </v-col>
           <v-col cols="11">
-            <span class="font-weight-medium">{{ sectionTitle }}</span>
+            <span class="font-weight-medium">
+                {{ sectionTitle }}
+              <template v-if="localModel.feedback && localModel.feedback!==''">
+                <span class="badge bg-danger ms-1">1</span>
+              </template>
+            </span>
+            <!-- <span class="font-weight-medium">{{ sectionTitle }}</span> -->
           </v-col>
         </v-row>
       </v-expansion-panel-title>
