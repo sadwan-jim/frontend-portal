@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed ,watch} from 'vue';
 import { required } from '@/validators/validators';
 
 import dropdown from '@/components/controls/dropdown.vue';
@@ -135,6 +135,18 @@ const sendData = () => {
 
 defineExpose({
   sendData
+});
+
+
+props.controls.forEach((field) => {
+  watch(
+    () => field.ok,
+    (newVal) => {
+      if (newVal) {
+        field.feedback = '';
+      }
+    }
+  );
 });
 
 </script>

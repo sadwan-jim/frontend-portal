@@ -97,6 +97,16 @@ watch(
   { deep: true }
 )
 
+watch(
+  () => localModel.ok,
+  (newVal) => {
+    if (newVal) {
+      localModel.feedback = ''
+      emitModel()
+    }
+  }
+)
+
 function emitModel() {
   emit('update:modelValue', { ...localModel })
 }
