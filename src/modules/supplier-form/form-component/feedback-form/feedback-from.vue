@@ -73,6 +73,7 @@
               v-if="index < tabs.length - 1"
               class="mr-3"
               @click.stop="handleClick('next', index)"
+                :disabled="disableNext"
             >
               NEXT <v-icon right>mdi-arrow-right</v-icon>
             </v-btn>
@@ -193,4 +194,17 @@ async function handleClick(name,index){
     }
 
 }
+
+const disableNext = computed(() => {
+  const currentTabData = templateStore.getTemplateList.filter(
+    x => x.tab === tab.value
+  );
+
+  return currentTabData.some(tab =>
+    tab.controls.some(
+      ctrl => ctrl.feedback && ctrl.feedback.trim() !== ''
+    )
+  );
+});
+
 </script>
