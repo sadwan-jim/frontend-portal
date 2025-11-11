@@ -13,7 +13,7 @@
       </div>
     </v-card-title>
 
-   
+   <!-- {{ isAllOk }} -->
     <v-card-text class="pa-4" style="background-color: #f9f9f9;">
         <!-- {{ templateStore.getTemplateList.filter(x=>x.title=='Marketing Concern') }} -->
       <v-tabs
@@ -38,7 +38,7 @@
           :value="item"
         >
             <template v-for="template in templateStore.getTemplateList.filter(x=>x.tab==item)">
-                <!-- {{template}} -->
+                <!-- {{template.controls}} -->
                 <template v-if="template.panelType == 'control'">
                     <!-- <TransactionBaseTemplate  class="mt-4" v-if="template.title === 'Transaction Base'" /> -->
                     <FeedbackControlTemplate  class="mt-4" :sectionTitle="template.title" :controls="template.controls" @emitData="payload=> onEmitData(payload,template.title)"/>
@@ -85,7 +85,13 @@
               v-if="index === tabs.length - 1"
               @click.stop="handleClick('submit', index)"
             >
-              SUBMIT <v-icon right>mdi-check</v-icon>
+             <template v-if="isAllOk">
+                SUBMIT
+             </template>
+             <template v-else>
+                FEEDBACK
+             </template>
+               <v-icon right>mdi-check</v-icon>
             </v-btn>
           </v-row>
         </v-window-item>
@@ -127,7 +133,7 @@ onMounted(async () => {
 });
 function setTemplateData(templateJson){
        //const formStructureData = JSON.parse(templateJson)
-
+    debugger;
     const uniqueTabs = [...new Set(templateJson.map(item => item.tab))];
     
     tabs.value = uniqueTabs;
@@ -137,7 +143,14 @@ function setTemplateData(templateJson){
     //templateStore.updateControlList(templateJson)
 }
 
-
+const isAllOk = computed(()=>{
+  
+  return templateStore.getTemplateList
+  .filter(item => item.controls.length > 0)
+  .every(item => 
+    item.controls.every(control => control.ok === true) 
+  );
+})
 
 function onEmitData(payload ,title){
     console.log(payload ,title,"::::::payload ,title")
