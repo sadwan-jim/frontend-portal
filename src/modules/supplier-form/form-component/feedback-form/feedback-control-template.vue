@@ -8,7 +8,7 @@
           </v-col>
          
           <v-col cols="11" class="d-flex align-center justify-space-between">
-            <span class="font-weight-medium">{{ sectionTitle }}</span>
+            <span class="font-weight-medium">{{ sectionTitle }} <template v-if="feedBackCount>0"> ({{feedBackCount}})  </template></span>
           
           </v-col>
         </v-row>
@@ -90,6 +90,23 @@ const props = defineProps({
 
 
 const emit = defineEmits(['emitData'])
+
+
+const feedBackCount = computed(() => {
+  // const data = {};
+  // props.controls.forEach(f => {
+  //   data[f.label] = f.value;
+  // });
+  return props.controls.reduce((accum,cur) => {
+     if(cur.feedback && cur.feedback.trim() !== ''){
+        accum+=1;
+     }
+     return accum;
+  },0);
+  
+ 
+});
+
 
 const dynamicFieldsData = computed(() => {
   const data = {};
