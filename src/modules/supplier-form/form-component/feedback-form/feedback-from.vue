@@ -9,7 +9,7 @@
     >
       
       <div class="d-flex align-center">
-        <span class="font-weight-medium">{{ sectionTitle }}</span>
+        <span class="font-weight-medium">{{ sectionTitle }} </span>
       </div>
     </v-card-title>
 
@@ -27,7 +27,7 @@
           :value="item"
           class="d-flex align-center"
         >
-          <span>{{ item }}</span>
+          <span>{{ item }} {{ feedBackCount(item) }}</span>
         </v-tab>
       </v-tabs>
      
@@ -207,5 +207,22 @@ const disableNext = computed(() => {
     )
   )
 });
+
+function feedBackCount (tab) {
+  const currentTabData = templateStore.getTemplateList.filter(
+    x => x.tab === tab
+  );
+
+   const allControls = currentTabData.flatMap(item => item.controls || []);
+  return allControls.reduce((accum,cur) => {
+     if(cur.feedback && cur.feedback.trim() !== ''){
+        accum+=1;
+     }
+     return accum;
+  },0);
+  
+ 
+};
+
 
 </script>
