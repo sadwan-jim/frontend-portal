@@ -73,7 +73,7 @@
               v-if="index < tabs.length - 1"
               class="mr-3"
               @click.stop="handleClick('next', index)"
-                :disabled="disableNext"
+                :disabled="!disableNext"
             >
               NEXT <v-icon right>mdi-arrow-right</v-icon>
             </v-btn>
@@ -85,6 +85,7 @@
               rounded
               v-if="index === tabs.length - 1"
               @click.stop="handleClick('submit', index)"
+                :disabled="!disableNext"
             >
              <template v-if="isAllOk">
                 SUBMIT
@@ -200,11 +201,11 @@ const disableNext = computed(() => {
     x => x.tab === tab.value
   );
 
-  return currentTabData.some(tab =>
-    tab.controls.some(
-      ctrl => ctrl.feedback && ctrl.feedback.trim() !== ''
+  return currentTabData.every(tab =>
+    tab.controls.every(ctrl =>
+      ctrl.ok || (ctrl.feedback && ctrl.feedback.trim() !== '')
     )
-  );
+  )
 });
 
 </script>
