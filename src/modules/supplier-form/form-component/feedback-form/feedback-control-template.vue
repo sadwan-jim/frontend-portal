@@ -46,6 +46,7 @@
               <v-checkbox
                 v-model="field.ok"
                 label="Ok"
+                 :disabled="index !== 0 && !(controls[index - 1].ok || (controls[index - 1].feedback && controls[index - 1].feedback.trim() !== ''))"
                
               />
             </v-col>
