@@ -8,7 +8,13 @@
           </v-col>
          
           <v-col cols="11" class="d-flex align-center justify-space-between">
-            <span class="font-weight-medium">{{ sectionTitle }} <template v-if="feedBackCount>0"> ({{feedBackCount}})  </template></span>
+            <span class="font-weight-medium">
+                {{ sectionTitle }}
+              <template v-if="feedBackCount > 0">
+                <span class="badge bg-danger ms-1">{{ feedBackCount }}</span>
+              </template>
+            </span>
+
           
           </v-col>
         </v-row>
