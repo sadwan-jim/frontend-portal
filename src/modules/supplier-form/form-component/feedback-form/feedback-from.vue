@@ -27,7 +27,12 @@
           :value="item"
           class="d-flex align-center"
         >
-          <span>{{ item }} {{ feedBackCount(item) }}</span>
+          <span>{{ item }}
+            <template v-if="feedBackCount(item) > 0">
+                <span class="badge bg-danger ms-1">{{ feedBackCount(item) }}</span>
+            </template> 
+            
+          </span>
         </v-tab>
       </v-tabs>
      
